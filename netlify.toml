@@ -28,6 +28,12 @@
     Cache-Control = "no-cache"
 
 [[headers]]
+  for = "/descargas/*.exe"
+  [headers.values]
+    Content-Type = "application/vnd.microsoft.portable-executable"
+    Content-Disposition = "attachment"
+
+[[headers]]
   for = "/descargas/*.apk"
   [headers.values]
     Content-Type = "application/vnd.android.package-archive"

@@ -16,3 +16,6 @@ android/build/
 
 # Local Netlify folder
 .netlify
+
+# Paquetes de Windows (Electron)
+release/

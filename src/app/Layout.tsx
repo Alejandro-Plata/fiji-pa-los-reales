@@ -4,7 +4,7 @@ import { t } from '../textos/es';
 import { AvisoAlmacenamiento } from './AvisoAlmacenamiento';
 import { useAvisos } from './Avisos';
 import { comprobarActualizacion } from './actualizaciones';
-import { esAppNativa } from './plataforma';
+import { esAppNativa, esEscritorio } from './plataforma';
 import estilos from './Layout.module.css';
 
 const enlaces = [
@@ -32,11 +32,11 @@ export function Layout() {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // App Android: al arrancar, aviso discreto si hay una versión nueva publicada
+  // Apps de Android y Windows: al arrancar, aviso discreto si hay una versión nueva publicada
   const avisar = useAvisos();
   const navegar = useNavigate();
   useEffect(() => {
-    if (!esAppNativa() || comprobadoAlArrancar) return;
+    if (!(esAppNativa() || esEscritorio()) || comprobadoAlArrancar) return;
     comprobadoAlArrancar = true;
     void comprobarActualizacion().then((r) => {
       if (r.estado !== 'disponible') return;

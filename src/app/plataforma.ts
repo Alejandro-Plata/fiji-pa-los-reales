@@ -6,13 +6,27 @@ import { Capacitor } from '@capacitor/core';
 
 export const esAppNativa = () => Capacitor.isNativePlatform();
 
+/** Puente de la app de escritorio (escritorio/preload.cjs). */
+interface PuenteEscritorio {
+  plataforma: string;
+  abrirEnNavegador(url: string): Promise<void>;
+}
+declare global {
+  interface Window {
+    fplrEscritorio?: PuenteEscritorio;
+  }
+}
+export const escritorio = (): PuenteEscritorio | undefined =>
+  typeof window === 'undefined' ? undefined : window.fplrEscritorio;
+export const esEscritorio = () => escritorio() !== undefined;
+
 /**
  * Dirección pública de la app, para los enlaces de receteta.
- * En la web es la propia dirección; en Android se usa VITE_URL_PUBLICA (la PWA publicada).
+ * En la web es la propia dirección; en Android y Windows se usa VITE_URL_PUBLICA (la PWA publicada).
  */
 export function urlPublica(): string | null {
   const configurada = import.meta.env.VITE_URL_PUBLICA as string | undefined;
-  if (esAppNativa()) return configurada || null;
+  if (esAppNativa() || esEscritorio()) return configurada || null;
   return configurada || `${location.origin}${location.pathname}`;
 }
 

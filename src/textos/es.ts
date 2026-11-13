@@ -463,6 +463,15 @@ export const t = {
       descargarApk: (v: string) => `Descargar APK ${v}`,
       androidTexto:
         'Al abrir el archivo descargado, Android solicita autorización para instalar aplicaciones de esta fuente. Las siguientes actualizaciones pueden instalarse desde Ajustes, dentro de la propia app.',
+      // Windows (Electron)
+      windows: 'Aplicación para Windows',
+      descargarWindows: (v: string) => `Descargar instalador ${v}`,
+      windowsTexto:
+        'Instalador para Windows 10 y 11. Al no estar firmado por una entidad certificadora, Windows SmartScreen puede mostrar un aviso: «Más información» › «Ejecutar de todas formas».',
+      instalarWindows: 'Descargar instalador',
+      windowsDescarga:
+        'El instalador se descarga en el navegador. Al ejecutarlo, la versión instalada se sustituye conservando las recetetas.',
+      sinInstaladorWindows: 'Esta versión no incluye instalador para Windows.',
     },
     instalar: 'Instalación en el móvil',
     instalarPasos: [

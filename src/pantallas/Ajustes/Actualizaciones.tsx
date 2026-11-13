@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Boton } from '../../componentes/Boton/Boton';
 import { Nota } from '../../componentes/Nota/Nota';
-import { esAppNativa } from '../../app/plataforma';
+import { escritorio, esAppNativa, esEscritorio } from '../../app/plataforma';
 import {
   abrirAjustesPermiso,
   comprobarActualizacion,
@@ -131,7 +131,59 @@ function ActualizacionesNativas() {
   );
 }
 
-/** Web (PWA): se actualiza sola; ofrece descargar la app de Android si hay una publicada. */
+/** App de Windows: avisa de versiones nuevas y abre el instalador en el navegador. */
+function ActualizacionesEscritorio() {
+  const [r, setR] = useState<Comprobacion | null>(null);
+  const [descargando, setDescargando] = useState(false);
+  const buscar = async () => {
+    setR(null);
+    setDescargando(false);
+    setR(await comprobarActualizacion());
+  };
+  useEffect(() => {
+    let vivo = true;
+    void comprobarActualizacion().then((x) => {
+      if (vivo) setR(x);
+    });
+    return () => {
+      vivo = false;
+    };
+  }, []);
+
+  return (
+    <>
+      <p>{tx.instalada(__VERSION_APP__)}</p>
+      <div aria-live="polite" className={estilos.estadoActualizacion}>
+        {r === null && <p className="texto-suave">{tx.buscando}</p>}
+        {r?.estado === 'al-dia' && <Nota tipo="exito">{tx.alDia}</Nota>}
+        {r?.estado === 'sin-publicacion' && <p>{tx.sinPublicacion}</p>}
+        {r?.estado === 'error' && <Nota tipo="aviso">{tx.error}</Nota>}
+        {r?.estado === 'disponible' && <Novedades r={r} />}
+        {r?.estado === 'disponible' && !r.urlWindows && <p>{tx.sinInstaladorWindows}</p>}
+        {descargando && <Nota tipo="info">{tx.windowsDescarga}</Nota>}
+      </div>
+      <div className="fila">
+        {r?.estado === 'disponible' && r.urlWindows && (
+          <Boton
+            onClick={() => {
+              setDescargando(true);
+              void escritorio()?.abrirEnNavegador(r.urlWindows!);
+            }}
+          >
+            {tx.instalarWindows}
+          </Boton>
+        )}
+        {r?.estado !== 'disponible' && (
+          <Boton variante="secundario" onClick={() => void buscar()} disabled={r === null}>
+            {tx.buscar}
+          </Boton>
+        )}
+      </div>
+    </>
+  );
+}
+
+/** Web (PWA): se actualiza sola; ofrece descargar las apps de Android y Windows publicadas. */
 function ActualizacionesWeb() {
   const [r, setR] = useState<Comprobacion | null>(null);
   useEffect(() => {
@@ -160,6 +212,18 @@ function ActualizacionesWeb() {
           </div>
         </div>
       )}
+      {r?.estado === 'disponible' && r.urlWindows && (
+        <div className={estilos.novedades}>
+          <h3 className={estilos.subtitulo}>{tx.windows}</h3>
+          <p className="caption texto-suave">{tx.windowsTexto}</p>
+          <div>
+            <a className={estilos.enlaceBoton} href={r.urlWindows} download>
+              {tx.descargarWindows(r.publicacion.version)}
+              {r.publicacion.windows?.tamano ? ` · ${megas(r.publicacion.windows.tamano)}` : ''}
+            </a>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -168,7 +232,13 @@ export function Actualizaciones() {
   return (
     <section className={estilos.seccion} aria-labelledby="aj-actualizaciones" id="actualizaciones">
       <h2 id="aj-actualizaciones">{tx.titulo}</h2>
-      {esAppNativa() ? <ActualizacionesNativas /> : <ActualizacionesWeb />}
+      {esAppNativa() ? (
+        <ActualizacionesNativas />
+      ) : esEscritorio() ? (
+        <ActualizacionesEscritorio />
+      ) : (
+        <ActualizacionesWeb />
+      )}
     </section>
   );
 }

@@ -37,6 +37,9 @@ await png(svg, 512, 'public/iconos/icono-512.png', true);
 await png(sangre, 512, 'public/iconos/icono-maskable-512.png');
 writeFileSync('public/icono.svg', svg);
 
+// Windows (Electron): electron-builder genera el .ico desde este PNG de 512 px
+await png(svg, 512, 'escritorio/icono.png', true);
+
 // Android (Capacitor): iconos clásicos, redondos y primer plano adaptativo
 const densidades = { mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 };
 for (const [d, f] of Object.entries(densidades)) {

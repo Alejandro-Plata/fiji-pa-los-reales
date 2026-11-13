@@ -9,6 +9,7 @@ test('web: Ajustes ofrece descargar el APK publicado', async ({ page }) => {
         tamano: 5_452_595,
         publicada: '2026-11-14',
         novedades: ['Tutorial'],
+        windows: { instalador: 'fiji-pa-los-reales-1.1.0-instalador.exe', tamano: 121_900_000 },
       },
     }),
   );
@@ -18,6 +19,9 @@ test('web: Ajustes ofrece descargar el APK publicado', async ({ page }) => {
   const enlace = seccion.getByRole('link', { name: /Descargar APK 1\.1\.0 · 5,2 MB/ });
   await expect(enlace).toBeVisible();
   expect(await enlace.getAttribute('href')).toMatch(/\/descargas\/fiji-pa-los-reales-1\.1\.0\.apk$/);
+  const windows = seccion.getByRole('link', { name: /Descargar instalador 1\.1\.0 · 116,3 MB/ });
+  await expect(windows).toBeVisible();
+  expect(await windows.getAttribute('href')).toMatch(/\/descargas\/fiji-pa-los-reales-1\.1\.0-instalador\.exe$/);
 });
 
 test('web: sin publicación no se muestra la descarga', async ({ page }) => {

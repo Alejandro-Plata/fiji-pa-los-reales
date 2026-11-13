@@ -10,7 +10,7 @@
  */
 import { registerPlugin, type PluginListenerHandle } from '@capacitor/core';
 import { z } from 'zod';
-import { esAppNativa } from './plataforma';
+import { esAppNativa, esEscritorio } from './plataforma';
 
 const esquemaPublicacion = z.object({
   version: z.string().regex(/^\d+\.\d+\.\d+$/),
@@ -18,6 +18,8 @@ const esquemaPublicacion = z.object({
   tamano: z.number().nonnegative().optional(),
   publicada: z.string(),
   novedades: z.array(z.string()).default([]),
+  /** Instalador de Windows de la misma versión (opcional). */
+  windows: z.object({ instalador: z.string().min(1), tamano: z.number().nonnegative().optional() }).optional(),
 });
 
 export type Publicacion = z.infer<typeof esquemaPublicacion>;
@@ -41,14 +43,15 @@ export function leerPublicacion(datos: unknown): Publicacion | null {
 /** Carpeta pública de descargas: la web publicada (en Android, VITE_URL_PUBLICA). */
 export function urlDescargas(): string | null {
   const configurada = import.meta.env.VITE_URL_PUBLICA as string | undefined;
-  const base = configurada || (esAppNativa() ? null : `${location.origin}${location.pathname}`);
+  const base =
+    configurada || (esAppNativa() || esEscritorio() ? null : `${location.origin}${location.pathname}`);
   if (!base) return null;
   return new URL('descargas/', base.endsWith('/') ? base : `${base}/`).href;
 }
 
 export type Comprobacion =
   | { estado: 'al-dia'; publicacion: Publicacion }
-  | { estado: 'disponible'; publicacion: Publicacion; urlApk: string }
+  | { estado: 'disponible'; publicacion: Publicacion; urlApk: string; urlWindows: string | null }
   | { estado: 'sin-publicacion' }
   | { estado: 'error' };
 
@@ -63,8 +66,9 @@ export async function comprobarActualizacion(versionActual = __VERSION_APP__): P
     const publicacion = leerPublicacion(await r.json());
     if (!publicacion) return { estado: 'error' };
     const urlApk = new URL(publicacion.apk, carpeta).href;
+    const urlWindows = publicacion.windows ? new URL(publicacion.windows.instalador, carpeta).href : null;
     return compararVersiones(publicacion.version, versionActual) > 0
-      ? { estado: 'disponible', publicacion, urlApk }
+      ? { estado: 'disponible', publicacion, urlApk, urlWindows }
       : { estado: 'al-dia', publicacion };
   } catch {
     return { estado: 'error' };

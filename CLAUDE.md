@@ -44,6 +44,17 @@ Repositorio: github.com/Alejandro-Plata/fiji-pa-los-reales. Web: https://fiji-pa
 3. `npm run publicar`: pruebas, compilación con `VITE_URL_PUBLICA`, APK, `dist/descargas/version.json`
    y despliegue en Netlify con `--no-build`. No conectar despliegues automáticos desde GitHub:
    recompilarían y borrarían `descargas/`.
+## App de Windows (Electron)
+`escritorio/main.cjs` sirve `dist/` por el protocolo seguro `app://fplr/` (con file:// no funcionan
+los workers). `escritorio/preload.cjs` expone solo `window.fplrEscritorio` (abrir https en el
+navegador). Sin service worker: se actualiza desde Ajustes, que abre el instalador publicado.
+- `npm run windows` → `release/` (instalador NSIS y portátil). `npm run escritorio` abre `dist/`.
+- Prueba de humo del paquete: `node tests/escritorio/humo.mjs`.
+- `npm run publicar` incluye el instalador en `descargas/` (`--sin-windows` para omitirlo).
+- Si falta el binario de Electron (npm bloquea scripts de instalación):
+  `node node_modules/electron/install.js`.
+- Sin certificado de firma de código: SmartScreen muestra aviso la primera vez.
+
 ## Firma del APK
 Clave propia FUERA del repositorio: `~/.fiji-pa-los-reales/firma/` (`fiji-pa-los-reales.jks` +
 `firma.properties` con contraseña y alias; otra ruta con la variable `FPLR_FIRMA`). La usa

@@ -43,6 +43,10 @@ if (!existsSync(apkCompilado)) {
   process.exit(1);
 }
 
+// Windows: instalador NSIS (la web ya está compilada en dist; aún sin descargas/)
+const conWindows = process.platform === 'win32' && !process.argv.includes('--sin-windows');
+if (conWindows) ejecutar('node scripts/empaquetar-windows.mjs --sin-compilar');
+
 const nombreApk = `fiji-pa-los-reales-${version}.apk`;
 mkdirSync('dist/descargas', { recursive: true });
 const destino = join('dist/descargas', nombreApk);
@@ -54,6 +58,11 @@ const publicacion = {
   publicada: new Date().toISOString().slice(0, 10),
   novedades,
 };
+if (conWindows) {
+  const instalador = `fiji-pa-los-reales-${version}-instalador.exe`;
+  copyFileSync(join('release', instalador), join('dist/descargas', instalador));
+  publicacion.windows = { instalador, tamano: statSync(join('dist/descargas', instalador)).size };
+}
 writeFileSync('dist/descargas/version.json', JSON.stringify(publicacion, null, 2));
 console.log(`\nAPK ${version} listo: ${destino} (${(publicacion.tamano / 1048576).toFixed(1)} MB)`);
 
