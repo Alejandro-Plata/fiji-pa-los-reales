@@ -48,7 +48,8 @@ export function Dialogo({ abierto, titulo, texto, onCerrar, amplio, children, ac
           {titulo}
         </h2>
         {texto && <p id={`${id}-texto`}>{texto}</p>}
-        {children}
+        {/* El contenido solo existe mientras el diálogo está abierto */}
+        {abierto && children}
         <div className={estilos.acciones}>{acciones}</div>
       </div>
     </dialog>

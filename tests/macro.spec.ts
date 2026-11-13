@@ -90,6 +90,29 @@ test('guía de Fiji como panel desde Resultado', async ({ page }) => {
   await expect(panel).toBeHidden();
 });
 
+test('texto para Métodos: copiar y cambiar idioma', async ({ page }) => {
+  await guardarPlantilla(page, 'mamosferas-campo-claro');
+  await page.getByRole('button', { name: 'Texto para Métodos' }).click();
+  const panel = page.getByRole('dialog');
+  await expect(panel.getByText('Revisa el texto y adáptalo al estilo de tu tesis.')).toBeVisible();
+  await expect(panel.getByText(/circularidad ≥ 0,4/)).toBeVisible();
+  await panel.getByRole('button', { name: 'Cambiar idioma' }).click();
+  await expect(panel.getByText(/circularity ≥ 0\.4/)).toBeVisible();
+  await panel.getByRole('button', { name: 'Copiar', exact: true }).click();
+  await expect(page.getByText('Texto copiado')).toBeVisible();
+  const copiado = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copiado).toContain('Mammosphere images were analysed in Fiji');
+  expect(copiado).toContain('Nature Methods, 9(7), 676–682');
+});
+
+test('el idioma por defecto de Métodos sale de Ajustes', async ({ page }) => {
+  await page.goto('/#/ajustes');
+  await page.getByRole('radio', { name: 'Inglés' }).check();
+  await guardarPlantilla(page, 'mamosferas-campo-claro');
+  await page.getByRole('button', { name: 'Texto para Métodos' }).click();
+  await expect(page.getByRole('dialog').getByText(/Mammosphere images/)).toBeVisible();
+});
+
 test('vista previa del macro en vivo en escritorio', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/#/receteta/nueva?plantilla=mamosferas-campo-claro');

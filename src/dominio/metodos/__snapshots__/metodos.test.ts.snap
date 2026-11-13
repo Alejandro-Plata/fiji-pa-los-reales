@@ -1,0 +1,93 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > mamosferas-campo-claro-en 1`] = `
+{
+  "parrafo": "Mammosphere images were analysed in Fiji ([Fiji version]; Schindelin et al., 2012) using a custom macro applied identically to all conditions. Images were converted to 8-bit and smoothed with a Gaussian filter (σ = 2 pixels). Sphere outlines were detected with a variance filter (radius = 4 pixels) followed by automatic Otsu thresholding; the resulting masks were hole-filled and cleaned by morphological opening. Objects with an equivalent diameter ≥ 50 µm and circularity ≥ 0.4 were scored as spheres, excluding those touching the image border.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > mamosferas-campo-claro-es 1`] = `
+{
+  "parrafo": "Las imágenes de mamosferas se analizaron en Fiji ([versión de Fiji]; Schindelin et al., 2012) mediante un macro personalizado aplicado por igual a todas las condiciones. Las imágenes se convirtieron a 8 bits y se suavizaron con un filtro gaussiano (σ = 2 píxeles). Los contornos de las esferas se detectaron con un filtro de varianza (radio = 4 píxeles) seguido de un umbral automático por el método de Otsu; las máscaras resultantes se rellenaron y se depuraron mediante una apertura morfológica. Se consideraron esferas los objetos con un diámetro equivalente ≥ 50 µm y una circularidad ≥ 0,4, excluyendo los que tocaban el borde de la imagen.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > mamosferas-contraste-en 1`] = `
+{
+  "parrafo": "Mammosphere images were analysed in Fiji ([Fiji version]; Schindelin et al., 2012) using a custom macro applied identically to all conditions. Images were converted to 8-bit, background-subtracted with the rolling-ball algorithm (radius = 50 pixels) and smoothed with a Gaussian filter (σ = 2 pixels). Spheres were segmented by automatic Otsu thresholding; the resulting masks were hole-filled and cleaned by morphological opening. Objects with an equivalent diameter ≥ 50 µm and circularity ≥ 0.4 were scored as spheres, excluding those touching the image border.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > mamosferas-contraste-es 1`] = `
+{
+  "parrafo": "Las imágenes de mamosferas se analizaron en Fiji ([versión de Fiji]; Schindelin et al., 2012) mediante un macro personalizado aplicado por igual a todas las condiciones. Las imágenes se convirtieron a 8 bits, se les restó el fondo con el algoritmo rolling ball (radio = 50 píxeles) y se suavizaron con un filtro gaussiano (σ = 2 píxeles). Las esferas se segmentaron mediante un umbral automático por el método de Otsu; las máscaras resultantes se rellenaron y se depuraron mediante una apertura morfológica. Se consideraron esferas los objetos con un diámetro equivalente ≥ 50 µm y una circularidad ≥ 0,4, excluyendo los que tocaban el borde de la imagen.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > nucleos-dapi-marcador-en 1`] = `
+{
+  "parrafo": "Immunofluorescence images were analysed in Fiji ([Fiji version]; Schindelin et al., 2012) using a custom macro applied identically to all conditions. Z-stacks, when present, were combined by maximum-intensity projection. Background was subtracted from each channel with the rolling-ball algorithm (radius = 50 pixels). Nuclei were segmented in channel 1 ([nuclear stain]) after Gaussian smoothing (σ = 1 pixel) by automatic Otsu thresholding; masks were hole-filled and touching nuclei were separated by watershed segmentation. Objects with an area between 20 and 500 µm² were considered nuclei, excluding those touching the image border. For each nucleus, the mean intensity of Marcador (channel 2) was measured. Per-nucleus intensities were exported to set the positivity threshold from the negative controls.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > nucleos-dapi-marcador-es 1`] = `
+{
+  "parrafo": "Las imágenes de inmunofluorescencia se analizaron en Fiji ([versión de Fiji]; Schindelin et al., 2012) mediante un macro personalizado aplicado por igual a todas las condiciones. Las pilas Z, cuando las hubo, se combinaron mediante proyección de máxima intensidad. Se restó el fondo de cada canal con el algoritmo rolling ball (radio = 50 píxeles). Los núcleos se segmentaron en el canal 1 ([tinción nuclear]) tras un suavizado gaussiano (σ = 1 píxel) mediante un umbral automático por el método de Otsu; las máscaras se rellenaron y los núcleos en contacto se separaron mediante watershed. Se consideraron núcleos los objetos con un área de entre 20 y 500 µm², excluyendo los que tocaban el borde de la imagen. En cada núcleo se midió la intensidad media de Marcador (canal 2). Las intensidades por núcleo se exportaron para establecer el umbral de positividad a partir de los controles negativos.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > nucleos-stardist-en 1`] = `
+{
+  "parrafo": "Immunofluorescence images were analysed in Fiji ([Fiji version]; Schindelin et al., 2012) using a custom macro applied identically to all conditions. Z-stacks, when present, were combined by maximum-intensity projection. Background was subtracted from each channel with the rolling-ball algorithm (radius = 50 pixels). Nuclei were segmented in channel 1 ([nuclear stain]) with StarDist (Schmidt et al., 2018) using the pretrained "Versatile (fluorescent nuclei)" model (probability threshold = 0.5; overlap threshold = 0.4). Objects with an area between 20 and 500 µm² were considered nuclei, excluding those touching the image border. For each nucleus, the mean intensity of Marcador (channel 2) was measured. Per-nucleus intensities were exported to set the positivity threshold from the negative controls.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+    "Schmidt, U., Weigert, M., Broaddus, C. and Myers, G. (2018). Cell Detection with Star-Convex Polygons. MICCAI 2018, LNCS 11071, 265–273. https://doi.org/10.1007/978-3-030-00934-2_30",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > nucleos-stardist-es 1`] = `
+{
+  "parrafo": "Las imágenes de inmunofluorescencia se analizaron en Fiji ([versión de Fiji]; Schindelin et al., 2012) mediante un macro personalizado aplicado por igual a todas las condiciones. Las pilas Z, cuando las hubo, se combinaron mediante proyección de máxima intensidad. Se restó el fondo de cada canal con el algoritmo rolling ball (radio = 50 píxeles). Los núcleos se segmentaron en el canal 1 ([tinción nuclear]) con StarDist (Schmidt et al., 2018) y el modelo preentrenado «Versatile (fluorescent nuclei)» (umbral de probabilidad = 0,5; umbral de solapamiento = 0,4). Se consideraron núcleos los objetos con un área de entre 20 y 500 µm², excluyendo los que tocaban el borde de la imagen. En cada núcleo se midió la intensidad media de Marcador (canal 2). Las intensidades por núcleo se exportaron para establecer el umbral de positividad a partir de los controles negativos.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+    "Schmidt, U., Weigert, M., Broaddus, C. y Myers, G. (2018). Cell Detection with Star-Convex Polygons. MICCAI 2018, LNCS 11071, 265–273. https://doi.org/10.1007/978-3-030-00934-2_30",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > western-densitometria-en 1`] = `
+{
+  "parrafo": "Western blot bands were quantified by densitometry in Fiji ([Fiji version]; Schindelin et al., 2012) using a custom macro, from the original TIFF images exported by the acquisition system ([bit depth]). The absence of saturated pixels was verified before quantification. Images were inverted so that higher signal corresponded to higher values and were background-subtracted with the rolling-ball algorithm (radius = 50 pixels). Each band was manually enclosed with a rectangle of identical size for all lanes, and its integrated density (RawIntDen) was measured. [protein] signal was normalised to the loading control ([loading control]) and then to the control condition.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+  ],
+}
+`;
+
+exports[`texto de Métodos > instantáneas de todas las plantillas en los dos idiomas > western-densitometria-es 1`] = `
+{
+  "parrafo": "Las bandas de western blot se cuantificaron por densitometría en Fiji ([versión de Fiji]; Schindelin et al., 2012) mediante un macro personalizado, a partir de las imágenes originales del equipo de adquisición en formato TIFF ([profundidad de bits]). Se comprobó la ausencia de píxeles saturados antes de la cuantificación. Las imágenes se invirtieron para que una mayor señal correspondiera a valores más altos y se les restó el fondo con el algoritmo rolling ball (radio = 50 píxeles). Cada banda se delimitó manualmente con un rectángulo de tamaño idéntico para todos los carriles y se midió su densidad integrada (RawIntDen). La señal de [proteína] se normalizó respecto al control de carga ([control de carga]) y, después, respecto a la condición control.",
+  "referencias": [
+    "Schindelin, J. et al. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019",
+  ],
+}
+`;

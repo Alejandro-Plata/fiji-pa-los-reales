@@ -508,6 +508,19 @@ export const t = {
     errorDescarga: 'No se ha podido guardar el archivo.',
   },
 
+  metodos: {
+    titulo: 'Texto para Métodos',
+    nota: 'Revisa el texto y adáptalo al estilo de tu tesis.',
+    corchetes: 'Completa lo que está entre corchetes: la app no lo sabe.',
+    copiar: 'Copiar',
+    copiado: 'Texto copiado',
+    noCopiado: 'No se ha podido copiar. Selecciona el texto y cópialo a mano.',
+    cambiarIdioma: 'Cambiar idioma',
+    idioma: { es: 'Español', en: 'Inglés' },
+    referencias: 'Referencias',
+    texto: 'Párrafo de Materiales y Métodos',
+  },
+
   guia: {
     titulo: 'Cómo usarlo en Fiji',
     intro: 'Sigue estos pasos en el ordenador donde está Fiji. Toca cada paso para desplegarlo.',
