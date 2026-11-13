@@ -9,6 +9,7 @@ import { Instrucciones } from '../pantallas/Instrucciones/Instrucciones';
 import { Ajustes } from '../pantallas/Ajustes/Ajustes';
 import { Rapido } from '../pantallas/Rapido/Rapido';
 import { Importar } from '../pantallas/Importar/Importar';
+import { Umbral } from '../pantallas/Umbral/Umbral';
 import { NoEncontrada } from '../pantallas/NoEncontrada/NoEncontrada';
 
 // Router de datos con hash: permite useBlocker (aviso al salir sin guardar)
@@ -25,6 +26,7 @@ const router = createHashRouter([
       { path: 'ajustes', element: <Ajustes /> },
       { path: 'rapido', element: <Rapido /> },
       { path: 'importar', element: <Importar /> },
+      { path: 'umbral', element: <Umbral /> },
       { path: '*', element: <NoEncontrada /> },
     ],
   },

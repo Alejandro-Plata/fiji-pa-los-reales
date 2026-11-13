@@ -129,6 +129,11 @@ export function Resultado() {
         <Boton variante="secundario" onClick={() => void compartirReceteta(r)}>
           {t.inicio.compartir}
         </Boton>
+        {r.tipo === 'fluorescencia' && r.parametros.marcadores.length > 0 && (
+          <BotonEnlace to="/umbral" variante="secundario">
+            {t.umbral.titulo}
+          </BotonEnlace>
+        )}
       </div>
 
       <Dialogo

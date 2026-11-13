@@ -13,6 +13,7 @@ export const PANTALLAS = [
   { nombre: 'ajustes', ruta: '/#/ajustes' },
   { nombre: 'rapido', ruta: '/#/rapido' },
   { nombre: 'importar', ruta: '/#/importar?r=zroto' },
+  { nombre: 'umbral', ruta: '/#/umbral' },
 ] as const;
 
 /** Guarda una receteta de demostración (id «demo») antes de cargar la página. */

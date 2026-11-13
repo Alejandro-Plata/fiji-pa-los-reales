@@ -57,7 +57,8 @@ export interface PiezasLote {
   subcarpetas: string[];
   /** Opciones de Analyze › Set Measurements. */
   medidas: string;
-  guardarObjetos: boolean;
+  /** true: objetos.csv sale de la tabla Results; 'tabla': de una tabla propia «Objetos». */
+  guardarObjetos: boolean | 'tabla';
   guardarResumen: boolean;
   /** Líneas completas de `function analizar(nombre) { … }`; devuelve true si la imagen se analizó. */
   funcionAnalizar: string[];
@@ -116,6 +117,7 @@ export function macroLote(r: Receteta, ctx: Contexto, p: PiezasLote): string {
     'setOption("BlackBackground", true);',
     `run("Set Measurements...", ${cadena(p.medidas)});`,
     'Table.create("Resumen");',
+    ...(p.guardarObjetos === 'tabla' ? ['Table.create("Objetos");'] : []),
     `extensiones = newArray(${exts.map(cadena).join(', ')});`,
     '',
     '// --- 3. Recorremos todas las imágenes de la carpeta',
@@ -152,7 +154,12 @@ export function macroLote(r: Receteta, ctx: Contexto, p: PiezasLote): string {
     '    exit();',
     '}',
   );
-  if (p.guardarObjetos) {
+  if (p.guardarObjetos === 'tabla') {
+    l.push(
+      'if (Table.size("Objetos") > 0) Table.save(dirSalida + "objetos.csv", "Objetos");',
+      `else print(${texto('No se ha detectado ningún objeto: no se guarda objetos.csv.')});`,
+    );
+  } else if (p.guardarObjetos) {
     l.push(
       'if (nResults > 0) saveAs("Results", dirSalida + "objetos.csv");',
       `else print(${texto('No se ha detectado ningún objeto: no se guarda objetos.csv.')});`,

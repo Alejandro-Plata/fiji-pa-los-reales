@@ -61,10 +61,16 @@ def esferas(carpeta: Path) -> dict:
     carpeta.mkdir(parents=True, exist_ok=True)
     guardar_tif(carpeta / "esferas.tif", img)
     guardar_tif(carpeta / "esferas_sin_escala.tif", img, con_escala=False)
+    doble = carpeta.parent / "esferas_doble"
+    doble.mkdir(parents=True, exist_ok=True)
+    guardar_tif(doble / "esferas_a.tif", img)
+    guardar_tif(doble / "esferas_b.tif", img)
 
     rgb = carpeta.parent / "esferas_rgb"
     rgb.mkdir(parents=True, exist_ok=True)
-    Image.fromarray(np.stack([img, img, img], axis=-1)).save(rgb / "esferas_camara.jpg", quality=95)
+    # JPG en color de verdad (tono cálido de cámara): Fiji lo abre como RGB, no como 8 bits
+    color = np.stack([img, np.clip(img.astype(int) - 12, 0, 255), np.clip(img.astype(int) - 30, 0, 255)], axis=-1)
+    Image.fromarray(color.astype(np.uint8)).save(rgb / "esferas_camara.jpg", quality=95)
 
     # Hiperpila: 2 canales × 3 planos; las esferas están en el canal 2 (el 1 es solo ruido)
     hiper = carpeta.parent / "esferas_hiper"
@@ -92,6 +98,11 @@ def fluorescencia(carpeta: Path) -> dict:
 
     carpeta.mkdir(parents=True, exist_ok=True)
     guardar_tif(carpeta / "fluo.tif", pila, ejes="CYX")
+    # Dos imágenes en la misma carpeta: comprueba que no se pierden filas entre imágenes
+    doble = carpeta.parent / "fluorescencia_doble"
+    doble.mkdir(parents=True, exist_ok=True)
+    guardar_tif(doble / "fluo_a.tif", pila, ejes="CYX")
+    guardar_tif(doble / "fluo_b.tif", pila, ejes="CYX")
     return {"nucleos": 40, "positivos": 10, "porcentaje": 25.0, "umbral_prueba": 1200}
 
 

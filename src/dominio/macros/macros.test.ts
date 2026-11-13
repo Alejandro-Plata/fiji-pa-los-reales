@@ -49,6 +49,31 @@ const CASOS: [string, RecetetaDe<'esferas'>][] = [
   ],
 ];
 
+function fluo(clave: string, cambios?: (r: RecetetaDe<'fluorescencia'>) => void) {
+  const r = desdeCompartida(plantillaPorClave(clave)!.receteta, 'plantilla') as RecetetaDe<'fluorescencia'>;
+  cambios?.(r);
+  return r;
+}
+
+const CASOS_FLUO: [string, RecetetaDe<'fluorescencia'>][] = [
+  ['nucleos-dapi-marcador', fluo('nucleos-dapi-marcador')],
+  ['nucleos-stardist', fluo('nucleos-stardist')],
+  [
+    'fluo-tres-marcadores-umbral-integrada',
+    fluo('nucleos-dapi-marcador', (r) => {
+      r.parametros.marcadores = [
+        { nombre: 'CD44', canal: 2, umbralPositivo: 850 },
+        { nombre: 'β-actina', canal: 3, umbralPositivo: null },
+        { nombre: 'Ki-67', canal: 4, umbralPositivo: 1200.5 },
+      ];
+      r.parametros.medida = 'integrada';
+      r.parametros.restarFondoRadio = 0;
+      r.parametros.separarNucleos = false;
+      r.imagenes.proyeccionZ = 'ninguna';
+    }),
+  ],
+];
+
 describe('instantáneas de macros de esferas', () => {
   for (const [nombre, r] of CASOS) {
     it(nombre, async () => {
@@ -57,8 +82,30 @@ describe('instantáneas de macros de esferas', () => {
   }
 });
 
+describe('instantáneas de macros de fluorescencia', () => {
+  for (const [nombre, r] of CASOS_FLUO) {
+    it(nombre, async () => {
+      await expect(generarMacro(r, CTX)).toMatchFileSnapshot(`./__snapshots__/${nombre}.ijm`);
+    });
+  }
+
+  it('StarDist: comprueba que está instalado y para con un mensaje claro', () => {
+    const m = generarMacro(CASOS_FLUO[1]![1], CTX);
+    expect(m).toContain('if (List.get("StarDist 2D") == "" || List.get("Command From Macro") == "") exit(');
+    expect(m).toContain('Esta receteta usa StarDist, que no est');
+    expect(m.indexOf('List.get("StarDist 2D")')).toBeLessThan(m.indexOf('lista = getFileList'));
+  });
+
+  it('nombres de marcador seguros en columnas y variables', () => {
+    const m = generarMacro(CASOS_FLUO[2]![1], CTX);
+    expect(m).toContain('"b_actina_integrada"');
+    expect(m).toContain('positivos_Ki_67');
+    expect(m).toContain('if (v > 1200.5)');
+  });
+});
+
 describe('reglas del generador', () => {
-  const todos = CASOS.map(([, r]) => generarMacro(r, CTX));
+  const todos = [...CASOS, ...CASOS_FLUO].map(([, r]) => generarMacro(r, CTX));
 
   it('es determinista: misma receteta y contexto → mismo macro', () => {
     const r = CASOS[0]![1];
@@ -82,6 +129,15 @@ describe('reglas del generador', () => {
         .filter((l) => !l.trim().startsWith('//'))
         .map((l) => l.replace(/\/\/.*$/, ''));
       for (const l of codigo) expect(l, l).toMatch(/^[\x20-\x7e]*$/);
+    }
+  });
+
+  it('ninguna línea de código usa caracteres no ASCII (también nombres de marcador)', () => {
+    for (const m of todos) {
+      for (const l of m.split('\n')) {
+        const codigo = l.replace(/\/\/.*$/, '');
+        expect(codigo, l).toMatch(/^[\x20-\x7e]*$/);
+      }
     }
   });
 

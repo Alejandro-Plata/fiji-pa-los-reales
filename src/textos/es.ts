@@ -508,6 +508,34 @@ export const t = {
     errorDescarga: 'No se ha podido guardar el archivo.',
   },
 
+  umbral: {
+    titulo: 'Calcular umbral',
+    enlace: 'Calcular el umbral con un control negativo',
+    intro:
+      'Analiza tu control negativo (sin anticuerpo primario o isotipo) con la misma receteta y abre aquí su objetos.csv. Te proponemos como umbral un percentil alto de la intensidad del marcador: casi todas las células del control quedan por debajo.',
+    elegir: 'Elegir objetos.csv',
+    archivo: (n: string, filas: number) => `${n}: ${filas} núcleos`,
+    sinColumnas:
+      'Este archivo no tiene columnas de marcador (terminadas en _media o _integrada). ¿Es el objetos.csv de una receteta de fluorescencia?',
+    errorLeer: 'No se ha podido leer el archivo.',
+    columna: 'Marcador',
+    percentil: {
+      etiqueta: 'Percentil',
+      ayuda:
+        'El umbral deja por debajo este porcentaje de las células del control negativo. Con 99, solo el 1 % del control saldría «positivo».',
+    },
+    resultado: 'Umbral propuesto',
+    estadisticas: (n: number, min: string, mediana: string, max: string) =>
+      `${n} núcleos · mínimo ${min} · mediana ${mediana} · máximo ${max}`,
+    pocos: 'Hay muy pocos núcleos: el percentil será poco fiable. Usa más imágenes del control.',
+    aplicar: 'Usar en una receteta',
+    receteta: 'Receteta',
+    marcador: 'Marcador de la receteta',
+    sinRecetetas: 'No tienes recetetas de fluorescencia con marcadores.',
+    guardar: 'Guardar umbral en la receteta',
+    guardado: (m: string, r: string) => `Umbral guardado para ${m} en «${r}»`,
+  },
+
   metodos: {
     titulo: 'Texto para Métodos',
     nota: 'Revisa el texto y adáptalo al estilo de tu tesis.',

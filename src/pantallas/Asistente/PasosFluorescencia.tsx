@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { CampoLista, CampoNumero, CampoTexto } from '../../componentes/Campo/Controles';
 import { Selector, SiNo } from '../../componentes/Selector/Selector';
 import { Plegable } from '../../componentes/Plegable/Plegable';
@@ -213,7 +214,14 @@ function Marcadores({ r, editar, e }: Props) {
         <p className="texto-suave">{m.maximo}</p>
       )}
 
-      {p.marcadores.length > 0 && <Nota tipo="aviso">{m.avisoUmbral}</Nota>}
+      {p.marcadores.length > 0 && (
+        <Nota tipo="aviso">
+          <p>{m.avisoUmbral}</p>
+          <p>
+            <Link to="/umbral">{t.umbral.enlace}</Link>
+          </p>
+        </Nota>
+      )}
 
       <Selector
         etiqueta={tx.medida.etiqueta}

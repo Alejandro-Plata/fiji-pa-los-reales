@@ -67,6 +67,18 @@ describe('mamosferas en Fiji real', () => {
     expect(existsSync(join(salida, 'rois', 'esferas.zip'))).toBe(true);
   });
 
+  it('dos imágenes: 16 filas en objetos.csv y 2 en resumen.csv', async () => {
+    const { salida, resumen } = await lanzar(
+      plantilla('mamosferas-campo-claro'),
+      join(SINTETICAS, 'esferas_doble'),
+      'esferas-doble',
+    );
+    expect(resumen.map((f) => Number(f.Esferas))).toEqual([8, 8]);
+    const objetos = leerCsv(join(salida, 'objetos.csv'));
+    expect(objetos).toHaveLength(16);
+    expect(objetos.filter((o) => o.Label.startsWith('esferas_b'))).toHaveLength(8);
+  });
+
   it('plantilla «contraste simple»: 8 esferas', async () => {
     const { resumen } = await lanzar(
       plantilla('mamosferas-contraste'),
@@ -111,7 +123,7 @@ describe('mamosferas en Fiji real', () => {
     expect(unidad).toMatch(/micron|µm/);
   });
 
-  it('JPG RGB de cámara con escala manual 0,65 µm/píxel y SFE', async () => {
+  it('JPG RGB de cámara con escala manual 0,65 µm/píxel y SFE (esferas)', async () => {
     const r = plantilla('mamosferas-campo-claro') as Extract<Receteta, { tipo: 'esferas' }>;
     r.imagenes = { ...r.imagenes, extensiones: ['.jpg'], escala: { modo: 'manual', micrasPorPixel: 0.65 } };
     r.parametros.celulasSembradas = 1000;
@@ -119,5 +131,83 @@ describe('mamosferas en Fiji real', () => {
     expect(Number(resumen[0]!.Esferas)).toBe(8);
     expect(Number(resumen[0]!.SFE_porcentaje)).toBeCloseTo(0.8, 5);
     expect(readdirSync(join(salida, 'control'))).toEqual(['esferas_camara_control.jpg']);
+  });
+});
+
+type Fluo = Extract<Receteta, { tipo: 'fluorescencia' }>;
+
+function fluo(clave: string, umbral: number | null = 1200): Fluo {
+  const r = plantilla(clave) as Fluo;
+  r.parametros.marcadores = [{ nombre: 'CD44', canal: 2, umbralPositivo: umbral }];
+  return r;
+}
+
+describe('fluorescencia en Fiji real', () => {
+  it('umbral + watershed: 40 núcleos y 25 % positivas', async () => {
+    const { salida, resumen } = await lanzar(
+      fluo('nucleos-dapi-marcador'),
+      join(SINTETICAS, 'fluorescencia'),
+      'fluo-umbral',
+    );
+    expect(resumen[0]!.Imagen).toBe('fluo');
+    expect(Number(resumen[0]!.Nucleos)).toBe(40);
+    expect(Number(resumen[0]!.CD44_positivos)).toBe(10);
+    expect(Number(resumen[0]!.CD44_porcentaje)).toBeCloseTo(25, 5);
+    const objetos = leerCsv(join(salida, 'objetos.csv'));
+    expect(objetos).toHaveLength(40);
+    expect(objetos.filter((o) => o.CD44_positivo === '1')).toHaveLength(10);
+    expect(existsSync(join(salida, 'control', 'fluo_control.jpg'))).toBe(true);
+    expect(existsSync(join(salida, 'rois', 'fluo.zip'))).toBe(true);
+  });
+
+  it('dos imágenes: 80 filas en objetos.csv y 2 en resumen.csv', async () => {
+    const { salida, resumen } = await lanzar(
+      fluo('nucleos-dapi-marcador'),
+      join(SINTETICAS, 'fluorescencia_doble'),
+      'fluo-doble',
+    );
+    expect(resumen.map((f) => f.Imagen)).toEqual(['fluo_a', 'fluo_b']);
+    expect(resumen.map((f) => Number(f.CD44_porcentaje))).toEqual([25, 25]);
+    const objetos = leerCsv(join(salida, 'objetos.csv'));
+    expect(objetos).toHaveLength(80);
+    expect(objetos.filter((o) => o.Imagen === 'fluo_b')).toHaveLength(40);
+  });
+
+  it('sin umbral: exporta intensidades por núcleo', async () => {
+    const { salida, resumen } = await lanzar(
+      fluo('nucleos-dapi-marcador', null),
+      join(SINTETICAS, 'fluorescencia'),
+      'fluo-intensidades',
+    );
+    expect(Number(resumen[0]!.Nucleos)).toBe(40);
+    expect(resumen[0]!.CD44_positivos).toBeUndefined();
+    const intensidades = leerCsv(join(salida, 'objetos.csv')).map((o) => Number(o.CD44_media));
+    expect(intensidades.filter((v) => v > 1200)).toHaveLength(10);
+    expect(intensidades.filter((v) => v < 800)).toHaveLength(30);
+  });
+
+  // PENDIENTE (spec §14.6): StarDist 0.3.0 + CSBDeep 0.6.0 se instalan en la Fiji de pruebas,
+  // pero Fiji se bloquea al cargar TensorFlow 1.15 (Java 21 de Fiji 2.18, Windows; marca
+  // lib/win64/.crashed). No se da por buena sin ejecutarla. Activar con FIJI_STARDIST=1 en un
+  // equipo donde StarDist funcione en Fiji.
+  it.runIf(process.env.FIJI_STARDIST === '1')('StarDist: 40 núcleos y 25 % positivas', async () => {
+    const { resumen } = await lanzar(
+      fluo('nucleos-stardist'),
+      join(SINTETICAS, 'fluorescencia'),
+      'fluo-stardist',
+    );
+    expect(Number(resumen[0]!.Nucleos)).toBe(40);
+    expect(Number(resumen[0]!.CD44_porcentaje)).toBeCloseTo(25, 5);
+  });
+
+  it('una imagen RGB se omite con un aviso claro', async () => {
+    const r = fluo('nucleos-dapi-marcador');
+    r.imagenes = { ...r.imagenes, extensiones: ['.jpg'], escala: { modo: 'manual', micrasPorPixel: 0.65 } };
+    const salida = carpetaSalida('fluo-rgb');
+    await ejecutarMacro(generarMacro(r, CTX), `${join(SINTETICAS, 'esferas_rgb')}|${salida}`, {
+      tiempoMs: 90_000,
+    });
+    const log = readFileSync(join(salida, 'log.txt'), 'utf8');
+    expect(log).toContain('es una imagen RGB (sin canales separados). Se omite.');
   });
 });
