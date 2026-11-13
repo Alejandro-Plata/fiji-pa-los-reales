@@ -111,6 +111,11 @@ describe('crear y duplicar', () => {
     expect(nombreUnico('A', ['a'])).toBe('A (2)');
     expect(nombreUnico('A', ['A', 'A (2)'])).toBe('A (3)');
   });
+  it('crear desde plantilla no comparte objetos con la plantilla', () => {
+    const r = desdeCompartida(PLANTILLAS[0]!.receteta, 'plantilla');
+    (r.parametros as { canal: number }).canal = 7;
+    expect((PLANTILLAS[0]!.receteta.parametros as { canal: number }).canal).toBe(1);
+  });
   it('duplicar cambia id y nombre', () => {
     const r = { ...crearReceteta('western'), nombre: 'WB' };
     const d = duplicar(r, ['WB']);

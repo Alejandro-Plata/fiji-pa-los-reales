@@ -38,7 +38,15 @@ export function crearReceteta(tipo: TipoAnalisis, nombre = ''): Receteta {
 /** Convierte una receteta compartida (sin metadatos) en una receteta local nueva. */
 export function desdeCompartida(c: RecetetaCompartida, origen: Receteta['origen']): Receteta {
   const fecha = ahora();
-  return { ...c, id: nuevoId(), favorita: false, creada: fecha, modificada: fecha, origen } as Receteta;
+  // Copia profunda: nunca compartir objetos con la plantilla o el enlace de origen
+  return {
+    ...structuredClone(c),
+    id: nuevoId(),
+    favorita: false,
+    creada: fecha,
+    modificada: fecha,
+    origen,
+  } as Receteta;
 }
 
 /** Quita los metadatos locales (id, fechas, favorita, origen). */

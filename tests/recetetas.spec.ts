@@ -74,7 +74,7 @@ test('elegir tipo, borrador automático y aviso al salir sin guardar', async ({ 
 
 test('ayuda «¿Qué es esto?» se abre con toque o teclado', async ({ page }) => {
   await page.goto('/#/receteta/nueva/esferas');
-  const ayuda = page.getByText('Si la imagen tiene varios canales');
+  const ayuda = page.getByText(/^Si la imagen tiene varios canales/);
   await expect(ayuda).toBeHidden();
   const boton = page.getByRole('button', { name: '¿Qué es esto?' }).nth(2);
   await boton.focus();

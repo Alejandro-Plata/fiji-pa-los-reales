@@ -11,6 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test",
+    "sinteticas": "py -I scripts/generar-sinteticas.py",
+    "validar:fiji": "vitest run --config vitest.fiji.config.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "iconos": "node scripts/generar-iconos.mjs",

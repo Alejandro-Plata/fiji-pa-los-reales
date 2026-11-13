@@ -1,0 +1,104 @@
+/* Bloque de código — DESIGN.md › code-block (surface-night, Monaco 16px, rounded-md, padding 16px) */
+
+.figura {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  border-radius: var(--rounded-md);
+  background: var(--surface-night);
+  color: var(--on-primary);
+  overflow: hidden;
+}
+
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  padding: var(--spacing-xs) var(--spacing-lg);
+  border-bottom: 1px solid var(--hairline-violet);
+}
+
+.titulo {
+  color: var(--on-dark-muted);
+  font-size: var(--caption-size);
+  line-height: var(--caption-leading);
+}
+
+.ajustar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--objetivo-tactil);
+  font-size: var(--caption-size);
+  font-weight: var(--body-md-weight);
+  cursor: pointer;
+}
+
+.ajustar input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--on-primary);
+}
+
+/* Scroll horizontal DENTRO del bloque: nunca de la página */
+.pre {
+  margin: 0;
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 0;
+  overflow-x: auto;
+  font-family: var(--fuente-codigo);
+  font-size: var(--code-size);
+  font-weight: var(--code-weight);
+  line-height: var(--code-leading);
+  tab-size: 4;
+}
+
+.pre[data-compacto='true'] {
+  max-height: 60dvh;
+  overflow-y: auto;
+}
+
+.pre:focus-visible {
+  outline-offset: -3px;
+}
+
+.codigo {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  counter-reset: linea;
+  font: inherit;
+}
+
+.linea {
+  display: block;
+  white-space: pre;
+}
+
+/* Números de línea con contador CSS: no se copian al seleccionar */
+.linea::before {
+  counter-increment: linea;
+  content: counter(linea);
+  display: inline-block;
+  width: 4ch;
+  margin-right: var(--spacing-md);
+  padding-right: var(--spacing-sm);
+  text-align: right;
+  color: var(--on-dark-muted);
+  border-right: 1px solid var(--hairline-violet);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.pre[data-ajustar='true'] .codigo {
+  width: auto;
+}
+
+.pre[data-ajustar='true'] .linea {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding-left: calc(4ch + var(--spacing-md) + var(--spacing-sm));
+  text-indent: calc(-1 * (4ch + var(--spacing-md) + var(--spacing-sm)));
+}

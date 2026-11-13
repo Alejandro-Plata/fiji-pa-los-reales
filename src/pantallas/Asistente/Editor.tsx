@@ -16,6 +16,9 @@ import { esquemaReceteta } from '../../dominio/recetetas/esquemas';
 import { resumirReceteta } from '../../dominio/recetetas/resumen';
 import type { Receteta, RecetetaDe } from '../../dominio/recetetas/tipos';
 import { t } from '../../textos/es';
+import { BloqueCodigo } from '../../componentes/BloqueCodigo/BloqueCodigo';
+import { contextoActual, generarMacro, TipoSinMacro } from '../../dominio/macros';
+import { useEsEscritorio } from '../../app/useEsEscritorio';
 import { erroresDePaso, PASOS, type Errores } from './pasos';
 import { PasoNombre, type PropsPaso } from './PasosComunes';
 import { PasoEsferas } from './PasosEsferas';
@@ -67,6 +70,22 @@ export function Editor({ inicial, vistaPrevia }: Props) {
   const ultimo = paso === pasos.length - 1;
   const errores = useMemo(() => validar(r), [r]);
   const valida = Object.keys(errores).length === 0;
+
+  // Vista previa del macro en vivo (solo se ve en escritorio). El nombre puede faltar aún.
+  const esEscritorio = useEsEscritorio();
+  const macroEnVivo = useMemo((): string | 'pendiente' | null => {
+    if (!esEscritorio) return null;
+    if (Object.keys(errores).some((k) => k !== 'nombre')) return 'pendiente';
+    try {
+      return generarMacro(
+        { ...r, nombre: r.nombre.trim() || tx.tituloNueva },
+        contextoActual(__VERSION_APP__),
+      );
+    } catch (e) {
+      if (e instanceof TipoSinMacro) return null;
+      throw e;
+    }
+  }, [r, errores, esEscritorio, tx.tituloNueva]);
 
   const editar = useCallback((fn: (x: Receteta) => void) => {
     setR((prev) => {
@@ -251,12 +270,17 @@ export function Editor({ inicial, vistaPrevia }: Props) {
             ) : (
               <>
                 <h2 className={estilos.lateralTitulo}>{tx.vistaPrevia}</h2>
-                <p className="texto-suave caption">{tx.vistaPreviaTexto}</p>
                 <ul className={estilos.resumen}>
                   {resumirReceteta(r).map((f) => (
                     <li key={f}>{f}</li>
                   ))}
                 </ul>
+                {macroEnVivo !== null &&
+                  (macroEnVivo === 'pendiente' ? (
+                    <p className="texto-suave caption">{t.resultado.vistaPreviaPendiente}</p>
+                  ) : (
+                    <BloqueCodigo codigo={macroEnVivo} etiqueta={t.resultado.vistaPreviaMacro} compacto />
+                  ))}
               </>
             )}
           </div>

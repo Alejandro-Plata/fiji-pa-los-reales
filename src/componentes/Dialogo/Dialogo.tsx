@@ -6,13 +6,15 @@ interface Props {
   titulo: string;
   texto?: string;
   onCerrar: () => void;
+  /** Panel ancho (guía de Fiji, texto de Métodos). */
+  amplio?: boolean;
   children?: ReactNode;
   /** Botones de acción (el primero recibe el foco si no hay campos). */
   acciones: ReactNode;
 }
 
 /** Diálogo modal nativo (<dialog>): atrapa el foco y se cierra con Escape. */
-export function Dialogo({ abierto, titulo, texto, onCerrar, children, acciones }: Props) {
+export function Dialogo({ abierto, titulo, texto, onCerrar, amplio, children, acciones }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
   const abiertoRef = useRef(abierto);
   const id = useId();
@@ -29,6 +31,7 @@ export function Dialogo({ abierto, titulo, texto, onCerrar, children, acciones }
     <dialog
       ref={ref}
       className={estilos.dialogo}
+      data-amplio={amplio}
       aria-labelledby={`${id}-titulo`}
       aria-describedby={texto ? `${id}-texto` : undefined}
       // Solo avisa si lo cierra la usuaria (no al cerrarlo nosotros porque `abierto` pasó a false)

@@ -10,6 +10,10 @@
   box-shadow: var(--elevation-2);
 }
 
+.dialogo[data-amplio='true'] {
+  width: min(56rem, calc(100vw - 2 * var(--espacio-5)));
+}
+
 .dialogo::backdrop {
   background: var(--color-velo);
 }

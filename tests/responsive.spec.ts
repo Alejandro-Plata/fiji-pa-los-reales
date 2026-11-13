@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
-import { ANCHOS, PANTALLAS } from './pantallas';
+import { ANCHOS, PANTALLAS, prepararDatos } from './pantallas';
+
+test.beforeEach(async ({ page }) => prepararDatos(page));
 
 for (const ancho of ANCHOS) {
   for (const p of PANTALLAS) {
@@ -26,7 +28,9 @@ test('objetivos táctiles de al menos 44 × 44 px en móvil', async ({ page }) =
     const pequenos = await page.$$eval('a, button, input, select, textarea', (els) =>
       els
         .filter((e) => {
-          const r = e.getBoundingClientRect();
+          // Una casilla dentro de su <label> se pulsa en toda la etiqueta
+          const objetivo = e.tagName === 'INPUT' && e.closest('label') ? e.closest('label')! : e;
+          const r = objetivo.getBoundingClientRect();
           const visible = r.width > 0 && r.height > 0 && getComputedStyle(e).visibility !== 'hidden';
           const enLinea = e.tagName === 'A' && e.closest('p, li') && !e.className;
           return visible && !enLinea && (r.width < 44 || r.height < 44);

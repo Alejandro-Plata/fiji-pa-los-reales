@@ -1,6 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import { PANTALLAS } from './pantallas';
+import { PANTALLAS, prepararDatos } from './pantallas';
+
+test.beforeEach(async ({ page }) => prepararDatos(page));
 
 test('las seis pantallas son navegables', async ({ page }) => {
   for (const p of PANTALLAS) {
