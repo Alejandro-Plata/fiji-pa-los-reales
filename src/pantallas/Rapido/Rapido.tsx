@@ -201,13 +201,17 @@ export function Rapido() {
         <strong>{tx.aviso}</strong>
       </Nota>
 
-      <Selector
-        etiqueta={tx.receteta}
-        compacto
-        valor={idReceteta}
-        opciones={[{ valor: '', etiqueta: tx.porDefecto }, ...esferas.map((r) => ({ valor: r.id, etiqueta: r.nombre }))]}
-        onCambio={cambiarReceteta}
-      />
+      {/* Solo tiene sentido elegir si hay recetetas de mamosferas: con una única opción no hace nada */}
+      {esferas.length > 0 && (
+        <Selector
+          etiqueta={tx.receteta}
+          pista={tx.recetetaPista}
+          compacto
+          valor={idReceteta}
+          opciones={[{ valor: '', etiqueta: tx.porDefecto }, ...esferas.map((r) => ({ valor: r.id, etiqueta: r.nombre }))]}
+          onCambio={cambiarReceteta}
+        />
+      )}
 
       <div className={estilos.bloque}>
         <div>

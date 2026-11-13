@@ -477,7 +477,6 @@ export const t = {
     instalarPasos: [
       'iPhone: abrir la app en Safari, seleccionar Compartir y después «Añadir a pantalla de inicio».',
       'Android: abrir la app en Chrome, abrir el menú ⋮ y seleccionar «Instalar aplicación» o «Añadir a pantalla de inicio».',
-      'Una vez instalada, funciona sin conexión.',
     ],
   },
 
@@ -537,7 +536,7 @@ export const t = {
     lineas: (n: number) => `${n} líneas`,
     noDisponible: 'El macro de este tipo de análisis no está disponible todavía.',
     invalida: 'La receteta contiene errores. Deben corregirse para generar el macro.',
-    vistaPreviaMacro: 'Macro en vivo',
+    vistaPreviaMacro: 'Macro',
     vistaPreviaPendiente: 'Corregir los campos marcados para ver el macro.',
     avisoSeries: 'En archivos .lif y .czi con varias series solo se analiza la primera.',
     errorDescarga: 'No se ha podido guardar el archivo.',
@@ -547,6 +546,7 @@ export const t = {
     titulo: 'Análisis rápido',
     aviso: 'Resultado orientativo. Para datos publicables, debe usarse el macro en Fiji.',
     receteta: 'Ajustes de partida',
+    recetetaPista: 'Detección, filtros y escala con los que se analiza la imagen: los valores por defecto o los de una receteta de mamosferas.',
     porDefecto: 'Valores por defecto',
     elegirImagen: 'Hacer foto o elegir imagen',
     formatos: 'JPG, PNG o TIFF.',
@@ -577,7 +577,7 @@ export const t = {
     sinWatershed: 'La separación de esferas en contacto solo se aplica en Fiji.',
     umbralSustituido: (m: string) => `El método de umbral ${m} solo está disponible en Fiji; aquí se usa Otsu.`,
     fondoAprox: 'La corrección de fondo es una aproximación de la de Fiji.',
-    deslizadores: 'Ajustes en vivo',
+    deslizadores: 'Filtros',
     diametroMin: (d: string) => `Diámetro mínimo: ${d} µm`,
     circularidadMin: (c: string) => `Circularidad mínima: ${c}`,
     zoomMas: 'Ampliar',
@@ -666,7 +666,7 @@ export const t = {
         titulo: 'Configuración paso a paso',
         texto:
           'El asistente agrupa las opciones en pasos: imágenes, detección, filtros y resultados. Cada campo incluye información sobre su efecto y los valores recomendados.',
-        puntos: ['Validación inmediata de cada campo', 'Vista previa del macro en vivo', 'Borrador guardado automáticamente'],
+        puntos: ['Validación inmediata de cada campo', 'Vista previa del macro', 'Borrador guardado automáticamente'],
       },
       {
         id: 'macro',
@@ -686,8 +686,8 @@ export const t = {
         id: 'rapido',
         titulo: 'Análisis rápido en el móvil',
         texto:
-          'Una foto del microscopio basta para obtener un recuento orientativo de esferas en segundos, sin conexión. Los ajustes obtenidos pueden trasladarse a una receteta.',
-        puntos: ['Cámara o galería', 'Calibración con barra de escala', 'Ajuste de filtros en vivo'],
+          'Recuento orientativo de esferas a partir de una foto del microscopio. Los ajustes obtenidos pueden trasladarse a una receteta.',
+        puntos: ['Cámara o galería', 'Calibración con barra de escala', 'Ajuste de filtros sobre la imagen'],
       },
       {
         id: 'umbral',
@@ -700,8 +700,8 @@ export const t = {
         id: 'compartir',
         titulo: 'Compartir y conservar',
         texto:
-          'Las recetetas pueden compartirse mediante enlace con otros miembros del laboratorio y exportarse en formato .json como copia de seguridad. La app funciona sin conexión.',
-        puntos: ['Enlace de importación', 'Copia de seguridad en .json', 'Funcionamiento sin conexión'],
+          'Las recetetas pueden compartirse mediante enlace con otros miembros del laboratorio y exportarse en formato .json como copia de seguridad.',
+        puntos: ['Enlace de importación', 'Copia de seguridad en .json', 'Importación en otro dispositivo'],
       },
     ],
     figuras: {

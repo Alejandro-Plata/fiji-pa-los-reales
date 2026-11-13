@@ -80,7 +80,7 @@ tres dificultades:
    inglés, con las referencias bibliográficas correspondientes.
 
 Las imágenes no se suben a ningún servidor: el análisis definitivo se ejecuta en Fiji y el análisis
-rápido se realiza en el propio dispositivo. La aplicación funciona sin conexión.
+rápido se realiza en el propio dispositivo.
 
 ## Tipos de análisis
 
@@ -148,7 +148,7 @@ Primero se elige el tipo de análisis; después, el asistente agrupa las opcione
 
 Cada campo incluye un botón **Información** que explica su efecto, y se indica el valor
 recomendado. Los errores se señalan en el momento (por ejemplo, un diámetro mínimo mayor que el
-máximo). En pantallas anchas, el resumen y el **macro se actualizan en vivo** a la derecha. Los
+máximo). En pantallas anchas, el resumen y el **macro** se muestran a la derecha y reflejan cada cambio. Los
 cambios sin guardar se conservan como borrador.
 
 <img src="docs/capturas/05-asistente-deteccion.png" alt="Paso de detección del asistente con la vista previa del macro" width="860">
@@ -213,13 +213,13 @@ menores de 50 µm y la esfera cortada por el borde se excluyen, tal como indica 
 ### Análisis rápido
 
 Recuento **orientativo** de esferas a partir de una foto tomada con el móvil a través del ocular o
-de una imagen de la galería, en segundos y sin conexión. Sirve para hacerse una idea al terminar
+de una imagen de la galería. Sirve para hacerse una idea al terminar
 el ensayo y, sobre todo, para **ajustar los filtros viendo el efecto en la imagen**: los contornos
 en lima se cuentan y los rosas se descartan. Los ajustes pueden guardarse después en una receteta.
 La escala se lee del archivo, se introduce a mano o se **calibra marcando la barra de escala** de
 la imagen.
 
-<img src="docs/capturas/09-analisis-rapido.png" alt="Análisis rápido con el recuento y los ajustes en vivo" width="860">
+<img src="docs/capturas/09-analisis-rapido.png" alt="Análisis rápido con el recuento y los filtros" width="860">
 
 En las imágenes de prueba, el recuento coincide con el de Fiji. Aun así, los datos definitivos
 deben obtenerse siempre con el macro en Fiji.
@@ -248,7 +248,7 @@ muestra sus estadísticas y lo guarda directamente en la receteta.
 ### Compartir recetetas
 
 Cada receteta puede compartirse mediante un **enlace**. Al abrirlo en otro dispositivo, la receteta
-se importa con un toque. Así un grupo de trabajo puede analizar con un criterio idéntico.
+se importa en la aplicación. Así un grupo de trabajo puede analizar con un criterio idéntico.
 
 ### En el móvil
 
@@ -295,7 +295,7 @@ en Windows, macOS o Linux. StarDist es opcional y se instala desde el propio Fij
 
 - **Vite + React + TypeScript** (estricto), CSS Modules con *tokens* de diseño.
 - **Zod** para validar recetetas, enlaces e importaciones.
-- **PWA** (`vite-plugin-pwa`): instalable y operativa sin conexión.
+- **PWA** (`vite-plugin-pwa`): instalable desde el navegador.
 - **Capacitor** para Android (con un plugin nativo propio de actualizaciones) y **Electron** para
   Windows.
 - **Vitest** (unitarias e instantáneas de macros) y **Playwright** + **axe** (interfaz,
