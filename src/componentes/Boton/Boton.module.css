@@ -1,0 +1,98 @@
+/* Botones — DESIGN.md › Buttons. Sin estados hover (DESIGN.md › Components): solo normal y pulsado. */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-3);
+  min-height: var(--objetivo-tactil);
+  min-width: var(--objetivo-tactil);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid transparent;
+  border-radius: var(--rounded-md);
+  font-family: var(--fuente-base);
+  font-size: var(--button-cap-size);
+  font-weight: var(--button-cap-weight);
+  line-height: var(--button-cap-leading);
+  letter-spacing: var(--caps-tracking);
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.anchoCompleto {
+  width: 100%;
+}
+
+/* button-primary / button-primary-pressed */
+.primario {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.primario:active:not(:disabled) {
+  background: var(--surface-press-stronger);
+  color: var(--ink-press);
+}
+
+/* button-inverted / button-inverted-pressed (sobre lienzo oscuro) */
+.invertido {
+  background: var(--on-primary);
+  color: var(--ink-deep);
+  box-shadow: var(--elevation-1);
+}
+.invertido:active:not(:disabled) {
+  background: var(--surface-press-light);
+  color: var(--ink-press);
+  box-shadow: var(--elevation-4);
+}
+
+/* Secundario sobre claro: variante rebajada (DESIGN.md › outlined variants are downgraded) */
+.secundario {
+  background: var(--surface-canvas-light);
+  color: var(--ink-deep);
+  border-color: var(--hairline-cool);
+  font-weight: var(--button-cap-light-weight);
+  line-height: var(--button-cap-light-leading);
+}
+.secundario:active:not(:disabled) {
+  background: var(--surface-press-light);
+  color: var(--ink-press);
+}
+
+/* button-ghost-on-dark */
+.fantasma {
+  background: var(--on-dark-faint);
+  color: var(--on-primary);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--rounded-xl);
+}
+.fantasma:active:not(:disabled) {
+  background: var(--hairline-violet);
+}
+
+/* button-violet-token: etiquetas y filtros */
+.token {
+  background: var(--accent-violet-mid);
+  color: var(--on-primary);
+  border-color: var(--accent-violet-deep);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--rounded-xl);
+  font-weight: var(--button-cap-light-weight);
+  line-height: var(--button-cap-light-leading);
+}
+.token[aria-pressed='true'] {
+  background: var(--accent-violet-deep);
+}
+
+/* button-disabled */
+.boton:disabled,
+.boton[aria-disabled='true'] {
+  background: var(--hairline-cloud);
+  color: var(--on-dark-muted);
+  border-color: transparent;
+  box-shadow: none;
+  cursor: not-allowed;
+}

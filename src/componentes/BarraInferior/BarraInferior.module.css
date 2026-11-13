@@ -1,0 +1,49 @@
+/*
+ * Barra inferior fija del asistente (spec §4: móvil).
+ * Respeta notch y barra de gestos con env(safe-area-inset-*).
+ * En escritorio deja de ser fija y se integra al final del formulario.
+ */
+.barra {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  gap: var(--separacion-tactil);
+  padding: var(--espacio-4) var(--espacio-5);
+  padding-left: max(var(--espacio-5), env(safe-area-inset-left));
+  padding-right: max(var(--espacio-5), env(safe-area-inset-right));
+  padding-bottom: max(var(--espacio-4), env(safe-area-inset-bottom));
+  background: var(--color-superficie);
+  border-top: 1px solid var(--color-borde);
+}
+
+.barra > * {
+  flex: 1 1 0;
+}
+
+/* Hueco para que el contenido no quede tapado por la barra */
+.reserva {
+  height: calc(var(--objetivo-tactil) + 2 * var(--espacio-4) + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+  .barra {
+    position: static;
+    padding: var(--espacio-6) 0 0;
+    border-top: 1px solid var(--color-borde);
+    background: transparent;
+    justify-content: space-between;
+  }
+  .barra > * {
+    flex: 0 0 auto;
+  }
+  .reserva {
+    display: none;
+  }
+}
+
+/* Con el teclado virtual abierto la barra se oculta para no tapar el campo activo (spec §4.7) */
+.barra[data-teclado='abierto'] {
+  display: none;
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Fiji pa los reales</string>
+    <string name="title_activity_main">Fiji pa los reales</string>
+    <string name="package_name">es.fijipalosreales.app</string>
+    <string name="custom_url_scheme">es.fijipalosreales.app</string>
+</resources>

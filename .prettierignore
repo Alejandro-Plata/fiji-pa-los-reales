@@ -1,0 +1,7 @@
+dist
+dev-dist
+android
+.fiji
+spec.md
+DESIGN.md
+src/dominio/macros/__snapshots__

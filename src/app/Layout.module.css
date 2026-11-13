@@ -1,0 +1,182 @@
+/* Layout general — DESIGN.md › nav-bar-light, footer-light, Lime Squiggly Footer Divider */
+
+.marco {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.saltar {
+  position: absolute;
+  left: var(--espacio-3);
+  top: calc(-1 * var(--objetivo-tactil) * 2);
+  z-index: 100;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--primary);
+  color: var(--on-primary);
+  border-radius: var(--rounded-md);
+}
+.saltar:focus {
+  top: var(--espacio-3);
+}
+
+/* ---------- Cabecera: nav-bar-light ---------- */
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--surface-canvas-light);
+  color: var(--ink-deep);
+  border-bottom: 1px solid var(--hairline-cloud);
+  padding-top: env(safe-area-inset-top);
+}
+
+.barraNav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  padding-block: var(--spacing-sm);
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--objetivo-tactil);
+  font-family: var(--fuente-display);
+  font-size: var(--heading-sm-size);
+  font-weight: var(--display-hero-weight);
+  line-height: var(--heading-sm-leading);
+  color: var(--ink-deep);
+  text-decoration: none;
+}
+
+.hamburguesa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--objetivo-tactil);
+  height: var(--objetivo-tactil);
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--hairline-cool);
+  border-radius: var(--rounded-md);
+  cursor: pointer;
+}
+
+.hamburguesaIcono,
+.hamburguesaIcono::before,
+.hamburguesaIcono::after {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--ink-deep);
+  border-radius: var(--rounded-xs);
+}
+.hamburguesaIcono {
+  position: relative;
+}
+.hamburguesaIcono::before,
+.hamburguesaIcono::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+.hamburguesaIcono::before {
+  top: -6px;
+}
+.hamburguesaIcono::after {
+  top: 6px;
+}
+
+/* Menú plegado en móvil: acordeón a lo ancho */
+.nav {
+  display: none;
+  flex-basis: 100%;
+}
+.nav[data-abierto='true'] {
+  display: block;
+}
+
+.listaNav {
+  list-style: none;
+  padding: 0 0 var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.enlaceNav {
+  display: flex;
+  align-items: center;
+  min-height: var(--objetivo-tactil);
+  padding-inline: var(--spacing-md);
+  border-radius: var(--rounded-md);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight);
+  color: var(--ink-deep);
+  text-decoration: none;
+}
+.enlaceNav:active {
+  background: var(--surface-press-light);
+}
+.enlaceNavActivo {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+@media (min-width: 768px) {
+  .barraNav {
+    flex-wrap: nowrap;
+    padding-block: var(--spacing-lg);
+  }
+  .hamburguesa {
+    display: none;
+  }
+  .nav,
+  .nav[data-abierto='false'] {
+    display: block;
+    flex-basis: auto;
+  }
+  .listaNav {
+    flex-direction: row;
+    padding: 0;
+    gap: var(--spacing-sm);
+  }
+}
+
+/* ---------- Contenido ---------- */
+.principal {
+  flex: 1;
+  padding-block: var(--espacio-6) var(--espacio-7);
+}
+.principal:focus {
+  outline: none;
+}
+
+/* ---------- Pie: footer-light con garabato lima ---------- */
+.pie {
+  background: var(--surface-canvas-light);
+  color: var(--ink-deep);
+  font-size: var(--caption-size);
+  font-weight: var(--caption-weight);
+  line-height: var(--caption-leading);
+}
+
+.garabato {
+  width: 100%;
+  height: 16px;
+  fill: none;
+  stroke: var(--accent-lime);
+  stroke-width: 3px;
+}
+
+.pieContenido {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding-block: var(--spacing-xxl);
+  padding-bottom: max(var(--spacing-xxl), env(safe-area-inset-bottom));
+}

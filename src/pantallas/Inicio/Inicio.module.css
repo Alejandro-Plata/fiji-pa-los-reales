@@ -1,0 +1,55 @@
+/* Banda de portada: lienzo oscuro, titular display con chip lima (DESIGN.md › chip-lime-keyword) */
+.banda {
+  margin-top: calc(-1 * var(--espacio-6));
+  background: var(--surface-canvas-dark);
+  color: var(--on-primary);
+}
+
+.bandaContenido {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  padding-block: var(--spacing-section);
+}
+
+.eyebrow {
+  color: var(--on-dark-muted);
+}
+
+.titular {
+  font-family: var(--fuente-display);
+  font-size: var(--display-large-size);
+  font-weight: var(--display-hero-weight);
+  line-height: var(--display-hero-leading);
+}
+
+.chipLima {
+  background: var(--accent-lime);
+  color: var(--ink-deep);
+  border-radius: var(--rounded-xs);
+  padding: 0 var(--spacing-md);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Prosa de portada: body-lg con interlineado 2.0 */
+.textoBanda {
+  max-width: 60ch;
+  color: var(--on-dark-muted);
+  font-size: var(--body-lg-size);
+  font-weight: var(--body-lg-weight);
+  line-height: var(--body-lg-leading);
+}
+
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+  padding-top: var(--espacio-7);
+}
+
+.vacio {
+  padding: var(--spacing-xxl);
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+}

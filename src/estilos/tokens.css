@@ -1,0 +1,189 @@
+/*
+ * tokens.css — ÚNICO lugar donde se definen colores, tipografía, espacios, radios y sombras.
+ *
+ * Origen de los valores: DESIGN.md (raíz del repositorio). Se copian tal cual.
+ * Estructura:
+ *   1. Tokens base con los nombres de DESIGN.md (--primary, --accent-lime, --spacing-md…).
+ *   2. Alias semánticos con los nombres de la spec (--color-fondo, --espacio-1…), que apuntan a los base.
+ * Los componentes usan preferentemente los alias semánticos. Nunca valores escritos a mano.
+ *
+ * Puntos de corte (las media queries de CSS no aceptan variables; se usan siempre estos literales):
+ *   Disposición (spec §4):  tableta ≥ 600px · escritorio ≥ 1024px
+ *   Escalera DESIGN.md (solo tipografía y márgenes): 576 · 640 · 768 · 992 · 1152 · 1440
+ *   Navegación: menú hamburguesa por debajo de 768px (DESIGN.md › Mobile nav)
+ */
+
+/* Fuentes autoalojadas (sin peticiones externas: la app funciona sin conexión) */
+@import '@fontsource/rubik/latin-400.css';
+@import '@fontsource/rubik/latin-500.css';
+@import '@fontsource/rubik/latin-600.css';
+@import '@fontsource/rubik/latin-700.css';
+@import '@fontsource/space-grotesk/latin-500.css';
+@import '@fontsource/space-grotesk/latin-700.css';
+
+:root {
+  /* ---------- 1. Colores (DESIGN.md › colors) ---------- */
+  --primary: #150f23;
+  --ink-deep: #1f1633;
+  --on-primary: #ffffff;
+  --accent-lime: #c2ef4e;
+  --accent-pink: #fa7faa;
+  --accent-violet: #6a5fc1;
+  --accent-violet-deep: #422082;
+  --accent-violet-mid: #79628c;
+  --surface-canvas-dark: #1f1633;
+  --surface-canvas-light: #ffffff;
+  --surface-night: #150f23;
+  --surface-press-light: #f0f0f0;
+  --surface-press-stronger: #efefef;
+  --hairline-violet: #362d59;
+  --hairline-cool: #cfcfdb;
+  --hairline-cloud: #e5e7eb;
+  --ink: #1f1633;
+  --ink-press: #1a1a1a;
+  --on-dark-muted: #bdb8c0;
+  --on-dark-faint: #3f3849;
+  --ring-focus: #9dc1f5;
+
+  /* ---------- 2. Familias (DESIGN.md › typography; sustituto de la display: Space Grotesk) ---------- */
+  --font-display: 'Space Grotesk', Rubik, system-ui, sans-serif;
+  --font-ui: Rubik, -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-code: Monaco, Menlo, 'Ubuntu Mono', monospace;
+
+  /* ---------- 3. Escala tipográfica (tamaño · peso · interlineado · tracking) ----------
+     Fluida con clamp() entre los valores de la escalera de DESIGN.md (88 → 60 → 48).
+     El interlineado de la display se baja 0,05 por usar fuente sustituta (DESIGN.md › Note on Font Substitutes). */
+  --display-hero-size: clamp(3rem, 2rem + 5vw, 5.5rem);
+  --display-hero-weight: 700;
+  --display-hero-leading: 1.15;
+  --display-large-size: clamp(2.25rem, 1.5rem + 3.5vw, 3.75rem);
+  --display-large-weight: 500;
+  --display-large-leading: 1.05;
+  --heading-xl-size: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  --heading-xl-weight: 500;
+  --heading-xl-leading: 1.2;
+  --heading-lg-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.6875rem);
+  --heading-lg-weight: 500;
+  --heading-lg-leading: 1.25;
+  --heading-md-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --heading-md-weight: 500;
+  --heading-md-leading: 1.25;
+  --heading-sm-size: 1.25rem;
+  --heading-sm-weight: 600;
+  --heading-sm-leading: 1.25;
+  --body-lg-size: 1rem;
+  --body-lg-weight: 400;
+  --body-lg-leading: 2;
+  --body-strong-size: 1rem;
+  --body-strong-weight: 600;
+  --body-strong-leading: 1.5;
+  --body-md-size: 1rem;
+  --body-md-weight: 500;
+  --body-md-leading: 1.5;
+  --eyebrow-size: 0.9375rem;
+  --eyebrow-weight: 500;
+  --eyebrow-leading: 1.4;
+  --button-cap-size: 0.875rem;
+  --button-cap-weight: 700;
+  --button-cap-leading: 1.14;
+  --button-cap-light-weight: 500;
+  --button-cap-light-leading: 1.29;
+  --caps-tracking: 0.2px;
+  --caption-size: 0.875rem;
+  --caption-weight: 400;
+  --caption-leading: 1.43;
+  --micro-cap-size: 0.625rem;
+  --micro-cap-weight: 600;
+  --micro-cap-leading: 1.8;
+  --micro-cap-tracking: 0.25px;
+  --code-size: 1rem;
+  --code-weight: 400;
+  --code-strong-weight: 700;
+  --code-leading: 1.5;
+
+  /* ---------- 4. Radios (DESIGN.md › rounded) ---------- */
+  --rounded-xs: 4px;
+  --rounded-sm: 6px;
+  --rounded-md: 8px;
+  --rounded-lg: 10px;
+  --rounded-xl: 12px;
+  --rounded-xxl: 18px;
+  --rounded-full: 9999px;
+
+  /* ---------- 5. Espacios (DESIGN.md › spacing; base 8px) ---------- */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+  /* 96px entre bandas en escritorio, 32–48px en móvil (DESIGN.md › Section padding) */
+  --spacing-section: clamp(32px, 4px + 6.5vw, 96px);
+
+  /* ---------- 6. Elevación (DESIGN.md › Elevation & Depth) ---------- */
+  --elevation-1: rgba(0, 0, 0, 0.08) 0 2px 8px 0;
+  --elevation-2: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.1) 0 4px 6px -4px;
+  --elevation-3: rgb(21, 15, 35) 0 0 8px 6px;
+  --elevation-4: rgba(0, 0, 0, 0.18) 0 0.5rem 1.5rem;
+  --input-focus-inset: rgba(0, 0, 0, 0.15) 0 2px 10px inset;
+
+  /* ---------- 7. Contenedores ---------- */
+  --contenedor-tableta: 720px; /* spec §4 */
+  --contenedor-max: 1152px; /* DESIGN.md › Grid & Container */
+  --objetivo-tactil: 44px; /* spec §4.2 y DESIGN.md › Touch Targets */
+  --separacion-tactil: var(--spacing-sm);
+  --duracion: 150ms;
+
+  /* =====================================================================
+     ALIAS SEMÁNTICOS (nombres de la spec §3). Usar estos en los componentes.
+     ===================================================================== */
+  --color-fondo: var(--surface-canvas-light);
+  --color-fondo-oscuro: var(--surface-canvas-dark);
+  --color-superficie: var(--surface-canvas-light);
+  --color-superficie-oscura: var(--surface-night);
+  --color-superficie-pulsada: var(--surface-press-light);
+  --color-borde: var(--hairline-cloud);
+  --color-borde-campo: var(--hairline-cool);
+  --color-borde-oscuro: var(--hairline-violet);
+  --color-texto: var(--ink);
+  --color-texto-invertido: var(--on-primary);
+  --color-texto-suave: var(--accent-violet-mid); /* sobre claro; contraste 5,1:1 */
+  --color-texto-suave-oscuro: var(--on-dark-muted); /* sobre oscuro */
+  --color-acento: var(--accent-lime); /* escaso: uno por pantalla (DESIGN.md › Iteration Guide 6) */
+  --color-enlace: var(--accent-violet);
+  --color-foco: var(--ring-focus);
+  /* DESIGN.md no define colores de estado y prohíbe añadir acentos: se reutilizan los existentes.
+     Se usan como marcas (bordes, fondos de chip), nunca como color de texto a tamaño de cuerpo. */
+  --color-error: var(--accent-pink);
+  --color-aviso: var(--accent-violet-mid);
+  --color-exito: var(--accent-lime);
+
+  --espacio-1: var(--spacing-xxs);
+  --espacio-2: var(--spacing-xs);
+  --espacio-3: var(--spacing-sm);
+  --espacio-4: var(--spacing-md);
+  --espacio-5: var(--spacing-lg);
+  --espacio-6: var(--spacing-xl);
+  --espacio-7: var(--spacing-xxl);
+  --espacio-8: var(--spacing-section);
+
+  --radio-s: var(--rounded-sm);
+  --radio-m: var(--rounded-md);
+  --radio-l: var(--rounded-xl);
+
+  --fuente-display: var(--font-display);
+  --fuente-base: var(--font-ui);
+  --fuente-codigo: var(--font-code);
+
+  --texto-s: var(--caption-size);
+  --texto-m: var(--body-md-size);
+  --texto-l: var(--heading-md-size);
+  --texto-xl: var(--heading-xl-size);
+
+  /* Modo claro y oscuro: DESIGN.md asigna la polaridad por tipo de pantalla, no por preferencia.
+     Las pantallas de trabajo usan el lienzo claro; las bandas de portada, el oscuro.
+     Si en el futuro se quiere un modo oscuro automático, se redefinen aquí los alias dentro de
+     @media (prefers-color-scheme: dark). */
+  color-scheme: light;
+}

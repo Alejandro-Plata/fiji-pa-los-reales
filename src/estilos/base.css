@@ -1,0 +1,174 @@
+/*
+ * base.css — reset, tipografía base y utilidades de layout.
+ * Solo usa var(--token). Mobile-first: se escribe para 320px y se amplía con min-width.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--fuente-base);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight);
+  line-height: var(--body-md-leading);
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--heading-xl-size);
+  font-weight: var(--heading-xl-weight);
+  line-height: var(--heading-xl-leading);
+}
+
+h2 {
+  font-size: var(--heading-md-size);
+  font-weight: var(--heading-md-weight);
+  line-height: var(--heading-md-leading);
+}
+
+h3 {
+  font-size: var(--heading-sm-size);
+  font-weight: var(--heading-sm-weight);
+  line-height: var(--heading-sm-leading);
+}
+
+img,
+canvas,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Campos ≥ 16px para evitar el zoom automático de iOS (spec §4.4) */
+input,
+select,
+textarea {
+  font-size: max(16px, var(--body-md-size));
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--fuente-codigo);
+}
+
+/* Foco de teclado siempre visible en todo elemento interactivo (spec §4.11) */
+:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+/* Respeta la preferencia de reducir movimiento (spec §4.11) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Utilidades de layout ---------- */
+
+.contenedor {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--espacio-5);
+}
+
+@media (min-width: 600px) {
+  .contenedor {
+    max-width: calc(var(--contenedor-tableta) + 2 * var(--espacio-6));
+    padding-inline: var(--espacio-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .contenedor {
+    max-width: calc(var(--contenedor-max) + 2 * var(--espacio-6));
+  }
+}
+
+.pila {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--separacion-tactil);
+}
+
+.visualmente-oculto {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Rótulo superior en mayúsculas (DESIGN.md › eyebrow) */
+.eyebrow {
+  font-size: var(--eyebrow-size);
+  font-weight: var(--eyebrow-weight);
+  line-height: var(--eyebrow-leading);
+  letter-spacing: var(--caps-tracking);
+  text-transform: uppercase;
+}
+
+.texto-suave {
+  color: var(--color-texto-suave);
+}
+
+.caption {
+  font-size: var(--caption-size);
+  font-weight: var(--caption-weight);
+  line-height: var(--caption-leading);
+}
