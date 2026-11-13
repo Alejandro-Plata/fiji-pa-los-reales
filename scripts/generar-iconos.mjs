@@ -5,12 +5,18 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const svg = readFileSync('public/logo.svg', 'utf8');
-// Versión a sangre (maskable / adaptativa de Android): fondo completo y motivo en la zona segura
-const sangre = svg
-  .replace('<rect width="512" height="512" rx="112" fill="#150f23"/>', '<rect width="512" height="512" fill="#150f23"/><g transform="translate(64 64) scale(0.75)">')
-  .replace('</svg>', '</g></svg>');
-// Solo el motivo, sin fondo (primer plano del icono adaptativo de Android)
-const motivo = sangre.replace('<rect width="512" height="512" fill="#150f23"/>', '');
+// El logo no tiene fondo. Donde el sistema exige un icono opaco (maskable de la PWA) se pone
+// fondo blanco y el motivo se reduce hasta caber en la zona segura circular.
+const reducido = (escala, fondo) => {
+  const d = (512 * (1 - escala)) / 2;
+  return svg
+    .replace('</title>', `</title>${fondo ? `<rect width="512" height="512" fill="${fondo}"/>` : ''}<g transform="translate(${d} ${d}) scale(${escala})">`)
+    .replace(/<\/svg>\s*$/, '</g></svg>');
+};
+// Maskable: zona segura = círculo de radio 40 %
+const sangre = reducido(0.72, '#ffffff');
+// Primer plano adaptativo de Android: zona segura = círculo de 66/108 dp; el fondo es una capa aparte (blanca)
+const motivo = reducido(0.62);
 
 const navegador = await chromium.launch();
 const pagina = await navegador.newPage();

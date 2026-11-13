@@ -1,28 +1,78 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t">
   <title id="t">Fiji pa los reales</title>
-  <!-- Paleta de DESIGN.md: primary #150f23, accent-lime #c2ef4e, accent-pink #fa7faa, ink-deep #1f1633 -->
-  <rect width="512" height="512" rx="112" fill="#150f23"/>
-  <!-- Contorno de pegatina (blanco) bajo las esferas -->
-  <g fill="none" stroke="#ffffff" stroke-width="28" stroke-linejoin="round">
-    <circle cx="226" cy="282" r="120"/>
-    <circle cx="358" cy="190" r="70"/>
-    <circle cx="372" cy="342" r="40"/>
+  <!-- Mamosfera cani: gorra ladeada con las iniciales FPLR, cadena de oro y mirada chulesca.
+       Paleta de DESIGN.md (primary #150f23, ink-deep #1f1633, accent-lime #c2ef4e, accent-pink #fa7faa,
+       accent-violet-deep #422082) más el oro de la cadena (#f2c230), exclusivo del logo.
+       Sin fondo: el contorno blanco de pegatina lo separa de cualquier superficie.
+       Las letras son trazos, no texto: se ven igual sin fuentes instaladas. -->
+  <defs>
+    <g id="silueta">
+      <circle cx="420" cy="404" r="50"/>
+      <circle cx="250" cy="310" r="165"/>
+      <g transform="rotate(-10 250 170)">
+        <path d="M84 214 C 92 62, 408 62, 416 214 Z"/>
+        <path d="M372 196 C 420 182, 462 192, 474 214 C 444 230, 404 228, 366 222 Z"/>
+      </g>
+      <circle cx="250" cy="448" r="30"/>
+    </g>
+  </defs>
+
+  <!-- Contorno de pegatina -->
+  <use href="#silueta" fill="#ffffff" stroke="#ffffff" stroke-width="36" stroke-linejoin="round"/>
+
+  <!-- Esfera rosa compañera, detrás -->
+  <circle cx="420" cy="404" r="50" fill="#fa7faa" stroke="#1f1633" stroke-width="10"/>
+  <circle cx="406" cy="392" r="7" fill="#1f1633"/>
+  <circle cx="432" cy="420" r="5" fill="#1f1633"/>
+
+  <!-- Mamosfera -->
+  <circle cx="250" cy="310" r="165" fill="#c2ef4e" stroke="#1f1633" stroke-width="10"/>
+  <circle cx="132" cy="352" r="9" fill="#1f1633" opacity="0.35"/>
+  <circle cx="370" cy="268" r="7" fill="#1f1633" opacity="0.35"/>
+  <circle cx="378" cy="372" r="11" fill="#1f1633" opacity="0.35"/>
+  <path d="M112 318 A 140 140 0 0 1 128 250" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- Ojos con párpado caído -->
+  <g stroke="#1f1633" stroke-width="8" stroke-linecap="round">
+    <ellipse cx="196" cy="296" rx="30" ry="24" fill="#ffffff"/>
+    <ellipse cx="304" cy="296" rx="30" ry="24" fill="#ffffff"/>
   </g>
-  <!-- Racimo de esferas: la grande es la mamosfera -->
-  <circle cx="226" cy="282" r="120" fill="#c2ef4e" stroke="#1f1633" stroke-width="8"/>
-  <circle cx="358" cy="190" r="70" fill="#c2ef4e" stroke="#1f1633" stroke-width="8"/>
-  <circle cx="372" cy="342" r="40" fill="#fa7faa" stroke="#1f1633" stroke-width="8"/>
-  <!-- Células dentro de la esfera -->
-  <g fill="#1f1633">
-    <circle cx="186" cy="246" r="15"/>
-    <circle cx="240" cy="226" r="11"/>
-    <circle cx="272" cy="284" r="16"/>
-    <circle cx="200" cy="318" r="12"/>
-    <circle cx="246" cy="344" r="10"/>
-    <circle cx="160" cy="294" r="9"/>
-    <circle cx="370" cy="178" r="10"/>
-    <circle cx="340" cy="212" r="8"/>
+  <circle cx="204" cy="304" r="11" fill="#1f1633"/>
+  <circle cx="312" cy="304" r="11" fill="#1f1633"/>
+  <path d="M164 294 A 32 26 0 0 1 228 294 Z" fill="#1f1633"/>
+  <path d="M272 294 A 32 26 0 0 1 336 294 Z" fill="#1f1633"/>
+  <path d="M270 252 Q 306 236 340 256" fill="none" stroke="#1f1633" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- Sonrisa de lado -->
+  <path d="M206 364 Q 262 392 312 350" fill="none" stroke="#1f1633" stroke-width="10" stroke-linecap="round"/>
+  <path d="M306 342 l 14 10" fill="none" stroke="#1f1633" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Cadena de oro con medallón -->
+  <g fill="#f2c230" stroke="#1f1633" stroke-width="5">
+    <circle cx="146" cy="396" r="11"/>
+    <circle cx="170" cy="410" r="11"/>
+    <circle cx="196" cy="421" r="11"/>
+    <circle cx="222" cy="427" r="11"/>
+    <circle cx="278" cy="427" r="11"/>
+    <circle cx="304" cy="421" r="11"/>
+    <circle cx="330" cy="410" r="11"/>
+    <circle cx="354" cy="396" r="11"/>
+    <circle cx="250" cy="448" r="30" stroke-width="8"/>
   </g>
-  <!-- Brillo: volumen de esfera -->
-  <path d="M150 230 A 96 96 0 0 1 214 176" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" opacity="0.85"/>
+  <path d="M238 436 l 12 -6 l 12 6 v 12 l -12 12 l -12 -12 z" fill="#ffffff" stroke="#1f1633" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- Gorra ladeada con FPLR -->
+  <g transform="rotate(-10 250 170)">
+    <path d="M84 214 C 92 62, 408 62, 416 214 Z" fill="#422082" stroke="#1f1633" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M372 196 C 420 182, 462 192, 474 214 C 444 230, 404 228, 366 222 Z" fill="#150f23" stroke="#1f1633" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M84 214 H 416" stroke="#c2ef4e" stroke-width="12"/>
+    <circle cx="250" cy="92" r="11" fill="#c2ef4e" stroke="#1f1633" stroke-width="6"/>
+    <!-- Letras F P L R (trazos, 52 px de alto) -->
+    <g fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" transform="translate(152 128)">
+      <path d="M8 6 V 58 M8 6 H 38 M8 31 H 32"/>
+      <path d="M58 58 V 6 H 76 A 13 13 0 0 1 76 32 H 58"/>
+      <path d="M110 6 V 58 H 138"/>
+      <path d="M158 58 V 6 H 176 A 13 13 0 0 1 176 32 H 158 M172 32 L 192 58"/>
+    </g>
+  </g>
 </svg>

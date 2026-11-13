@@ -46,10 +46,22 @@ primero los tokens de DESIGN.md con sus nombres, después los alias semánticos 
 | Lienzo del análisis rápido | `pantallas/Rapido/Lienzo` | rounded-xxl, surface-night; contornos lima (contados) y rosa (descartados) | normal, calibrando (borde lima), con zoom |
 
 ## Logo
-`public/logo.svg` (pedido por la usuaria al terminar): azulejo `{colors.primary}` con un racimo de
-esferas en `{colors.accent-lime}` y una en `{colors.accent-pink}`, contorno de pegatina blanco y
-células en `{colors.ink-deep}`. `npm run iconos` genera desde él los iconos de la PWA (192, 512,
-maskable) y los de Android (clásicos, redondos y adaptativos con fondo `#150F23`).
+`public/logo.svg`: mamosfera «cani» en `{colors.accent-lime}` con gorra ladeada
+`{colors.accent-violet-deep}` y las iniciales **FPLR** (trazos, no texto), cadena con medallón y
+esfera compañera en `{colors.accent-pink}`. Sin fondo: el contorno blanco de pegatina la separa de
+cualquier superficie. Único color fuera de DESIGN.md: el oro de la cadena (`#f2c230`), solo en el
+logo. `npm run iconos` genera los iconos de la PWA (192 y 512 transparentes; maskable con fondo
+blanco) y los de Android (clásicos y redondos transparentes; adaptativos con capa de fondo blanca).
+
+## Tutorial
+`pantallas/Tutorial`: ocho diapositivas (`?paso=n`) con ilustraciones SVG animadas en CSS sobre
+escenario `surface-canvas-dark` + `rounded-xxl`. Navegación con botones, índice de puntos
+(44 px), flechas del teclado y deslizamiento. Todas las animaciones terminan en la figura completa,
+de modo que con «reducir movimiento» se ve la ilustración final sin movimiento.
+
+## Registro de los textos
+Profesional e impersonal: sin tuteo, instrucciones en infinitivo («Seleccionar la carpeta»),
+explicaciones en forma impersonal. Aplica también a los mensajes que muestran los macros en Fiji.
 
 ## Huecos para recursos de la diseñadora
 - `public/capturas/` — capturas de Fiji de las instrucciones (con texto alternativo).
