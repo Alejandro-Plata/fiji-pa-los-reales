@@ -2,7 +2,7 @@
 // Receteta: Núcleos con StarDist
 // Tipo: fluorescencia · Fiji pa los reales v1.0.0 · 2026-10-22
 // Parámetros: {"imagenes":{"extensiones":[".tif",".tiff"],"escala":{"modo":"archivo"},"proyeccionZ":"maxima"},"parametros":{"canalNucleos":1,"marcadores":[{"nombre":"Marcador","canal":2,"umbralPositivo":null}],"deteccion":"stardist","metodoUmbral":"Otsu","restarFondoRadio":50,"separarNucleos":true,"probabilidadStardist":0.5,"solapamientoStardist":0.4,"areaNucleoMin":20,"areaNucleoMax":500,"excluirBordes":true,"medida":"media"}}
-// Uso: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
+// Uso: en Fiji, File > New > Script..., menú Language > ImageJ Macro,
 // pegar este texto y ejecutar con Run.
 // ==============================================================
 requires("1.54f");

@@ -721,7 +721,6 @@ export const t = {
   guia: {
     titulo: 'Uso en Fiji',
     intro: 'Pasos que se realizan en el ordenador donde está instalado Fiji.',
-    hueco: 'Captura pendiente',
     pasos: [
       {
         id: 'instalar',
@@ -750,9 +749,9 @@ export const t = {
         lista: 'ul',
         items: [
           'Archivo .ijm: arrastrarlo sobre la ventana principal de Fiji (la barra de herramientas). Se abre en el editor de scripts.',
-          'Texto copiado: 1) File › New › Script… 2) En el editor, Language › IJ1 Macro. Este paso es imprescindible: con otro lenguaje el macro genera errores. 3) Pegar con Ctrl+V (Cmd+V en Mac).',
+          'Texto copiado: 1) File › New › Script… 2) En el editor, Language › ImageJ Macro (en versiones anteriores de Fiji, «IJ1 Macro»). Este paso es imprescindible: con otro lenguaje el macro genera errores. 3) Pegar con Ctrl+V (Cmd+V en Mac).',
         ],
-        captura: { archivo: 'c-editor.png', alt: 'Editor de scripts de Fiji con el menú Language abierto y la opción IJ1 Macro marcada.' },
+        captura: { archivo: 'c-editor.png', alt: 'Editor de scripts de Fiji con el menú Language abierto y la opción ImageJ Macro marcada.' },
       },
       {
         id: 'lanzar',
@@ -789,8 +788,9 @@ export const t = {
         items: [
           'En el editor: File › Save As…, con un nombre terminado en .ijm.',
           'Para incluirlo en el menú de Fiji: guardarlo en la carpeta de Fiji, en scripts/Plugins/Recetetas/, y reiniciar Fiji. Aparecerá en Plugins › Recetetas.',
+          'También se localiza con el buscador de comandos de Fiji (tecla L) escribiendo «Recetetas».',
         ],
-        captura: { archivo: 'f-menu.png', alt: 'Menú Plugins de Fiji con el submenú Recetetas.' },
+        captura: { archivo: 'f-menu.png', alt: 'Buscador de comandos de Fiji con tres macros guardados en Plugins › Recetetas.' },
       },
       {
         id: 'stardist',
@@ -803,7 +803,7 @@ export const t = {
           'Apply and Close y, después, Apply changes.',
           'Reiniciar Fiji.',
         ],
-        captura: { archivo: 'g-update-sites.png', alt: 'Ventana Manage update sites con CSBDeep y StarDist marcados.' },
+        captura: { archivo: 'g-update-sites.png', alt: 'Ventana Manage Update Sites de Fiji con CSBDeep y StarDist activados.' },
       },
       {
         id: 'validar',
@@ -816,14 +816,14 @@ export const t = {
           'No modificar la receteta a mitad de un experimento: todas las condiciones se analizan con la misma.',
           'Archivar el .ijm junto a los datos: la cabecera documenta todos los parámetros.',
         ],
-        captura: { archivo: 'h-control.png', alt: 'Imagen de control con las esferas detectadas marcadas en amarillo.' },
+        captura: { archivo: 'h-control.jpg', alt: 'Imagen de control generada por Fiji: esferas contadas rodeadas en amarillo y numeradas; las pequeñas y la cortada por el borde quedan excluidas.' },
       },
     ],
     errores: {
       titulo: 'Errores frecuentes',
       columnas: ['Síntoma', 'Causa probable', 'Solución'],
       filas: [
-        ['«Statement cannot begin with…» u otro error en la primera línea', 'El editor no está en IJ1 Macro', 'Language › IJ1 Macro y volver a ejecutar'],
+        ['«Statement cannot begin with…» u otro error en la primera línea', 'El editor no está en ImageJ Macro', 'Language › ImageJ Macro y volver a ejecutar'],
         ['«Esta receteta usa StarDist, que no está instalado»', 'Falta el plugin', 'Paso G'],
         ['«No se ha encontrado ninguna imagen válida»', 'Extensión distinta de la indicada en la receteta', 'Comprobar el formato en el paso Imágenes de la receteta'],
         ['En el Log: «no tiene escala en micras. Se omite»', 'La imagen no incluye el tamaño de píxel (habitual en JPG o TIFF exportados)', 'Seleccionar «Escala manual» en la receteta e introducir las micras por píxel'],

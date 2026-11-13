@@ -2,7 +2,7 @@
 // Receteta: Núcleos DAPI + marcador
 // Tipo: fluorescencia · Fiji pa los reales v1.0.0 · 2026-10-22
 // Parámetros: {"imagenes":{"extensiones":[".tif",".tiff"],"escala":{"modo":"archivo"},"proyeccionZ":"ninguna"},"parametros":{"canalNucleos":1,"marcadores":[{"nombre":"CD44","canal":2,"umbralPositivo":850},{"nombre":"β-actina","canal":3,"umbralPositivo":null},{"nombre":"Ki-67","canal":4,"umbralPositivo":1200.5}],"deteccion":"umbral","metodoUmbral":"Otsu","restarFondoRadio":0,"separarNucleos":false,"probabilidadStardist":0.5,"solapamientoStardist":0.4,"areaNucleoMin":20,"areaNucleoMax":500,"excluirBordes":true,"medida":"integrada"}}
-// Uso: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
+// Uso: en Fiji, File > New > Script..., menú Language > ImageJ Macro,
 // pegar este texto y ejecutar con Run.
 // ==============================================================
 requires("1.54f");

@@ -1,0 +1,132 @@
+// Dibuja ventanas reales de Fiji en PNG (sin capturar la pantalla: cada ventana se pinta a sí misma
+// en una imagen). Lo lanza scripts/capturas-fiji.mjs; args.txt: carpeta de salida y macro de ejemplo.
+// El trabajo va en un hilo propio (el macro puede estar en el hilo de la interfaz) y termina
+// escribiendo fin.txt, que el macro envoltorio espera antes de cerrar Fiji.
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.swing.*;
+import javax.imageio.ImageIO;
+
+args = ij.IJ.openAsString(System.getProperty("fplr.args")).split("\n");
+salida = args[0].trim();
+macroEjemplo = ij.IJ.openAsString(args[1].trim());
+
+enEdt(r) {
+  if (SwingUtilities.isEventDispatchThread()) r.run(); else SwingUtilities.invokeAndWait(r);
+}
+
+pintar(comp, archivo) {
+  img = new BufferedImage(comp.getWidth(), comp.getHeight(), BufferedImage.TYPE_INT_RGB);
+  enEdt(new Runnable() { public void run() {
+    g = img.createGraphics();
+    g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    comp.paint(g);
+    g.dispose();
+  }});
+  ImageIO.write(img, "png", new File(salida, archivo));
+}
+
+buscarBoton(c, texto, raiz, sb) {
+  hijos = c.getComponents();
+  for (int i = 0; i < hijos.length; i++) {
+    h = hijos[i];
+    if (h instanceof AbstractButton && texto.equals(h.getText()) && h.isShowing()) {
+      p = SwingUtilities.convertPoint(h.getParent(), h.getLocation(), raiz);
+      sb.append(p.x + "," + p.y + "," + h.getWidth() + "," + h.getHeight() + "\n");
+    }
+    if (h instanceof Container) buscarBoton(h, texto, raiz, sb);
+  }
+}
+
+ocultarLateral(c) {
+  hijos = c.getComponents();
+  for (int i = 0; i < hijos.length; i++) {
+    h = hijos[i];
+    if (h instanceof JSplitPane && h.getOrientation() == JSplitPane.HORIZONTAL_SPLIT) {
+      h.getLeftComponent().setVisible(false);
+      h.setDividerSize(0);
+      h.setDividerLocation(0);
+      return true;
+    }
+    if (h instanceof Container && ocultarLateral(h)) return true;
+  }
+  return false;
+}
+
+maquetar(c) {
+  c.doLayout();
+  hijos = c.getComponents();
+  for (int i = 0; i < hijos.length; i++) if (hijos[i] instanceof Container) maquetar(hijos[i]);
+}
+
+trabajo() {
+  try {
+    ctx = ij.IJ.runPlugIn("org.scijava.Context", "");
+    ss = ctx.getService(org.scijava.script.ScriptService.class);
+    ed = null;
+    enEdt(new Runnable() { public void run() {
+      ed = new org.scijava.ui.swing.script.TextEditor(ctx);
+      ed.createNewDocument("Mamosferas_campo_claro.ijm", macroEjemplo);
+      // El lenguaje (ImageJ Macro) se deduce de la extensión .ijm del documento
+      ed.setSize(1180, 780);
+      ed.setLocation(40, 40);
+      ed.setVisible(true);
+      ed.getEditorPane().setCaretPosition(0);
+    }});
+    Thread.sleep(3000);
+    // Ocultar el explorador de archivos lateral (mostraría carpetas del equipo)
+    enEdt(new Runnable() { public void run() {
+      ocultarLateral(ed.getRootPane());
+      ed.getRootPane().revalidate();
+    }});
+    Thread.sleep(1000);
+    pintar(ed.getRootPane(), "editor-completo.png");
+
+    sb = new StringBuffer();
+    buscarBoton(ed.getRootPane(), "Run", ed.getRootPane(), sb);
+    ij.IJ.saveString(sb.toString(), new File(salida, "run.txt").getPath());
+
+    barra = ed.getJMenuBar();
+    menu = null;
+    for (int i = 0; i < barra.getMenuCount(); i++) {
+      m = barra.getMenu(i);
+      if (m != null && "Language".equals(m.getText())) menu = m;
+    }
+    // Menú Language: el desplegable se pinta aparte y se superpone bajo su título
+    popup = menu.getPopupMenu();
+    nombres = new StringBuffer();
+    elementos = popup.getComponents();
+    for (int i = 0; i < elementos.length; i++) {
+      e = elementos[i];
+      if (e instanceof JMenuItem) nombres.append(e.getText() + "|" + e.isSelected() + "\n");
+    }
+    ij.IJ.saveString(nombres.toString(), new File(salida, "lenguajes.txt").getPath());
+
+    base = new BufferedImage(ed.getRootPane().getWidth(), ed.getRootPane().getHeight(), BufferedImage.TYPE_INT_RGB);
+    enEdt(new Runnable() { public void run() {
+      menu.setSelected(true);
+      g = base.createGraphics();
+      g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+      ed.getRootPane().paint(g);
+      tam = popup.getPreferredSize();
+      popup.setSize(tam);
+      maquetar(popup);
+      p = SwingUtilities.convertPoint(menu.getParent(), menu.getLocation(), ed.getRootPane());
+      g.translate(p.x, p.y + menu.getHeight());
+      popup.paint(g);
+      g.dispose();
+      menu.setSelected(false);
+    }});
+    ImageIO.write(base, "png", new File(salida, "editor-lenguaje.png"));
+    enEdt(new Runnable() { public void run() { ed.dispose(); }});
+  } catch (Throwable e) {
+    sw = new java.io.StringWriter();
+    e.printStackTrace(new java.io.PrintWriter(sw));
+    ij.IJ.saveString(sw.toString(), new File(salida, "error.txt").getPath());
+  } finally {
+    ij.IJ.saveString("fin", new File(salida, "fin.txt").getPath());
+  }
+}
+
+new Thread(new Runnable() { public void run() { trabajo(); } }).start();
+return "lanzado";

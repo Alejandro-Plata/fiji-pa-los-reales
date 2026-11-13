@@ -58,7 +58,8 @@
     "publicar": "node scripts/publicar.mjs",
     "escritorio": "electron .",
     "windows": "node scripts/empaquetar-windows.mjs",
-    "capturas": "node scripts/capturas-readme.mjs"
+    "capturas": "node scripts/capturas-readme.mjs",
+    "capturas:fiji": "node scripts/capturas-fiji.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.6.2",

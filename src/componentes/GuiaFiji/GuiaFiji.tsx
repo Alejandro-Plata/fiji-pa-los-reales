@@ -4,8 +4,8 @@ import { t } from '../../textos/es';
 import estilos from './GuiaFiji.module.css';
 
 /**
- * Guía de la sección 11: pasos plegables con un hueco para captura de Fiji en cada uno
- * (imágenes en /public/capturas/, las aporta la diseñadora) y tabla de errores comunes.
+ * Guía de la sección 11: pasos plegables con una captura de Fiji en cada uno
+ * (public/capturas/, generadas con scripts/capturas-fiji.mjs) y tabla de errores frecuentes.
  */
 export function GuiaFiji({ nivelTitulo = 2 }: { nivelTitulo?: 2 | 3 }) {
   const g = t.guia;
@@ -23,12 +23,17 @@ export function GuiaFiji({ nivelTitulo = 2 }: { nivelTitulo?: 2 | 3 }) {
               ))}
             </Lista>
             {'nota' in p && p.nota && <Nota>{p.nota}</Nota>}
-            <figure className={estilos.captura} data-captura={`capturas/${p.captura.archivo}`}>
-              <div className={estilos.hueco} role="img" aria-label={p.captura.alt}>
-                <span>{g.hueco}</span>
-                <code>{`capturas/${p.captura.archivo}`}</code>
-              </div>
-              <figcaption className="caption texto-suave">{p.captura.alt}</figcaption>
+            <figure className={estilos.captura}>
+              <img
+                className={estilos.imagen}
+                src={`./capturas/${p.captura.archivo}`}
+                alt={p.captura.alt}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption className="caption texto-suave" aria-hidden="true">
+                {p.captura.alt}
+              </figcaption>
             </figure>
           </Plegable>
         );

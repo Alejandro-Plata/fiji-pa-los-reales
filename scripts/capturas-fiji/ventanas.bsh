@@ -1,0 +1,127 @@
+// Pinta en PNG dos ventanas reales de Fiji (sin capturar la pantalla):
+//  - buscador de comandos con el macro instalado en Plugins › Recetetas;
+//  - «Manage update sites» del actualizador, con CSBDeep y StarDist.
+// args.txt: carpeta de salida. Escribe fin.txt al terminar y error-*.txt si algo falla.
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.swing.*;
+import javax.imageio.ImageIO;
+
+args = ij.IJ.openAsString(System.getProperty("fplr.args")).split("\n");
+salida = args[0].trim();
+
+enEdt(r) {
+  if (SwingUtilities.isEventDispatchThread()) r.run(); else SwingUtilities.invokeAndWait(r);
+}
+
+pintar(comp, archivo) {
+  img = new BufferedImage(comp.getWidth(), comp.getHeight(), BufferedImage.TYPE_INT_RGB);
+  enEdt(new Runnable() { public void run() {
+    g = img.createGraphics();
+    g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    comp.paint(g);
+    g.dispose();
+  }});
+  ImageIO.write(img, "png", new File(salida, archivo));
+}
+
+error(nombre, e) {
+  sw = new java.io.StringWriter();
+  e.printStackTrace(new java.io.PrintWriter(sw));
+  ij.IJ.saveString(sw.toString(), new File(salida, "error-" + nombre + ".txt").getPath());
+}
+
+buscarTexto(c, lista) {
+  hijos = c.getComponents();
+  for (int i = 0; i < hijos.length; i++) {
+    if (hijos[i] instanceof JTextField) lista.add(hijos[i]);
+    if (hijos[i] instanceof Container) buscarTexto(hijos[i], lista);
+  }
+}
+
+describir(c, sb, n) {
+  sb.append("                    ".substring(0, Math.min(20, n * 2)) + c.getClass().getName());
+  if (c instanceof AbstractButton) sb.append(" [" + c.getText() + "]");
+  if (c instanceof JLabel) sb.append(" {" + c.getText() + "}");
+  sb.append("\n");
+  if (c instanceof Container) {
+    hijos = c.getComponents();
+    for (int i = 0; i < hijos.length; i++) describir(hijos[i], sb, n + 1);
+  }
+}
+
+buscadorComandos() {
+  try {
+    // El buscador se coloca respecto a la ventana principal: tiene que estar visible
+    principal = ij.IJ.getInstance();
+    enEdt(new Runnable() { public void run() { principal.setVisible(true); }});
+    Thread.sleep(1500);
+    ij.IJ.doCommand("Find Commands...");
+    Thread.sleep(3000);
+    marcos = Frame.getFrames();
+    sb = new StringBuffer();
+    for (int i = 0; i < marcos.length; i++) {
+      f = marcos[i];
+      sb.append(f.getClass().getName() + " | " + f.getTitle() + " | " + f.isShowing() + "\n");
+      if (f.isShowing() && f instanceof JFrame && f.getTitle().startsWith("Command Finder")) {
+        campos = new java.util.ArrayList();
+        buscarTexto(f.getRootPane(), campos);
+        if (campos.size() > 0) {
+          campo = campos.get(0);
+          enEdt(new Runnable() { public void run() { campo.setText("Recetetas"); }});
+        }
+        Thread.sleep(1500);
+        enEdt(new Runnable() { public void run() { f.setSize(820, 360); f.validate(); }});
+        Thread.sleep(1000);
+        pintar(f.getRootPane(), "buscador.png");
+        enEdt(new Runnable() { public void run() { f.dispose(); }});
+      }
+    }
+    ij.IJ.saveString(sb.toString(), new File(salida, "marcos.txt").getPath());
+  } catch (Throwable e) { error("buscador", e); }
+}
+
+sitios() {
+  try {
+    ctx = ij.IJ.runPlugIn("org.scijava.Context", "");
+    log = ctx.getService(org.scijava.log.LogService.class);
+    raiz = new File(ij.IJ.getDirectory("imagej"));
+    files = new net.imagej.updater.FilesCollection(log, raiz);
+    files.read();
+    try { net.imagej.updater.util.AvailableSites.initializeAndAddSites(files, log); }
+    catch (Throwable e) { error("sitios-red", e); }
+    dlg = null;
+    enEdt(new Runnable() { public void run() {
+      marco = new net.imagej.ui.swing.updater.UpdaterFrame(log, null, files);
+      dlg = new net.imagej.ui.swing.updater.SitesDialog(marco, files);
+      dlg.setModal(false);
+      dlg.setSize(980, 520);
+      dlg.setVisible(true);
+    }});
+    Thread.sleep(3000);
+    sb = new StringBuffer();
+    describir(dlg.getRootPane(), sb, 0);
+    ij.IJ.saveString(sb.toString(), new File(salida, "sitios-arbol.txt").getPath());
+    // Filtrar la tabla por «StarDist» si el diálogo tiene buscador; si no, se pinta tal cual
+    campos = new java.util.ArrayList();
+    buscarTexto(dlg.getRootPane(), campos);
+    pintar(dlg.getRootPane(), "sitios.png");
+    if (campos.size() > 0) {
+      campo = campos.get(0);
+      enEdt(new Runnable() { public void run() { campo.setText("StarDist"); }});
+      Thread.sleep(1500);
+      pintar(dlg.getRootPane(), "sitios-stardist.png");
+      enEdt(new Runnable() { public void run() { campo.setText("CSBDeep"); }});
+      Thread.sleep(1500);
+      pintar(dlg.getRootPane(), "sitios-csbdeep.png");
+    }
+    enEdt(new Runnable() { public void run() { dlg.dispose(); }});
+  } catch (Throwable e) { error("sitios", e); }
+}
+
+new Thread(new Runnable() { public void run() {
+  buscadorComandos();
+  sitios();
+  ij.IJ.saveString("fin", new File(salida, "fin.txt").getPath());
+}}).start();
+return "lanzado";

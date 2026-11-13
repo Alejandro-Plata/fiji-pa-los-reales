@@ -63,6 +63,12 @@ de modo que con «reducir movimiento» se ve la ilustración final sin movimient
 Profesional e impersonal: sin tuteo, instrucciones en infinitivo («Seleccionar la carpeta»),
 explicaciones en forma impersonal. Aplica también a los mensajes que muestran los macros en Fiji.
 
-## Huecos para recursos de la diseñadora
-- `public/capturas/` — capturas de Fiji de las instrucciones (con texto alternativo).
+## Capturas de «Uso en Fiji»
+`public/capturas/` se genera con `npm run capturas:fiji` (`scripts/capturas-fiji.mjs`):
+- Ventanas reales de Fiji (editor de scripts, botón Run, buscador de comandos, Manage Update Sites)
+  pintadas por la propia ventana en PNG desde BeanShell: nunca se captura la pantalla.
+- Página oficial de descargas de Fiji y pantallas de la app: navegador automatizado.
+- Resultados e imagen de control: salida real de Fiji en las validaciones (`scripts/salida/`).
+
+## Pendiente de la diseñadora
 - Mascotas y fondo de estrellas: sin implementar hasta que haya archivos.

@@ -2,7 +2,7 @@
 // Receteta: Mamosferas · campo claro
 // Tipo: mamosferas · Fiji pa los reales v1.0.0 · 2026-10-22
 // Parámetros: {"imagenes":{"extensiones":[".tif",".tiff"],"escala":{"modo":"archivo"},"proyeccionZ":"media"},"parametros":{"canal":1,"metodo":"bordes","suavizado":2,"radioBordes":4,"restarFondo":{"activo":true,"radio":50},"metodoUmbral":"Otsu","rellenarHuecos":false,"limpiarRuido":false,"separarTocandose":false,"diametroMin":50,"diametroMax":null,"circularidadMin":0.4,"excluirBordes":true,"celulasSembradas":null,"salidas":{"objetos":false,"resumen":true,"control":false,"rois":false}}}
-// Uso: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
+// Uso: en Fiji, File > New > Script..., menú Language > ImageJ Macro,
 // pegar este texto y ejecutar con Run.
 // ==============================================================
 requires("1.54f");

@@ -40,7 +40,7 @@ export function cabecera(r: Receteta, ctx: Contexto): string[] {
     `// Receteta: ${comentario(r.nombre)}`,
     `// Tipo: ${NOMBRE_TIPO[r.tipo]} · ${NOMBRE_APP} v${ctx.versionApp} · ${ctx.fecha}`,
     `// Parámetros: ${comentario(parametros)}`,
-    '// Uso: en Fiji, File > New > Script..., menú Language > IJ1 Macro,',
+    '// Uso: en Fiji, File > New > Script..., menú Language > ImageJ Macro,',
     '// pegar este texto y ejecutar con Run.',
     '// ==============================================================',
     'requires("1.54f");',

@@ -131,7 +131,7 @@ test('instrucciones: pasos plegables, huecos de captura y errores comunes', asyn
   await page.goto('/#/fiji');
   await expect(page.getByText('A. Instalación de Fiji')).toBeVisible();
   await page.getByText('C. Apertura del macro en Fiji').click();
-  await expect(page.getByText(/Language › IJ1 Macro\. Este paso es imprescindible/)).toBeVisible();
+  await expect(page.getByText(/Language › ImageJ Macro \(en versiones anteriores de Fiji, «IJ1 Macro»\)\. Este paso es imprescindible/)).toBeVisible();
   await expect(page.getByRole('img', { name: /Editor de scripts de Fiji/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Errores frecuentes' })).toBeVisible();
   await expect(page.getByText('Edit › Options › Memory & Threads', { exact: false })).toBeVisible();

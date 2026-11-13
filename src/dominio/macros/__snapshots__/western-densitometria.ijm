@@ -2,7 +2,7 @@
 // Receteta: Western blot · densitometría
 // Tipo: western blot · Fiji pa los reales v1.0.0 · 2026-10-22
 // Parámetros: {"imagenes":{"extensiones":[".tif",".tiff"],"escala":{"modo":"archivo"},"proyeccionZ":"maxima"},"parametros":{"bandasOscuras":true,"fondo":"rollingBall","radioFondo":50,"nombreProteina":"","avisarSaturacion":true}}
-// Uso: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
+// Uso: en Fiji, File > New > Script..., menú Language > ImageJ Macro,
 // pegar este texto y ejecutar con Run.
 // ==============================================================
 requires("1.54f");

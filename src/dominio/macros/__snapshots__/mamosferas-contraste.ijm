@@ -2,7 +2,7 @@
 // Receteta: Mamosferas · contraste simple
 // Tipo: mamosferas · Fiji pa los reales v1.0.0 · 2026-10-22
 // Parámetros: {"imagenes":{"extensiones":[".tif",".tiff"],"escala":{"modo":"archivo"},"proyeccionZ":"maxima"},"parametros":{"canal":1,"metodo":"umbral","suavizado":2,"radioBordes":4,"restarFondo":{"activo":true,"radio":50},"metodoUmbral":"Otsu","rellenarHuecos":true,"limpiarRuido":true,"separarTocandose":false,"diametroMin":50,"diametroMax":null,"circularidadMin":0.4,"excluirBordes":true,"celulasSembradas":null,"salidas":{"objetos":true,"resumen":true,"control":true,"rois":true}}}
-// Uso: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
+// Uso: en Fiji, File > New > Script..., menú Language > ImageJ Macro,
 // pegar este texto y ejecutar con Run.
 // ==============================================================
 requires("1.54f");
