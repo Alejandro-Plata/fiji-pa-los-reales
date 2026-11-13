@@ -104,6 +104,36 @@ describe('instantáneas de macros de fluorescencia', () => {
   });
 });
 
+function western(cambios?: (r: RecetetaDe<'western'>) => void) {
+  const r = desdeCompartida(plantillaPorClave('western-densitometria')!.receteta, 'plantilla') as RecetetaDe<'western'>;
+  cambios?.(r);
+  return r;
+}
+
+describe('instantáneas de macros de western blot', () => {
+  it('western-densitometria', async () => {
+    await expect(generarMacro(western(), CTX)).toMatchFileSnapshot('./__snapshots__/western-densitometria.ijm');
+  });
+  it('western-claras-sin-fondo-beta-actina', async () => {
+    const m = generarMacro(
+      western((r) => {
+        r.parametros.bandasOscuras = false;
+        r.parametros.fondo = 'ninguno';
+        r.parametros.avisarSaturacion = false;
+        r.parametros.nombreProteina = 'β-actina';
+      }),
+      CTX,
+    );
+    expect(m).not.toContain('run("Invert");');
+    expect(m).not.toContain('Subtract Background');
+    expect(m).toContain('"_b_actina_bandas.csv"');
+    await expect(m).toMatchFileSnapshot('./__snapshots__/western-claras-sin-fondo.ijm');
+  });
+  it('el mensaje final empieza por cadena (si empieza por número, IJ1 da NaN)', () => {
+    expect(generarMacro(western(), CTX)).toContain('mensaje = "" + n + ');
+  });
+});
+
 describe('reglas del generador', () => {
   const todos = [...CASOS, ...CASOS_FLUO].map(([, r]) => generarMacro(r, CTX));
 

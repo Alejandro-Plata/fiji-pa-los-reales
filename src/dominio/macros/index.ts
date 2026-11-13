@@ -6,6 +6,7 @@ import type { Receteta } from '../recetetas/tipos';
 import type { Contexto } from './comun';
 import { macroEsferas } from './esferas';
 import { macroFluorescencia } from './fluorescencia';
+import { macroWestern } from './western';
 
 export type { Contexto } from './comun';
 
@@ -17,8 +18,8 @@ export function generarMacro(r: Receteta, ctx: Contexto): string {
       return macroEsferas(r, ctx);
     case 'fluorescencia':
       return macroFluorescencia(r, ctx);
-    default:
-      throw new TipoSinMacro(`El macro de ${r.tipo} llega en una fase posterior.`);
+    case 'western':
+      return macroWestern(r, ctx);
   }
 }
 

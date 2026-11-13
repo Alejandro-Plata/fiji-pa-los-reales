@@ -134,6 +134,44 @@ describe('mamosferas en Fiji real', () => {
   });
 });
 
+describe('western blot en Fiji real (variante de prueba sin waitForUser)', () => {
+  async function lanzarWestern(r: Receteta, imagen: string, nombre: string) {
+    const salida = carpetaSalida(nombre);
+    const rois = join(SINTETICAS, 'western', 'bandas.zip');
+    const res = await ejecutarMacro(generarMacro(r, CTX), `${imagen}|${rois}|${salida}`, {
+      tiempoMs: 120_000,
+    });
+    const log = existsSync(join(salida, 'log.txt')) ? readFileSync(join(salida, 'log.txt'), 'utf8') : '';
+    return { salida, log, res };
+  }
+
+  it('abre, invierte, mide las ROI de ejemplo y numera los carriles', async () => {
+    const r = plantilla('western-densitometria') as Extract<Receteta, { tipo: 'western' }>;
+    r.parametros.nombreProteina = 'SOX2';
+    const { salida, log } = await lanzarWestern(r, join(SINTETICAS, 'western', 'blot.tif'), 'western');
+    const filas = leerCsv(join(salida, 'blot_SOX2_bandas.csv'));
+    expect(filas.map((f) => Number(f.Carril))).toEqual([1, 2, 3, 4, 5, 6]);
+    const senal = filas.map((f) => Number(f.RawIntDen));
+    // Más profundidad de banda = más señal tras invertir
+    for (let i = 1; i < senal.length; i++) expect(senal[i]).toBeGreaterThan(senal[i - 1]!);
+    expect(senal[0]).toBeGreaterThan(0);
+    expect(log).toContain('6 bandas medidas');
+    expect(log).not.toContain('saturados');
+    expect(existsSync(join(salida, 'blot_SOX2_control.jpg'))).toBe(true);
+    expect(existsSync(join(salida, 'blot_SOX2_bandas.zip'))).toBe(true);
+  });
+
+  it('avisa de la saturación con una imagen saturada', async () => {
+    const r = plantilla('western-densitometria');
+    const { log } = await lanzarWestern(
+      r,
+      join(SINTETICAS, 'western_saturado', 'blot_saturado.tif'),
+      'western-saturado',
+    );
+    expect(log).toContain('La imagen tiene píxeles saturados.');
+  });
+});
+
 type Fluo = Extract<Receteta, { tipo: 'fluorescencia' }>;
 
 function fluo(clave: string, umbral: number | null = 1200): Fluo {

@@ -106,11 +106,50 @@ def fluorescencia(carpeta: Path) -> dict:
     return {"nucleos": 40, "positivos": 10, "porcentaje": 25.0, "umbral_prueba": 1200}
 
 
+def roi_rectangulo(x: int, y: int, ancho: int, alto: int) -> bytes:
+    """ROI rectangular en el formato binario de ImageJ (cabecera de 64 bytes)."""
+    import struct
+    cab = bytearray(64)
+    cab[0:4] = b"Iout"
+    struct.pack_into(">h", cab, 4, 228)  # versión
+    cab[6] = 1  # tipo: rectángulo
+    struct.pack_into(">hhhh", cab, 8, y, x, y + alto, x + ancho)  # top, left, bottom, right
+    return bytes(cab)
+
+
+def western(carpeta: Path) -> dict:
+    import zipfile
+    alto, ancho = 300, 800
+    fondo = 50000.0
+    yy, xx = np.mgrid[0:alto, 0:ancho]
+    profundidades = [3000, 6000, 9000, 12000, 15000, 18000]  # señal creciente carril a carril
+    img = np.full((alto, ancho), fondo)
+    for i, d in enumerate(profundidades):
+        cx = 100 + 120 * i
+        banda = np.exp(-(((xx - cx) / 22.0) ** 2) - (((yy - 150) / 7.0) ** 2))
+        img -= d * banda
+    img += RNG.normal(0, 150, img.shape)
+    carpeta.mkdir(parents=True, exist_ok=True)
+    guardar_tif(carpeta / "blot.tif", np.clip(img, 1, 65534).astype(np.uint16))
+
+    saturada = img.copy()
+    saturada[140:160, 690:715] = 0  # una banda quemada (negro puro)
+    sat = carpeta.parent / "western_saturado"
+    sat.mkdir(parents=True, exist_ok=True)
+    guardar_tif(sat / "blot_saturado.tif", np.clip(saturada, 0, 65534).astype(np.uint16))
+
+    with zipfile.ZipFile(carpeta / "bandas.zip", "w") as z:
+        for i in range(len(profundidades)):
+            z.writestr(f"{i + 1:04d}.roi", roi_rectangulo(100 + 120 * i - 40, 130, 80, 40))
+    return {"bandas": len(profundidades)}
+
+
 if __name__ == "__main__":
     base = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).parent / "sinteticas"
     esperado = {
         "esferas": esferas(base / "esferas"),
         "fluorescencia": fluorescencia(base / "fluorescencia"),
+        "western": western(base / "western"),
     }
     (base / "esperado.json").write_text(json.dumps(esperado, indent=2), encoding="utf-8")
     print(json.dumps(esperado, indent=2))
