@@ -18,7 +18,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icono.svg', 'capturas/*'],
+      includeAssets: ['icono.svg', 'logo.svg', 'capturas/*'],
       manifest: {
         name: 'Fiji pa los reales',
         short_name: 'Fiji pa los reales',

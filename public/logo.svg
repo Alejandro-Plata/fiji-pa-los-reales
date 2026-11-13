@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t">
+  <title id="t">Fiji pa los reales</title>
+  <!-- Paleta de DESIGN.md: primary #150f23, accent-lime #c2ef4e, accent-pink #fa7faa, ink-deep #1f1633 -->
+  <rect width="512" height="512" rx="112" fill="#150f23"/>
+  <!-- Contorno de pegatina (blanco) bajo las esferas -->
+  <g fill="none" stroke="#ffffff" stroke-width="28" stroke-linejoin="round">
+    <circle cx="226" cy="282" r="120"/>
+    <circle cx="358" cy="190" r="70"/>
+    <circle cx="372" cy="342" r="40"/>
+  </g>
+  <!-- Racimo de esferas: la grande es la mamosfera -->
+  <circle cx="226" cy="282" r="120" fill="#c2ef4e" stroke="#1f1633" stroke-width="8"/>
+  <circle cx="358" cy="190" r="70" fill="#c2ef4e" stroke="#1f1633" stroke-width="8"/>
+  <circle cx="372" cy="342" r="40" fill="#fa7faa" stroke="#1f1633" stroke-width="8"/>
+  <!-- Células dentro de la esfera -->
+  <g fill="#1f1633">
+    <circle cx="186" cy="246" r="15"/>
+    <circle cx="240" cy="226" r="11"/>
+    <circle cx="272" cy="284" r="16"/>
+    <circle cx="200" cy="318" r="12"/>
+    <circle cx="246" cy="344" r="10"/>
+    <circle cx="160" cy="294" r="9"/>
+    <circle cx="370" cy="178" r="10"/>
+    <circle cx="340" cy="212" r="8"/>
+  </g>
+  <!-- Brillo: volumen de esfera -->
+  <path d="M150 230 A 96 96 0 0 1 214 176" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" opacity="0.85"/>
+</svg>

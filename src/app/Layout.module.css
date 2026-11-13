@@ -40,9 +40,16 @@
   padding-block: var(--spacing-sm);
 }
 
+.logo {
+  flex: none;
+  width: 32px;
+  height: 32px;
+}
+
 .marca {
   display: inline-flex;
   align-items: center;
+  gap: var(--espacio-3);
   min-height: var(--objetivo-tactil);
   font-family: var(--fuente-display);
   font-size: var(--heading-sm-size);

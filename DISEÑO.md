@@ -31,10 +31,26 @@ primero los tokens de DESIGN.md con sus nombres, después los alias semánticos 
 | Pantalla | `componentes/Pantalla` | heading-xl, eyebrow | — |
 | Banda portada | `pantallas/Inicio` | surface-canvas-dark, display-large, chip-lime-keyword, body-lg | — |
 | Aviso | `app/AvisoAlmacenamiento` | surface-press-light, borde `--color-aviso`, caption | visible/oculto |
+| Campo (etiqueta, «Recomendado», «¿Qué es esto?», pista, error) | `componentes/Campo` | body-strong, pill-neutral-dark, caption, borde rosa en error | normal, foco (inset), error, ayuda abierta/cerrada |
+| Entrada de texto / número / lista | `componentes/Campo/Controles` | text-input / text-input-focused (hairline-cool, rounded-sm) | normal, foco, error, vacío |
+| Selector de opciones (tarjetas / Sí-No / casillas) | `componentes/Selector` | card con hairline-cool; marcada invertida a surface-night (card-pricing-featured) | normal, pulsado, marcado, foco |
+| Plegable | `componentes/Plegable` | hairline-cloud, rounded-xl, heading-sm | abierto, cerrado, foco |
+| Diálogo | `componentes/Dialogo` | surface-canvas-light, rounded-xl, elevation-2, velo `--color-velo` | abierto, cerrado; ancho normal/amplio |
+| Nota | `componentes/Nota` | surface-press-light + marca lateral (info/aviso/error/éxito) | — |
+| Avisos emergentes | `app/Avisos` | surface-night, acción button-inverted | visible, con acción («Deshacer»), cerrado |
+| Bloque de código | `componentes/BloqueCodigo` | code-block (surface-night, Monaco 16 px, rounded-md), números on-dark-muted | normal, ajustar líneas, compacto (altura máx.), seleccionado |
+| Guía de Fiji | `componentes/GuiaFiji` | plegables + huecos rounded-xxl para capturas; tabla densa (tarjetas en móvil) | — |
+| Tarjeta de receteta | `pantallas/Inicio/TarjetaReceteta` | card-pricing; favorita invertida | normal, favorita, más acciones abiertas |
+| Indicador de pasos | `pantallas/Asistente` | rounded-xl; actual invertido a surface-night | actual, visitado, no visitado (deshabilitado, borde discontinuo) |
+| Resultado destacado (umbral, recuento) | `pantallas/Umbral`, `pantallas/Rapido` | card-pricing-featured + display-large | — |
+| Lienzo del análisis rápido | `pantallas/Rapido/Lienzo` | rounded-xxl, surface-night; contornos lima (contados) y rosa (descartados) | normal, calibrando (borde lima), con zoom |
 
-Los componentes de las fases siguientes se añaden a esta tabla al crearlos.
+## Logo
+`public/logo.svg` (pedido por la usuaria al terminar): azulejo `{colors.primary}` con un racimo de
+esferas en `{colors.accent-lime}` y una en `{colors.accent-pink}`, contorno de pegatina blanco y
+células en `{colors.ink-deep}`. `npm run iconos` genera desde él los iconos de la PWA (192, 512,
+maskable) y los de Android (clásicos, redondos y adaptativos con fondo `#150F23`).
 
 ## Huecos para recursos de la diseñadora
 - `public/capturas/` — capturas de Fiji de las instrucciones (con texto alternativo).
-- `public/iconos/` — iconos provisionales generados por `npm run iconos`.
 - Mascotas y fondo de estrellas: sin implementar hasta que haya archivos.

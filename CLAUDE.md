@@ -15,6 +15,26 @@ La especificación completa está en `spec.md`. El diseño visual manda según `
   desde 320 px, objetivos táctiles ≥ 44 px, campos ≥ 16 px.
 - Nombre de la app: **Fiji pa los reales**.
 
+## Lenguaje de macros IJ1: comprobado en Fiji 1.54p (no repetir estos errores)
+- `nChannels` NO existe: usar `getDimensions(ancho, alto, canales, planos, tiempos)`.
+- `roiManager("reset")` ANTES de `setBatchMode(true)`; si no, las ROI van a otro gestor.
+- Cadenas con tildes: `texto()` (fromCharCode). Con `-macro` el .ijm se lee en cp1252.
+- Una expresión que empieza por número no concatena: `"" + n + " bandas"`, nunca `n + " bandas"`.
+- No depender de los índices de Results tras Analyze Particles + Measure: tabla propia
+  («Objetos») con `getValue()` y `Table.set()`.
+- Con ninguna imagen analizable, guardar log.txt antes de `exit()`.
+
+## Pruebas con Fiji real
+- `npm run sinteticas` (Python + numpy + tifffile + Pillow) y `npm run validar:fiji`.
+- En Windows se usa Fiji con interfaz minimizada (WSL2 no disponible: virtualización desactivada).
+- Fiji funciona como instancia única: `scripts/fiji.ts` mata el árbol de procesos entre pruebas.
+- StarDist: pendiente de validar (TensorFlow 1.15 se bloquea con el Java 21 de Fiji 2.18 aquí).
+  Activar con `FIJI_STARDIST=1` donde funcione.
+
+## Enlaces de receteta desde la app Android
+La app nativa necesita la dirección pública de la PWA: `VITE_URL_PUBLICA=https://…` al compilar.
+Sin ella, «Compartir» ofrece el archivo .json.
+
 ## Comandos
 - `npm run dev` · `npm run build` · `npm test` (Vitest) · `npm run e2e` (Playwright) · `npm run lint`
 - Android: `npm run android` y después `cd android && gradlew assembleDebug`

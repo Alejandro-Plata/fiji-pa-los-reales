@@ -34,6 +34,7 @@ export function Layout() {
       <header className={estilos.cabecera}>
         <div className={`contenedor ${estilos.barraNav}`}>
           <NavLink to="/" className={estilos.marca}>
+            <img src="./logo.svg" alt="" width={32} height={32} className={estilos.logo} />
             {t.app.nombre}
           </NavLink>
 
