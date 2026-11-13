@@ -44,6 +44,8 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,jpg,woff2,ijm}'],
         navigateFallback: 'index.html',
+        // Descargas del APK y version.json: siempre a la red, nunca la página de la app
+        navigateFallbackDenylist: [/\/descargas\//],
       },
     }),
   ],

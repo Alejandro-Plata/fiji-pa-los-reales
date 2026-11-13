@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { t } from '../textos/es';
 import { AvisoAlmacenamiento } from './AvisoAlmacenamiento';
+import { useAvisos } from './Avisos';
+import { comprobarActualizacion } from './actualizaciones';
+import { esAppNativa } from './plataforma';
 import estilos from './Layout.module.css';
 
 const enlaces = [
@@ -11,6 +14,9 @@ const enlaces = [
   { to: '/rapido', texto: t.nav.rapido, fin: false },
   { to: '/ajustes', texto: t.nav.ajustes, fin: false },
 ];
+
+/** Una sola comprobación de actualizaciones por arranque de la app. */
+let comprobadoAlArrancar = false;
 
 export function Layout() {
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -25,6 +31,21 @@ export function Layout() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  // App Android: al arrancar, aviso discreto si hay una versión nueva publicada
+  const avisar = useAvisos();
+  const navegar = useNavigate();
+  useEffect(() => {
+    if (!esAppNativa() || comprobadoAlArrancar) return;
+    comprobadoAlArrancar = true;
+    void comprobarActualizacion().then((r) => {
+      if (r.estado !== 'disponible') return;
+      avisar(t.ajustes.actualizaciones.aviso(r.publicacion.version), {
+        accion: { texto: t.ajustes.actualizaciones.ver, alPulsar: () => navegar('/ajustes') },
+        duracion: 10000,
+      });
+    });
+  }, [avisar, navegar]);
 
   return (
     <div className={estilos.marco}>

@@ -36,9 +36,9 @@ La especificación completa está en `spec.md`. El diseño visual manda según `
 ## Enlaces de receteta desde la app Android
 La app nativa necesita la dirección pública de la PWA: `VITE_URL_PUBLICA=https://…` al compilar.
 Sin ella, «Compartir» ofrece el archivo .json.
-Repositorio: github.com/Alejandro-Plata/fiji-pa-los-reales. La PWA se publica con
-`.github/workflows/pages.yml` en https://alejandro-plata.github.io/fiji-pa-los-reales/ (requiere
-Settings › Pages › Source: «GitHub Actions»). El APK se compila con esa dirección.
+Repositorio: github.com/Alejandro-Plata/fiji-pa-los-reales. La PWA se publica en Netlify
+(`netlify.toml`): `npm run build && npx netlify-cli deploy --prod --dir dist`. El APK se compila
+con `VITE_URL_PUBLICA` apuntando a la dirección de Netlify.
 
 ## Comandos
 - `npm run dev` · `npm run build` · `npm test` (Vitest) · `npm run e2e` (Playwright) · `npm run lint`

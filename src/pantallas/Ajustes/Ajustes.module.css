@@ -13,3 +13,41 @@
   gap: var(--espacio-3);
   padding-left: var(--espacio-6);
 }
+
+/* ---------- Actualizaciones ---------- */
+.estadoActualizacion,
+.novedades {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.disponible {
+  font-family: var(--fuente-display);
+  font-size: var(--heading-md-size);
+  font-weight: var(--heading-md-weight);
+  line-height: var(--heading-md-leading);
+}
+
+.subtitulo {
+  font-size: var(--heading-sm-size);
+  font-weight: var(--heading-sm-weight);
+  line-height: var(--heading-sm-leading);
+}
+
+.progreso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.progreso progress {
+  width: 100%;
+  height: 12px;
+  accent-color: var(--ink-deep);
+}
+
+/* Enlace de descarga con aspecto de botón primario */
+.enlaceBoton {
+  composes: boton primario from '../../componentes/Boton/Boton.module.css';
+}

@@ -436,6 +436,34 @@ export const t = {
     borrarDefinitivo: 'Borrar definitivamente',
     borrado: 'Se han borrado todos los datos.',
     acerca: 'Acerca de',
+    actualizaciones: {
+      titulo: 'Actualizaciones',
+      instalada: (v: string) => `Versión instalada: ${v}`,
+      buscar: 'Buscar actualizaciones',
+      buscando: 'Buscando actualizaciones…',
+      alDia: 'La aplicación está actualizada.',
+      disponible: (v: string) => `Versión ${v} disponible`,
+      publicada: (f: string, tam?: string) => `Publicada el ${f}${tam ? ` · ${tam}` : ''}`,
+      novedades: 'Novedades',
+      instalar: 'Descargar e instalar',
+      descargando: (pct: number) => `Descargando… ${pct} %`,
+      instalador:
+        'Instalador de Android abierto. Al confirmar, la aplicación se actualiza conservando las recetetas.',
+      sinPermiso:
+        'Android requiere autorizar a Fiji pa los reales para instalar aplicaciones. Tras conceder el permiso, volver a esta pantalla y repetir la descarga.',
+      concederPermiso: 'Conceder permiso',
+      sinPublicacion: 'No hay ninguna versión publicada.',
+      error: 'No se ha podido consultar el servidor de actualizaciones. Comprobar la conexión a internet.',
+      errorDescarga: 'No se ha podido descargar la actualización.',
+      aviso: (v: string) => `Versión ${v} disponible`,
+      ver: 'Ver',
+      // Web (PWA): se actualiza sola; se ofrece la app de Android
+      web: 'La versión web se actualiza automáticamente.',
+      android: 'Aplicación para Android',
+      descargarApk: (v: string) => `Descargar APK ${v}`,
+      androidTexto:
+        'Al abrir el archivo descargado, Android solicita autorización para instalar aplicaciones de esta fuente. Las siguientes actualizaciones pueden instalarse desde Ajustes, dentro de la propia app.',
+    },
     instalar: 'Instalación en el móvil',
     instalarPasos: [
       'iPhone: abrir la app en Safari, seleccionar Compartir y después «Añadir a pantalla de inicio».',

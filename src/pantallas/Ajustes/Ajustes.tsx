@@ -18,6 +18,7 @@ import {
   type Ajustes as TipoAjustes,
 } from '../../dominio/recetetas/almacenamiento';
 import { t } from '../../textos/es';
+import { Actualizaciones } from './Actualizaciones';
 import estilos from './Ajustes.module.css';
 
 export function Ajustes() {
@@ -130,6 +131,8 @@ export function Ajustes() {
           </Boton>
         </div>
       </section>
+
+      <Actualizaciones />
 
       <section className={estilos.seccion} aria-labelledby="aj-acerca">
         <h2 id="aj-acerca">{tx.acerca}</h2>

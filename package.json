@@ -1,7 +1,7 @@
 {
   "name": "fiji-pa-los-reales",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Genera macros de Fiji a partir de opciones elegidas con botones.",
   "scripts": {
@@ -16,7 +16,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "iconos": "node scripts/generar-iconos.mjs",
-    "android": "npm run build && npx cap sync android"
+    "android": "npm run build && npx cap sync android",
+    "publicar": "node scripts/publicar.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.6.2",
