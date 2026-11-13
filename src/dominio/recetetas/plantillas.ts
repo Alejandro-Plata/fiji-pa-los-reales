@@ -20,7 +20,7 @@ export const PLANTILLAS: Plantilla[] = [
     tipo: 'esferas',
     nombre: 'Mamosferas · campo claro',
     descripcion:
-      'Detección por bordes, diámetro ≥ 50 µm, circularidad ≥ 0,4, rellenar huecos, sin separar esferas pegadas.',
+      'Detección por bordes, diámetro ≥ 50 µm, circularidad ≥ 0,4, rellenar huecos, sin separar esferas en contacto.',
     parametros: {
       metodo: 'bordes',
       diametroMin: 50,

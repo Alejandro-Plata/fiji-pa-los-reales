@@ -57,7 +57,8 @@
     "android": "npm run build && npx cap sync android",
     "publicar": "node scripts/publicar.mjs",
     "escritorio": "electron .",
-    "windows": "node scripts/empaquetar-windows.mjs"
+    "windows": "node scripts/empaquetar-windows.mjs",
+    "capturas": "node scripts/capturas-readme.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.6.2",
