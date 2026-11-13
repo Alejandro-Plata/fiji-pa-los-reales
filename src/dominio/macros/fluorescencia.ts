@@ -23,7 +23,7 @@ export function macroFluorescencia(r: RecetetaDe<'fluorescencia'>, ctx: Contexto
       '// StarDist: comprobamos que está instalado antes de empezar',
       'List.setCommands;',
       `if (List.get("StarDist 2D") == "" || List.get("Command From Macro") == "") exit(${texto(
-        'Esta receteta usa StarDist, que no está instalado.\nEn Fiji: Help > Update... > Manage update sites > marca CSBDeep y StarDist > Apply and Close > Apply changes, y reinicia Fiji.',
+        'Esta receteta usa StarDist, que no está instalado.\nInstalación en Fiji: Help > Update... > Manage update sites > CSBDeep y StarDist > Apply and Close > Apply changes; después, reiniciar Fiji.',
       )});`,
     );
   }

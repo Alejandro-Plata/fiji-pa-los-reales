@@ -7,7 +7,7 @@ test.skip(!existsSync(join(SINT, 'rapido', 'esferas_12mp.jpg')), 'Faltan las sin
 
 test('TIFF con escala: 8 esferas, igual que Fiji, con el aviso siempre visible', async ({ page }) => {
   await page.goto('/#/rapido');
-  await expect(page.getByText('Resultado orientativo. Para la tesis, usa el macro en Fiji.')).toBeVisible();
+  await expect(page.getByText('Resultado orientativo. Para datos publicables, debe usarse el macro en Fiji.')).toBeVisible();
   await page.locator('input[type=file]').setInputFiles(join(SINT, 'esferas', 'esferas.tif'));
   await expect(page.getByTestId('recuento')).toHaveText('8 esferas', { timeout: 20_000 });
   await expect(page.getByText('Escala leída del archivo: 0,65 µm/píxel.')).toBeVisible();
@@ -44,7 +44,7 @@ test('calibrar con la barra de escala y guardar en la receteta', async ({ page }
 
   await page.goto('/#/rapido');
   await page.locator('input[type=file]').setInputFiles(join(SINT, 'esferas_rgb', 'esferas_camara.jpg'));
-  await expect(page.getByText('Indica la escala para medir en micras.')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByText('Se necesita la escala para medir en micras.')).toBeVisible({ timeout: 20_000 });
 
   // La imagen mide 1600 px de ancho: tocamos dos puntos separados 1000 px = 650 µm
   await page.getByRole('button', { name: 'Calibrar con la barra de escala' }).click();
@@ -56,7 +56,7 @@ test('calibrar con la barra de escala y guardar en la receteta', async ({ page }
   await page.mouse.click(caja.x + 300 * k, caja.y + 50 * k);
   await page.mouse.click(caja.x + 1300 * k, caja.y + 50 * k);
   await expect(page.getByText('Puntos marcados: 2 de 2')).toBeVisible();
-  await page.getByLabel('¿Cuántas µm mide la barra?').fill('650');
+  await page.getByLabel('Longitud de la barra (µm)').fill('650');
   await page.getByRole('button', { name: 'Aplicar calibración' }).click();
   await expect(page.getByLabel('Micras por píxel (µm/píxel)')).toHaveValue(/^0,6[45]/);
   await expect(page.getByTestId('recuento')).toHaveText('8 esferas');

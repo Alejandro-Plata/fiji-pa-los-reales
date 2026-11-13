@@ -6,6 +6,7 @@ import estilos from './Layout.module.css';
 
 const enlaces = [
   { to: '/', texto: t.nav.inicio, fin: true },
+  { to: '/tutorial', texto: t.nav.tutorial, fin: false },
   { to: '/fiji', texto: t.nav.fiji, fin: false },
   { to: '/rapido', texto: t.nav.rapido, fin: false },
   { to: '/ajustes', texto: t.nav.ajustes, fin: false },
@@ -94,7 +95,6 @@ export function Layout() {
           />
         </svg>
         <div className={`contenedor ${estilos.pieContenido}`}>
-          <p>{t.pie.privacidad}</p>
           <p>
             {t.app.nombre} · {t.app.version(__VERSION_APP__)}
           </p>

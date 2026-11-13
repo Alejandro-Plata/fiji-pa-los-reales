@@ -2,8 +2,8 @@
 // Receteta: Mamosferas · campo claro
 // Tipo: mamosferas · Fiji pa los reales v1.0.0 · 2026-10-22
 // Parámetros: {"imagenes":{"extensiones":[".tif",".tiff"],"escala":{"modo":"archivo"},"proyeccionZ":"maxima"},"parametros":{"canal":1,"metodo":"bordes","suavizado":2,"radioBordes":4,"restarFondo":{"activo":true,"radio":50},"metodoUmbral":"Otsu","rellenarHuecos":true,"limpiarRuido":true,"separarTocandose":false,"diametroMin":50,"diametroMax":null,"circularidadMin":0.4,"excluirBordes":true,"celulasSembradas":null,"salidas":{"objetos":true,"resumen":true,"control":true,"rois":true}}}
-// Cómo usarlo: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
-// pega este texto y pulsa Run.
+// Uso: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
+// pegar este texto y ejecutar con Run.
 // ==============================================================
 requires("1.54f");
 
@@ -19,8 +19,8 @@ if (args != "") {
     dirEntrada = partes[0];
     dirSalida = partes[1];
 } else {
-    dirEntrada = getDirectory("Elige la carpeta con las im" + fromCharCode(225) + "genes");
-    dirSalida = getDirectory("Elige la carpeta donde guardar los resultados (vac" + fromCharCode(237) + "a)");
+    dirEntrada = getDirectory("Carpeta de im" + fromCharCode(225) + "genes");
+    dirSalida = getDirectory("Carpeta de resultados (vac" + fromCharCode(237) + "a)");
 }
 if (!endsWith(dirEntrada, File.separator)) dirEntrada = dirEntrada + File.separator;
 if (!endsWith(dirSalida, File.separator)) dirSalida = dirSalida + File.separator;
@@ -111,7 +111,7 @@ function aplicarEscala(nombre) {
     if (u == "micron" || u == "microns" || u == "um") return true;
     if (u == fromCharCode(181) + "m" || u == fromCharCode(956) + "m") return true;
     print("  AVISO: " + nombre + " no tiene escala en micras (" + unidad + "). Se omite.");
-    print("  Soluci" + fromCharCode(243) + "n: en la receteta, elige 'Escala manual' e introduce las micras por p" + fromCharCode(237) + "xel.");
+    print("  Soluci" + fromCharCode(243) + "n: seleccionar 'Escala manual' en la receteta e introducir las micras por p" + fromCharCode(237) + "xel.");
     return false;
 }
 

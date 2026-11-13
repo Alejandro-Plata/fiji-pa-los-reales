@@ -24,7 +24,7 @@ test('resultado: resumen, macro con números de línea y copiar', async ({ page 
   await expect(botones.nth(1)).toHaveText('Descargar .ijm');
   await expect(botones.nth(2)).toHaveText('Enviar al ordenador');
   await expect(botones.nth(3)).toHaveText('Texto para Métodos');
-  await expect(botones.nth(4)).toHaveText('Cómo lanzarlo en Fiji');
+  await expect(botones.nth(4)).toHaveText('Ejecución en Fiji');
 
   await expect(page.locator('pre')).toContainText('size=1963.50-Infinity');
   await page.getByRole('button', { name: 'Copiar macro' }).click();
@@ -60,7 +60,7 @@ test('portapapeles bloqueado: selecciona el macro y pide Ctrl+C', async ({ page 
     document.execCommand = () => false;
   });
   await page.getByRole('button', { name: 'Copiar macro' }).click();
-  await expect(page.getByText(/pulsa Ctrl\+C/)).toBeVisible();
+  await expect(page.getByText(/Ctrl\+C \(Cmd\+C en Mac\) para copiarlo/)).toBeVisible();
   const seleccion = await page.evaluate(() => window.getSelection()?.toString() ?? '');
   expect(seleccion).toContain('requires("1.54f");');
 });
@@ -82,10 +82,10 @@ test('ajustar líneas evita el scroll horizontal del código', async ({ page }) 
 
 test('guía de Fiji como panel desde Resultado', async ({ page }) => {
   await guardarPlantilla(page, 'mamosferas-campo-claro');
-  await page.getByRole('button', { name: 'Cómo lanzarlo en Fiji' }).click();
+  await page.getByRole('button', { name: 'Ejecución en Fiji' }).click();
   const panel = page.getByRole('dialog');
-  await expect(panel.getByText('D. Lanzarlo')).toBeVisible();
-  await expect(panel.getByText('Pulsa el botón Run')).toBeVisible();
+  await expect(panel.getByText('D. Ejecución')).toBeVisible();
+  await expect(panel.getByText('Botón Run, en la parte inferior')).toBeVisible();
   await panel.getByRole('button', { name: 'Cerrar' }).click();
   await expect(panel).toBeHidden();
 });
@@ -94,7 +94,7 @@ test('texto para Métodos: copiar y cambiar idioma', async ({ page }) => {
   await guardarPlantilla(page, 'mamosferas-campo-claro');
   await page.getByRole('button', { name: 'Texto para Métodos' }).click();
   const panel = page.getByRole('dialog');
-  await expect(panel.getByText('Revisa el texto y adáptalo al estilo de tu tesis.')).toBeVisible();
+  await expect(panel.getByText('Texto de partida; debe revisarse y adaptarse al estilo del documento.')).toBeVisible();
   await expect(panel.getByText(/circularidad ≥ 0,4/)).toBeVisible();
   await panel.getByRole('button', { name: 'Cambiar idioma' }).click();
   await expect(panel.getByText(/circularity ≥ 0\.4/)).toBeVisible();
@@ -124,15 +124,15 @@ test('vista previa del macro en vivo en escritorio', async ({ page }) => {
   await expect(lateral.locator('pre')).toContainText('size=2827.43-Infinity');
   // Con un error, la vista previa espera
   await page.getByLabel('Diámetro mínimo (µm)').fill('5');
-  await expect(lateral.getByText('Corrige los campos marcados')).toBeVisible();
+  await expect(lateral.getByText('Corregir los campos marcados')).toBeVisible();
 });
 
 test('instrucciones: pasos plegables, huecos de captura y errores comunes', async ({ page }) => {
   await page.goto('/#/fiji');
-  await expect(page.getByText('A. Si aún no tienes Fiji')).toBeVisible();
-  await page.getByText('C. Abrir el macro en Fiji (elige una)').click();
+  await expect(page.getByText('A. Instalación de Fiji')).toBeVisible();
+  await page.getByText('C. Apertura del macro en Fiji').click();
   await expect(page.getByText(/Language › IJ1 Macro\. Este paso es imprescindible/)).toBeVisible();
   await expect(page.getByRole('img', { name: /Editor de scripts de Fiji/ })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Errores comunes' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Errores frecuentes' })).toBeVisible();
   await expect(page.getByText('Edit › Options › Memory & Threads', { exact: false })).toBeVisible();
 });

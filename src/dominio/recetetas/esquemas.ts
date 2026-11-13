@@ -8,15 +8,15 @@ import { z } from 'zod';
 // ---------- Ayudantes ----------
 const numero = (min: number, max: number) =>
   z
-    .number({ error: 'Escribe un número' })
-    .refine((n) => Number.isFinite(n), { error: 'Escribe un número' })
+    .number({ error: 'Introducir un número' })
+    .refine((n) => Number.isFinite(n), { error: 'Introducir un número' })
     .refine((n) => n >= min && n <= max, {
       error: `Debe estar entre ${fmt(min)} y ${fmt(max)}`,
     });
 
 const entero = (min: number, max: number) =>
   z
-    .number({ error: 'Escribe un número entero' })
+    .number({ error: 'Introducir un número entero' })
     .refine((n) => Number.isInteger(n), { error: 'Debe ser un número entero' })
     .refine((n) => n >= min && n <= max, {
       error: `Debe estar entre ${fmt(min)} y ${fmt(max)}`,
@@ -48,7 +48,7 @@ export const esquemaEscala = z.discriminatedUnion('modo', [
 export const esquemaImagenes = z.object({
   extensiones: z
     .array(z.enum([...EXTENSIONES, '*']))
-    .min(1, { error: 'Elige al menos un formato de imagen' })
+    .min(1, { error: 'Seleccionar al menos un formato de imagen' })
     .default(['.tif', '.tiff']),
   escala: esquemaEscala.default({ modo: 'archivo' }),
   proyeccionZ: z.enum(['ninguna', 'maxima', 'media']).default('maxima'),
@@ -100,10 +100,10 @@ export const esquemaMarcador = z.object({
   nombre: z
     .string()
     .trim()
-    .min(1, { error: 'Escribe el nombre del marcador' })
+    .min(1, { error: 'Falta el nombre del marcador' })
     .max(30, { error: 'Máximo 30 caracteres' })
     .regex(/^[\p{L}\p{N} ._+-]+$/u, {
-      error: 'Usa solo letras, números, espacios y . _ + -',
+      error: 'Solo se admiten letras, números, espacios y . _ + -',
     }),
   canal: entero(1, 8),
   umbralPositivo: numero(0, 1e12).nullable().default(null),
@@ -162,7 +162,7 @@ export const esquemaParametrosWestern = z.object({
     .string()
     .trim()
     .max(40, { error: 'Máximo 40 caracteres' })
-    .regex(/^[\p{L}\p{N} ._+-]*$/u, { error: 'Usa solo letras, números, espacios y . _ + -' })
+    .regex(/^[\p{L}\p{N} ._+-]*$/u, { error: 'Solo se admiten letras, números, espacios y . _ + -' })
     .default(''),
   avisarSaturacion: z.boolean().default(true),
 });
@@ -174,7 +174,7 @@ const camposBase = {
   nombre: z
     .string()
     .trim()
-    .min(1, { error: 'Ponle un nombre a la receteta' })
+    .min(1, { error: 'Falta el nombre de la receteta' })
     .max(60, { error: 'Máximo 60 caracteres' }),
   descripcion: z.string().max(300, { error: 'Máximo 300 caracteres' }).optional(),
   etiquetas: z.array(z.string().trim().min(1).max(30)).max(10).default([]),

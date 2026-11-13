@@ -6,7 +6,7 @@ test.use({ permissions: ['clipboard-read', 'clipboard-write'] });
 async function crearDesdePlantilla(page: Page, plantilla: string, nombre: string) {
   await page.goto('/#/');
   await page.getByRole('button', { name: `Usar plantilla: ${plantilla}` }).click();
-  await expect(page.getByText('Revisa la escala y el tamaño mínimo')).toBeVisible();
+  await expect(page.getByText('La escala y el tamaño mínimo dependen')).toBeVisible();
   // Recorre los pasos con «Siguiente» hasta el último
   for (let i = 0; i < 6; i++) {
     const sig = page.getByRole('button', { name: 'Siguiente', exact: true });
@@ -66,17 +66,17 @@ test('elegir tipo, borrador automático y aviso al salir sin guardar', async ({ 
 
   // Recarga: se recupera el borrador
   await page.reload();
-  await expect(page.getByText('Hemos recuperado el borrador')).toBeVisible();
+  await expect(page.getByText('Se ha recuperado un borrador')).toBeVisible();
   await expect(page.getByRole('radio', { name: /StarDist/ })).toBeChecked();
   await page.getByRole('button', { name: 'Empezar de cero' }).click();
   await expect(page.getByText('Paso 1 de 5')).toBeVisible();
 });
 
-test('ayuda «¿Qué es esto?» se abre con toque o teclado', async ({ page }) => {
+test('ayuda «Información» se abre con toque o teclado', async ({ page }) => {
   await page.goto('/#/receteta/nueva/esferas');
-  const ayuda = page.getByText(/^Si la imagen tiene varios canales/);
+  const ayuda = page.getByText(/^Canal que se analiza en imágenes multicanal/);
   await expect(ayuda).toBeHidden();
-  const boton = page.getByRole('button', { name: '¿Qué es esto?' }).nth(2);
+  const boton = page.getByRole('button', { name: 'Información' }).nth(2);
   await boton.focus();
   await page.keyboard.press('Enter');
   await expect(ayuda).toBeVisible();

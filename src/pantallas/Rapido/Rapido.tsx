@@ -200,7 +200,6 @@ export function Rapido() {
       <Nota tipo="aviso">
         <strong>{tx.aviso}</strong>
       </Nota>
-      <p className="caption texto-suave">{tx.privacidad}</p>
 
       <Selector
         etiqueta={tx.receteta}

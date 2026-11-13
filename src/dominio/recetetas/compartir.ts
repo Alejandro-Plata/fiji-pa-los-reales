@@ -55,7 +55,7 @@ export async function decodificarReceteta(datos: string): Promise<RecetetaCompar
     if (modo === 'z') {
       if (typeof DecompressionStream === 'undefined') {
         throw new EnlaceNoValido(
-          'Este navegador no puede abrir enlaces comprimidos. Prueba con otro navegador o usa el archivo .json.',
+          'Este navegador no puede abrir enlaces comprimidos. Puede usarse otro navegador o el archivo .json.',
         );
       }
       texto = await transformar(bytes, new DecompressionStream('deflate-raw'));
@@ -67,12 +67,12 @@ export async function decodificarReceteta(datos: string): Promise<RecetetaCompar
     json = JSON.parse(new TextDecoder().decode(texto));
   } catch (e) {
     if (e instanceof EnlaceNoValido) throw e;
-    throw new EnlaceNoValido('El enlace está incompleto o dañado. Pide que te lo vuelvan a enviar.');
+    throw new EnlaceNoValido('El enlace está incompleto o dañado. Debe solicitarse de nuevo.');
   }
   const r = esquemaRecetetaCompartida.safeParse(migrar(json));
   if (!r.success) {
     throw new EnlaceNoValido(
-      'El enlace no contiene una receteta válida. Puede que se haya modificado o que sea de otra versión de la app.',
+      'El enlace no contiene una receteta válida. Puede haberse modificado o proceder de otra versión de la app.',
     );
   }
   return r.data;

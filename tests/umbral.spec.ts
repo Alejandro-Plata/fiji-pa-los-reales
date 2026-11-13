@@ -36,5 +36,5 @@ test('un CSV sin columnas de marcador da un aviso claro', async ({ page }) => {
     mimeType: 'text/csv',
     buffer: Buffer.from('Imagen,Esferas\nx,8\n'),
   });
-  await expect(page.getByText(/no tiene columnas de marcador/)).toBeVisible();
+  await expect(page.getByText(/no contiene columnas de marcador/)).toBeVisible();
 });

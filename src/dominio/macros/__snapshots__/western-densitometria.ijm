@@ -2,8 +2,8 @@
 // Receteta: Western blot · densitometría
 // Tipo: western blot · Fiji pa los reales v1.0.0 · 2026-10-22
 // Parámetros: {"imagenes":{"extensiones":[".tif",".tiff"],"escala":{"modo":"archivo"},"proyeccionZ":"maxima"},"parametros":{"bandasOscuras":true,"fondo":"rollingBall","radioFondo":50,"nombreProteina":"","avisarSaturacion":true}}
-// Cómo usarlo: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
-// pega este texto y pulsa Run.
+// Uso: en Fiji, File > New > Script..., menú Language > IJ1 Macro,
+// pegar este texto y ejecutar con Run.
 // ==============================================================
 requires("1.54f");
 
@@ -21,7 +21,7 @@ if (modoPrueba) {
     if (!endsWith(dirSalida, File.separator)) dirSalida = dirSalida + File.separator;
     setBatchMode(true);
 } else {
-    ruta = File.openDialog("Elige la imagen del western blot (TIFF)");
+    ruta = File.openDialog("Imagen del western blot (TIFF)");
     dirSalida = File.getDirectory(ruta);
 }
 open(ruta);
@@ -30,7 +30,7 @@ idImagen = getImageID();
 
 // Una imagen RGB (JPG o captura de pantalla) no sirve para cuantificar: avisamos
 if (bitDepth() == 24) {
-    aviso = "La imagen es RGB (JPG o captura). La cuantificaci" + fromCharCode(243) + "n no es fiable: usa el TIFF original del equipo.";
+    aviso = "La imagen es RGB (JPG o captura). La cuantificaci" + fromCharCode(243) + "n no es fiable: se requiere el TIFF original del equipo.";
     print(aviso);
     if (!modoPrueba) showMessage("Atenci" + fromCharCode(243) + "n", aviso);
     run("8-bit");
@@ -42,7 +42,7 @@ getRawStatistics(nPix, media, minimo, maximo);
 maxPosible = pow(2, bitDepth()) - 1;
 if (bitDepth() != 32) {
     if (minimo == 0 || maximo == maxPosible) {
-        aviso = "La imagen tiene p" + fromCharCode(237) + "xeles saturados.\nLa cuantificaci" + fromCharCode(243) + "n de esas bandas puede no ser fiable: usa una exposici" + fromCharCode(243) + "n m" + fromCharCode(225) + "s corta.";
+        aviso = "La imagen tiene p" + fromCharCode(237) + "xeles saturados.\nLa cuantificaci" + fromCharCode(243) + "n de esas bandas puede no ser fiable: se recomienda una exposici" + fromCharCode(243) + "n m" + fromCharCode(225) + "s corta.";
         print("AVISO: " + aviso);
         if (!modoPrueba) showMessage("Atenci" + fromCharCode(243) + "n", aviso);
     }
@@ -63,12 +63,12 @@ if (modoPrueba) {
     roiManager("Open", rutaRois);
 } else {
     setTool("rectangle");
-    waitForUser("Marca las bandas",
-        "1. Dibuja un rect" + fromCharCode(225) + "ngulo que abarque la banda m" + fromCharCode(225) + "s grande.\n" +
-        "2. Pulsa la tecla T para a" + fromCharCode(241) + "adirla a la lista.\n" +
-        "3. Arrastra ese MISMO rect" + fromCharCode(225) + "ngulo a la siguiente banda y pulsa T.\n" +
-        "4. Repite de izquierda a derecha.\n" +
-        "5. Cuando termines, pulsa OK.");
+    waitForUser("Selecci" + fromCharCode(243) + "n de bandas",
+        "1. Dibujar un rect" + fromCharCode(225) + "ngulo que abarque la banda m" + fromCharCode(225) + "s grande.\n" +
+        "2. Tecla T para a" + fromCharCode(241) + "adirla a la lista.\n" +
+        "3. Desplazar el MISMO rect" + fromCharCode(225) + "ngulo a la siguiente banda y pulsar T.\n" +
+        "4. Repetir de izquierda a derecha.\n" +
+        "5. Al terminar, pulsar OK.");
 }
 n = roiManager("count");
 if (n == 0) exit("No has marcado ninguna banda.");
@@ -99,7 +99,7 @@ run("Flatten");
 saveAs("Jpeg", dirSalida + base + "_control.jpg");
 
 // La expresión empieza por "" : si empieza por un número, IJ1 no concatena y da NaN
-mensaje = "" + n + " bandas medidas. Usa la columna RawIntDen.\nResultados junto a la imagen original.";
+mensaje = "" + n + " bandas medidas. Valor de referencia: columna RawIntDen.\nResultados junto a la imagen original.";
 print(mensaje);
 if (modoPrueba) {
     setBatchMode(false);

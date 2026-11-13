@@ -11,6 +11,8 @@ La especificación completa está en `spec.md`. El diseño visual manda según `
   verificados con Fiji real (WSL + xvfb-run).
 - Nada se sube a ningún servidor. Todo ocurre en el dispositivo.
 - Toda la interfaz en español de España, todos los textos en `src/textos/es.ts`.
+  Registro profesional e impersonal: sin tuteo, instrucciones en infinitivo, sin coletillas
+  orientativas. También en los mensajes de los macros.
 - Estilos: solo `var(--token)` de `src/estilos/tokens.css`. Mobile-first, sin scroll horizontal
   desde 320 px, objetivos táctiles ≥ 44 px, campos ≥ 16 px.
 - Nombre de la app: **Fiji pa los reales**.
