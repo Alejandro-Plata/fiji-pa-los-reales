@@ -41,7 +41,8 @@ export function ejecutarBsh(script, lineasArgs, tiempoMs = 180_000) {
     'utf8',
   );
   return new Promise((ok) => {
-    const p = spawn(FIJI, ['--console', '-macro', envoltorio], { windowsHide: false });
+    // cwd temporal: el editor de scripts guarda ahí sus documentos, no en el repositorio
+    const p = spawn(FIJI, ['--console', '-macro', envoltorio], { windowsHide: false, cwd: TEMPORAL });
     let salida = '';
     p.stdout.on('data', (d) => (salida += d));
     p.stderr.on('data', (d) => (salida += d));
