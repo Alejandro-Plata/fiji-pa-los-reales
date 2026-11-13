@@ -9,7 +9,18 @@
     "noEmit": true,
     "skipLibCheck": true,
     "isolatedModules": true,
-    "types": ["node"]
+    "types": ["node", "vite/client"],
+    "noUncheckedIndexedAccess": true
   },
-  "include": ["vite.config.ts", "playwright.config.ts", "tests", "scripts/*.ts", "capacitor.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "vitest.fiji.config.ts",
+    "playwright.config.ts",
+    "tests",
+    "scripts/*.ts",
+    "capacitor.config.ts",
+    "src/**/*.test.ts",
+    "src/global.d.ts",
+    "src/utif.d.ts"
+  ]
 }

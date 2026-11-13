@@ -1,0 +1,100 @@
+.bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.estado {
+  color: var(--color-texto-suave);
+}
+
+/* Lienzo: se adapta al ancho; la ventana recorta el zoom (spec §4.9 y §13) */
+.lienzoMarco {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.lienzoVentana {
+  overflow: hidden;
+  max-width: 100%;
+  border-radius: var(--rounded-xxl);
+  background: var(--surface-night);
+  touch-action: none;
+}
+
+.lienzoVentana[data-calibrando='true'] {
+  cursor: crosshair;
+  outline: 3px solid var(--color-acento);
+  outline-offset: -3px;
+}
+
+.lienzo {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  transform-origin: 0 0;
+}
+
+/* Recuento destacado: tarjeta invertida (card-pricing-featured) */
+.resultado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--spacing-xl);
+  border-radius: var(--rounded-xl);
+  background: var(--surface-night);
+  color: var(--on-primary);
+}
+
+.cifra {
+  font-family: var(--fuente-display);
+  font-size: var(--display-large-size);
+  font-weight: var(--display-large-weight);
+  line-height: var(--display-large-leading);
+}
+
+.deslizadores {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+  margin: 0;
+  padding: var(--spacing-xl);
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+  min-width: 0;
+}
+
+.leyenda {
+  padding: 0 var(--spacing-sm);
+  font-size: var(--heading-sm-size);
+  font-weight: var(--heading-sm-weight);
+}
+
+.deslizador {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  font-weight: var(--body-strong-weight);
+}
+
+.deslizador input {
+  width: 100%;
+  min-height: var(--objetivo-tactil);
+  accent-color: var(--primary);
+}
+
+.casilla {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--objetivo-tactil);
+  cursor: pointer;
+}
+
+.casilla input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--primary);
+}

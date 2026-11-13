@@ -72,6 +72,13 @@ def esferas(carpeta: Path) -> dict:
     color = np.stack([img, np.clip(img.astype(int) - 12, 0, 255), np.clip(img.astype(int) - 30, 0, 255)], axis=-1)
     Image.fromarray(color.astype(np.uint8)).save(rgb / "esferas_camara.jpg", quality=95)
 
+    # Foto de 12 MP (4000 × 3000) para el análisis rápido: escala 0,65 / 2,5 = 0,26 µm/píxel
+    rapido = carpeta.parent / "rapido"
+    rapido.mkdir(parents=True, exist_ok=True)
+    Image.fromarray(color.astype(np.uint8)).resize((4000, 3000), Image.NEAREST).save(
+        rapido / "esferas_12mp.jpg", quality=90
+    )
+
     # Hiperpila: 2 canales × 3 planos; las esferas están en el canal 2 (el 1 es solo ruido)
     hiper = carpeta.parent / "esferas_hiper"
     hiper.mkdir(parents=True, exist_ok=True)

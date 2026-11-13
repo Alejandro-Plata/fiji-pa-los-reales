@@ -76,7 +76,7 @@ describe('mamosferas en Fiji real', () => {
     expect(resumen.map((f) => Number(f.Esferas))).toEqual([8, 8]);
     const objetos = leerCsv(join(salida, 'objetos.csv'));
     expect(objetos).toHaveLength(16);
-    expect(objetos.filter((o) => o.Label.startsWith('esferas_b'))).toHaveLength(8);
+    expect(objetos.filter((o) => (o.Label ?? '').startsWith('esferas_b'))).toHaveLength(8);
   });
 
   it('plantilla «contraste simple»: 8 esferas', async () => {
