@@ -78,8 +78,8 @@ export function Inicio() {
             <BotonEnlace to="/receteta/nueva" variante="invertido">
               {t.nav.nuevaReceteta}
             </BotonEnlace>
-            <BotonEnlace to="/fiji" variante="fantasma">
-              {t.nav.fiji}
+            <BotonEnlace to="/tutorial" variante="fantasma">
+              {tx.verTutorial}
             </BotonEnlace>
           </div>
         </div>

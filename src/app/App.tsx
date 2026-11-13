@@ -6,6 +6,7 @@ import { Inicio } from '../pantallas/Inicio/Inicio';
 import { Asistente } from '../pantallas/Asistente/Asistente';
 import { Resultado } from '../pantallas/Resultado/Resultado';
 import { Instrucciones } from '../pantallas/Instrucciones/Instrucciones';
+import { Tutorial } from '../pantallas/Tutorial/Tutorial';
 import { Ajustes } from '../pantallas/Ajustes/Ajustes';
 import { Rapido } from '../pantallas/Rapido/Rapido';
 import { Importar } from '../pantallas/Importar/Importar';
@@ -22,6 +23,7 @@ const router = createHashRouter([
       { path: 'receteta/nueva/:tipo', element: <Asistente /> },
       { path: 'receteta/:id', element: <Asistente /> },
       { path: 'receteta/:id/macro', element: <Resultado /> },
+      { path: 'tutorial', element: <Tutorial /> },
       { path: 'fiji', element: <Instrucciones /> },
       { path: 'ajustes', element: <Ajustes /> },
       { path: 'rapido', element: <Rapido /> },

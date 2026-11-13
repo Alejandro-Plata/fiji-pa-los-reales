@@ -1,0 +1,176 @@
+/* Tutorial: escenario oscuro (surface-canvas-dark, rounded-xxl) con la ilustración y, al lado o
+   debajo, el texto de la diapositiva. Móvil: una columna. Escritorio (≥ 1024 px): dos columnas. */
+
+.carrusel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+}
+
+.diapositiva {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-6);
+  align-items: center;
+  touch-action: pan-y;
+}
+
+.escenario {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  padding: var(--espacio-5);
+  background: var(--surface-canvas-dark);
+  border-radius: var(--rounded-xxl);
+  overflow: hidden;
+}
+
+.texto,
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.cuerpo {
+  animation: entra 400ms ease-out both;
+}
+
+/* Solo desplazamiento: el texto nunca pierde opacidad (contraste legible desde el primer instante) */
+@keyframes entra {
+  from { transform: translateY(8px); }
+  to { transform: none; }
+}
+
+.contador {
+  color: var(--color-texto-suave);
+}
+
+.titulo {
+  font-family: var(--fuente-display);
+  font-size: var(--heading-xl-size);
+  font-weight: var(--heading-xl-weight);
+  line-height: var(--heading-xl-leading);
+}
+
+.titulo:focus {
+  outline: none;
+}
+
+.titulo:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 4px;
+}
+
+.parrafo {
+  max-width: 60ch;
+  line-height: var(--body-lg-leading);
+}
+
+.puntos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: 0;
+  list-style: none;
+}
+
+.puntos li {
+  display: flex;
+  gap: var(--espacio-3);
+  align-items: baseline;
+  font-weight: var(--body-strong-weight);
+}
+
+/* Marca lima a la izquierda de cada punto */
+.puntos li::before {
+  content: '';
+  flex: none;
+  width: 10px;
+  height: 10px;
+  background: var(--accent-lime);
+  border: 2px solid var(--ink-deep);
+  border-radius: var(--rounded-full);
+  transform: translateY(1px);
+}
+
+/* ---------- Controles ---------- */
+/* Móvil: solo Anterior / Siguiente (el contador «n de 8» indica la posición); los ocho puntos
+   de 44 px no caben en una fila por debajo de 600 px. */
+.controles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'anterior siguiente';
+  gap: var(--espacio-4);
+  align-items: center;
+}
+
+.controles > .indice {
+  display: none;
+}
+
+.controles > :first-child { grid-area: anterior; }
+.controles > :last-child { grid-area: siguiente; }
+.controles > .indice { grid-area: indice; }
+
+.indice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.punto {
+  display: grid;
+  place-items: center;
+  width: var(--objetivo-tactil);
+  height: var(--objetivo-tactil);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--rounded-full);
+  cursor: pointer;
+}
+
+.punto span {
+  width: 10px;
+  height: 10px;
+  background: var(--hairline-cool);
+  border-radius: var(--rounded-full);
+  transition: width var(--duracion) ease, background var(--duracion) ease;
+}
+
+.punto:hover span {
+  background: var(--accent-violet-mid);
+}
+
+.punto[aria-current='step'] span {
+  width: 24px;
+  background: var(--ink-deep);
+}
+
+.volver {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 600px) {
+  .controles {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'anterior indice siguiente';
+  }
+
+  .controles > .indice {
+    display: flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .diapositiva {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--espacio-7);
+    min-height: 420px;
+  }
+}

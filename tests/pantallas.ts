@@ -9,6 +9,8 @@ export const PANTALLAS = [
   { nombre: 'asistente', ruta: '/#/receteta/nueva?plantilla=nucleos-dapi-marcador' },
   { nombre: 'asistente-esferas', ruta: '/#/receteta/demo' },
   { nombre: 'resultado', ruta: '/#/receteta/demo/macro' },
+  { nombre: 'tutorial', ruta: '/#/tutorial' },
+  { nombre: 'tutorial-final', ruta: '/#/tutorial?paso=8' },
   { nombre: 'instrucciones', ruta: '/#/fiji' },
   { nombre: 'ajustes', ruta: '/#/ajustes' },
   { nombre: 'rapido', ruta: '/#/rapido' },
