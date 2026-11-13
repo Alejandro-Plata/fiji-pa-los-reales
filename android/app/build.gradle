@@ -5,8 +5,24 @@ apply plugin: 'com.android.application'
 def versionApp = new groovy.json.JsonSlurper().parse(rootProject.file('../package.json')).version
 def (vMayor, vMenor, vParche) = versionApp.tokenize('.').collect { it.toInteger() }
 
+// Clave de firma propia, FUERA del repositorio (ruta en FPLR_FIRMA o la carpeta por defecto).
+// Sin ella, assembleRelease falla: nunca se publica un APK firmado con otra clave.
+def rutaFirma = System.getenv('FPLR_FIRMA') ?: "${System.getProperty('user.home')}/.fiji-pa-los-reales/firma/firma.properties"
+def firma = new Properties()
+if (file(rutaFirma).exists()) file(rutaFirma).withInputStream { firma.load(it) }
+
 android {
     namespace = "es.fijipalosreales.app"
+    signingConfigs {
+        if (firma.storeFile) {
+            publicacion {
+                storeFile file(firma.storeFile)
+                storePassword firma.storePassword
+                keyAlias firma.keyAlias
+                keyPassword firma.keyPassword
+            }
+        }
+    }
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "es.fijipalosreales.app"
@@ -24,6 +40,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            if (firma.storeFile) signingConfig signingConfigs.publicacion
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

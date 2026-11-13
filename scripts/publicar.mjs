@@ -8,10 +8,9 @@
 // dist DESPUÉS de sincronizar Android: así no acaba dentro del propio APK.
 //
 // Las actualizaciones solo se instalan sobre la app existente si el APK está firmado con la misma
-// clave. Ahora se usa la clave de depuración de este ordenador (~/.android/debug.keystore):
-// conservarla, o pasar a una clave de publicación propia antes de distribuir la app.
+// clave: la clave propia de ~/.fiji-pa-los-reales/firma/ (fuera del repositorio; ver CLAUDE.md).
 import { execSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const URL_PUBLICA = process.env.VITE_URL_PUBLICA ?? 'https://fiji-pa-los-reales.netlify.app/';
@@ -28,15 +27,26 @@ const ejecutar = (cmd, cwd = '.') => {
   execSync(cmd, { cwd, stdio: 'inherit', env: { ...process.env, VITE_URL_PUBLICA: URL_PUBLICA } });
 };
 
+rmSync('android/app/build/outputs/apk/release', { recursive: true, force: true });
 ejecutar('npm test');
 ejecutar('npm run build');
 ejecutar('npx cap sync android');
-ejecutar(process.platform === 'win32' ? '.\\gradlew.bat assembleDebug' : './gradlew assembleDebug', 'android');
+ejecutar(process.platform === 'win32' ? '.\\gradlew.bat assembleRelease' : './gradlew assembleRelease', 'android');
+
+// Firmado con la clave propia: sin ella Gradle deja un APK «unsigned» que no se puede instalar
+const apkCompilado = 'android/app/build/outputs/apk/release/app-release.apk';
+if (!existsSync(apkCompilado)) {
+  console.error(
+    'No se ha generado app-release.apk firmado. Falta la clave de firma: ' +
+      '~/.fiji-pa-los-reales/firma/firma.properties (o la ruta de FPLR_FIRMA).',
+  );
+  process.exit(1);
+}
 
 const nombreApk = `fiji-pa-los-reales-${version}.apk`;
 mkdirSync('dist/descargas', { recursive: true });
 const destino = join('dist/descargas', nombreApk);
-copyFileSync('android/app/build/outputs/apk/debug/app-debug.apk', destino);
+copyFileSync(apkCompilado, destino);
 const publicacion = {
   version,
   apk: nombreApk,

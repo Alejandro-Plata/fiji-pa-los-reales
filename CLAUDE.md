@@ -44,8 +44,13 @@ Repositorio: github.com/Alejandro-Plata/fiji-pa-los-reales. Web: https://fiji-pa
 3. `npm run publicar`: pruebas, compilación con `VITE_URL_PUBLICA`, APK, `dist/descargas/version.json`
    y despliegue en Netlify con `--no-build`. No conectar despliegues automáticos desde GitHub:
    recompilarían y borrarían `descargas/`.
-Las actualizaciones solo se instalan si el APK va firmado con la misma clave (ahora, la de
-depuración de este ordenador, `~/.android/debug.keystore`).
+## Firma del APK
+Clave propia FUERA del repositorio: `~/.fiji-pa-los-reales/firma/` (`fiji-pa-los-reales.jks` +
+`firma.properties` con contraseña y alias; otra ruta con la variable `FPLR_FIRMA`). La usa
+`assembleRelease`; sin ella no se genera APK firmado y `npm run publicar` se detiene.
+Certificado SHA-256: c57f5fd10e529407886f2b5e1217259f3a4222b5e7c0175b3e6d04a124469085.
+Si se pierde la clave, las actualizaciones dejan de instalarse: hay que desinstalar la app.
+Nunca subir la clave ni su contraseña al repositorio.
 
 ## Comandos
 - `npm run dev` · `npm run build` · `npm test` (Vitest) · `npm run e2e` (Playwright) · `npm run lint`
