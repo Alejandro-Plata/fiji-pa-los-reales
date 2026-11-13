@@ -153,6 +153,7 @@
   --color-acento: var(--accent-lime); /* escaso: uno por pantalla (DESIGN.md › Iteration Guide 6) */
   --color-enlace: var(--accent-violet);
   --color-foco: var(--ring-focus);
+  --color-velo: rgb(21 15 35 / 0.6); /* fondo tras los diálogos: {colors.primary} al 60 % */
   /* DESIGN.md no define colores de estado y prohíbe añadir acentos: se reutilizan los existentes.
      Se usan como marcas (bordes, fondos de chip), nunca como color de texto a tamaño de cuerpo. */
   --color-error: var(--accent-pink);

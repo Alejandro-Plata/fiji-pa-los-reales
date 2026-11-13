@@ -1,0 +1,51 @@
+/* Plegable — contenedor con hairline-cloud y rounded-xl (DESIGN.md › card-pricing en lienzo claro) */
+.plegable {
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+  background: var(--surface-canvas-light);
+}
+
+.resumen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-4);
+  min-height: var(--objetivo-tactil);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--heading-sm-size);
+  font-weight: var(--heading-sm-weight);
+  line-height: var(--heading-sm-leading);
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--rounded-xl);
+}
+
+.resumen::-webkit-details-marker {
+  display: none;
+}
+
+.resumen::after {
+  content: '';
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--duracion);
+}
+
+.plegable[open] > .resumen::after {
+  transform: rotate(-135deg);
+}
+
+.resumen:active {
+  background: var(--surface-press-light);
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  padding: var(--spacing-sm) var(--spacing-lg) var(--spacing-xl);
+}

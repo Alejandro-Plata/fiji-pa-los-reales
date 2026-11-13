@@ -1,0 +1,221 @@
+/* Asistente — lienzo claro, pasos, formulario y vista previa lateral en escritorio */
+
+.bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+/* ---------- Paso 0: tarjetas grandes de tipo (card-pricing) ---------- */
+.tipos {
+  display: grid;
+  gap: var(--espacio-5);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .tipos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.tarjetaTipo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  height: 100%;
+  padding: var(--spacing-xl);
+  background: var(--surface-canvas-light);
+  color: var(--ink-deep);
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+  text-decoration: none;
+}
+
+.tarjetaTipo:active {
+  background: var(--surface-night);
+  color: var(--on-primary);
+}
+
+@media (min-width: 600px) {
+  .tarjetaTipo {
+    padding: var(--spacing-xxl);
+  }
+}
+
+.tarjetaTipoNombre {
+  font-size: var(--heading-lg-size);
+  font-weight: var(--heading-lg-weight);
+  line-height: var(--heading-lg-leading);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.tarjetaTipoFrase {
+  font-size: var(--body-md-size);
+  font-weight: var(--body-lg-weight);
+  line-height: var(--body-md-leading);
+}
+
+/* ---------- Indicador de pasos ---------- */
+.pasos {
+  overflow-x: auto;
+  margin-inline: calc(-1 * var(--espacio-5));
+  padding-inline: var(--espacio-5);
+  scrollbar-width: thin;
+}
+
+.listaPasos {
+  display: flex;
+  gap: var(--separacion-tactil);
+  padding: var(--espacio-2) 0;
+  list-style: none;
+}
+
+.botonPaso {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--objetivo-tactil);
+  padding: var(--spacing-xs) var(--spacing-md) var(--spacing-xs) var(--spacing-xs);
+  background: var(--surface-canvas-light);
+  color: var(--ink-deep);
+  border: 1px solid var(--hairline-cool);
+  border-radius: var(--rounded-xl);
+  font-size: var(--caption-size);
+  font-weight: var(--body-md-weight);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.botonPaso:disabled {
+  color: var(--color-texto-suave);
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+.botonPaso[aria-current='step'] {
+  background: var(--surface-night);
+  color: var(--on-primary);
+  border-color: var(--surface-night);
+}
+
+.numeroPaso {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--rounded-full);
+  background: var(--surface-press-light);
+  color: var(--ink-deep);
+  font-weight: var(--body-strong-weight);
+}
+
+.botonPaso[aria-current='step'] .numeroPaso {
+  background: var(--on-primary);
+}
+
+/* En móvil solo se ve el nombre del paso actual */
+.botonPaso:not([aria-current='step']) .nombrePaso {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .botonPaso:not([aria-current='step']) .nombrePaso {
+    display: inline;
+  }
+}
+
+/* ---------- Columnas: formulario + vista previa ---------- */
+.columnas {
+  display: grid;
+  gap: var(--espacio-7);
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  min-width: 0;
+}
+
+.cabeceraPaso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.cabeceraPaso h2:focus {
+  outline: none;
+}
+
+.progreso {
+  color: var(--color-texto-suave);
+}
+
+.campos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-7);
+}
+
+/* La vista previa solo aparece en escritorio (spec §4) */
+.lateral {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .columnas {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .lateral {
+    display: block;
+    min-width: 0;
+    align-self: stretch;
+  }
+  .lateralFijo {
+    position: sticky;
+    top: calc(var(--objetivo-tactil) + 2 * var(--spacing-lg) + var(--espacio-5));
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-4);
+    max-height: calc(100dvh - var(--objetivo-tactil) - 2 * var(--spacing-lg) - 2 * var(--espacio-5));
+    overflow: auto;
+  }
+}
+
+.lateralTitulo {
+  font-size: var(--heading-sm-size);
+  font-weight: var(--heading-sm-weight);
+}
+
+.resumen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--spacing-xl);
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+  list-style: none;
+}
+
+/* ---------- Marcadores ---------- */
+.marcador {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+  margin: 0;
+  padding: var(--spacing-xl);
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+  min-width: 0;
+}
+
+.marcadorTitulo {
+  padding: 0 var(--spacing-sm);
+  font-size: var(--heading-sm-size);
+  font-weight: var(--heading-sm-weight);
+}

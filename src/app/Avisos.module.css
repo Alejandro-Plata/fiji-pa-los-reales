@@ -1,0 +1,69 @@
+/* Avisos emergentes: superficie noche (DESIGN.md › surface-night) con acción invertida */
+.region {
+  position: fixed;
+  z-index: 50;
+  inset-inline: var(--espacio-5);
+  bottom: calc(var(--objetivo-tactil) + 2 * var(--espacio-4) + env(safe-area-inset-bottom) + var(--espacio-5));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .region {
+    bottom: var(--espacio-6);
+  }
+}
+
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  width: min(100%, 32rem);
+  padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) var(--spacing-lg);
+  background: var(--surface-night);
+  color: var(--on-primary);
+  border-radius: var(--rounded-md);
+  box-shadow: var(--elevation-2);
+  pointer-events: auto;
+}
+
+.texto {
+  flex: 1;
+  padding-block: var(--spacing-sm);
+  font-size: var(--caption-size);
+  line-height: var(--caption-leading);
+}
+
+/* button-inverted compacto */
+.accion {
+  min-height: var(--objetivo-tactil);
+  padding: 0 var(--spacing-lg);
+  background: var(--on-primary);
+  color: var(--ink-deep);
+  border: 0;
+  border-radius: var(--rounded-md);
+  font-size: var(--button-cap-size);
+  font-weight: var(--button-cap-weight);
+  letter-spacing: var(--caps-tracking);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.accion:active {
+  background: var(--surface-press-light);
+  color: var(--ink-press);
+}
+
+.cerrar {
+  width: var(--objetivo-tactil);
+  height: var(--objetivo-tactil);
+  background: transparent;
+  color: var(--on-primary);
+  border: 0;
+  border-radius: var(--rounded-md);
+  font-size: var(--heading-sm-size);
+  cursor: pointer;
+}

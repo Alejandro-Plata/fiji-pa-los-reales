@@ -1,4 +1,9 @@
 .aviso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
   margin: 0;
   padding: var(--spacing-sm) var(--spacing-lg);
   background: var(--surface-press-light);
@@ -6,4 +11,17 @@
   color: var(--color-texto);
   font-size: var(--caption-size);
   line-height: var(--caption-leading);
+}
+
+.cerrar {
+  min-height: var(--objetivo-tactil);
+  padding: 0 var(--spacing-md);
+  background: transparent;
+  border: 1px solid var(--hairline-cool);
+  border-radius: var(--rounded-md);
+  font-size: var(--button-cap-size);
+  font-weight: var(--button-cap-light-weight);
+  letter-spacing: var(--caps-tracking);
+  text-transform: uppercase;
+  cursor: pointer;
 }

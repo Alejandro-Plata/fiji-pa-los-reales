@@ -1,0 +1,35 @@
+/* Diálogo — tarjeta flotante sobre lienzo claro con elevación 2 (DESIGN.md › Elevation: modals) */
+.dialogo {
+  width: min(32rem, calc(100vw - 2 * var(--espacio-5)));
+  max-height: calc(100dvh - 2 * var(--espacio-5));
+  padding: 0;
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+  background: var(--surface-canvas-light);
+  color: var(--ink-deep);
+  box-shadow: var(--elevation-2);
+}
+
+.dialogo::backdrop {
+  background: var(--color-velo);
+}
+
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+  padding: var(--spacing-xl);
+}
+
+.titulo {
+  font-size: var(--heading-md-size);
+  font-weight: var(--heading-md-weight);
+  line-height: var(--heading-md-leading);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-end;
+  gap: var(--separacion-tactil);
+}

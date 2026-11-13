@@ -41,15 +41,162 @@
   line-height: var(--body-lg-leading);
 }
 
+/* ---------- Cuerpo ---------- */
 .cuerpo {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-5);
+  gap: var(--spacing-section);
   padding-top: var(--espacio-7);
 }
 
+.seccion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.herramientas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
 .vacio {
-  padding: var(--spacing-xxl);
+  padding: var(--spacing-xl);
   border: 1px solid var(--hairline-cloud);
   border-radius: var(--rounded-xl);
+}
+
+/* Rejilla: 1 columna en móvil, 2 en tableta, 3 en escritorio (spec §4) */
+.rejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-5);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 600px) {
+  .rejilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .vacio {
+    padding: var(--spacing-xxl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rejilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Tarjeta de receteta: card-pricing ---------- */
+.tarjeta,
+.plantilla {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  height: 100%;
+  padding: var(--spacing-xl);
+  background: var(--surface-canvas-light);
+  color: var(--ink-deep);
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+}
+
+@media (min-width: 1024px) {
+  .tarjeta,
+  .plantilla {
+    padding: var(--spacing-xxl);
+  }
+}
+
+.tarjetaCabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.tipo {
+  color: var(--color-texto-suave);
+}
+
+.nombre {
+  font-size: var(--heading-md-size);
+  font-weight: var(--heading-md-weight);
+  line-height: var(--heading-md-leading);
+}
+
+/* link-on-light: subrayado como única señal */
+.enlaceNombre {
+  display: inline-block;
+  min-height: var(--objetivo-tactil);
+  color: var(--ink-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.fecha,
+.descripcion {
+  font-size: var(--caption-size);
+  font-weight: var(--caption-weight);
+  line-height: var(--caption-leading);
+  color: var(--color-texto-suave);
+}
+
+.descripcion {
+  flex: 1;
+}
+
+.plantilla > button {
+  align-self: flex-start;
+}
+
+.favorita {
+  width: var(--objetivo-tactil);
+  height: var(--objetivo-tactil);
+  background: transparent;
+  color: var(--ink-deep);
+  border: 1px solid var(--hairline-cool);
+  border-radius: var(--rounded-full);
+  font-size: var(--heading-sm-size);
+  cursor: pointer;
+}
+
+.favorita[aria-pressed='true'] {
+  background: var(--surface-night);
+  color: var(--on-primary);
+  border-color: var(--surface-night);
+}
+
+/* pill-neutral-dark */
+.chipFavorita {
+  align-self: flex-start;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--rounded-xs);
+  background: var(--surface-night);
+  color: var(--on-primary);
+  font-size: var(--micro-cap-size);
+  font-weight: var(--micro-cap-weight);
+  line-height: var(--micro-cap-leading);
+  letter-spacing: var(--micro-cap-tracking);
+  text-transform: uppercase;
+}
+
+.tarjetaAcciones,
+.masAcciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--separacion-tactil);
+}
+
+.tarjetaAcciones {
+  margin-top: auto;
+  padding-top: var(--espacio-4);
+}
+
+.masAcciones[hidden] {
+  display: none;
 }

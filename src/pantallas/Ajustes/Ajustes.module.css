@@ -1,0 +1,15 @@
+/* Ajustes — secciones separadas por hairline-cloud (lienzo claro, denso) */
+.seccion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding-top: var(--espacio-6);
+  border-top: 1px solid var(--hairline-cloud);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding-left: var(--espacio-6);
+}

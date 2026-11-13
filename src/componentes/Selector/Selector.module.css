@@ -1,0 +1,106 @@
+/*
+ * Opciones como tarjetas. La seleccionada se invierte a lienzo noche
+ * (DESIGN.md › card-pricing-featured: la inversión marca lo destacado, no un borde de color).
+ */
+
+.tarjetas {
+  display: grid;
+  gap: var(--separacion-tactil);
+}
+
+@media (min-width: 600px) {
+  .tarjetas {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+}
+
+.compacto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--separacion-tactil);
+}
+
+.opcion {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--espacio-2);
+  min-height: var(--objetivo-tactil);
+  min-width: var(--objetivo-tactil);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--surface-canvas-light);
+  color: var(--ink-deep);
+  border: 1px solid var(--hairline-cool);
+  border-radius: var(--rounded-md);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.opcion:active {
+  background: var(--surface-press-light);
+}
+
+.opcion[data-marcado='true'] {
+  background: var(--surface-night);
+  color: var(--on-primary);
+  border-color: var(--surface-night);
+}
+
+/* El radio nativo queda encima, invisible, para teclado y lectores de pantalla */
+.radio {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.opcion:has(.radio:focus-visible) {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.etiqueta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+  font-size: var(--body-strong-size);
+  font-weight: var(--body-strong-weight);
+  line-height: var(--body-strong-leading);
+}
+
+.texto {
+  font-size: var(--caption-size);
+  font-weight: var(--caption-weight);
+  line-height: var(--caption-leading);
+}
+
+.opcion[data-marcado='false'] .texto {
+  color: var(--color-texto-suave);
+}
+
+.opcion[data-marcado='true'] .texto {
+  color: var(--on-dark-muted);
+}
+
+/* pill-neutral-dark; invertida dentro de la opción marcada */
+.recomendado {
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border-radius: var(--rounded-xs);
+  background: var(--surface-night);
+  color: var(--on-primary);
+  font-size: var(--micro-cap-size);
+  font-weight: var(--micro-cap-weight);
+  line-height: var(--micro-cap-leading);
+  letter-spacing: var(--micro-cap-tracking);
+  text-transform: uppercase;
+}
+
+.opcion[data-marcado='true'] .recomendado {
+  background: var(--on-primary);
+  color: var(--ink-deep);
+}

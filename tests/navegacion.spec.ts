@@ -23,7 +23,7 @@ test('el menú hamburguesa abre la navegación en móvil', async ({ page }) => {
 
 test('barra inferior fija del asistente en móvil', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 700 });
-  await page.goto('/#/receteta/nueva');
+  await page.goto('/#/receteta/nueva/esferas');
   const barra = page.getByRole('navigation', { name: 'Acciones del asistente' });
   await expect(barra).toBeVisible();
   const caja = await barra.boundingBox();

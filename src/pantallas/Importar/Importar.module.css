@@ -1,0 +1,28 @@
+/* Tarjeta de receteta importada — card-pricing */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding: var(--spacing-xl);
+  border: 1px solid var(--hairline-cloud);
+  border-radius: var(--rounded-xl);
+  background: var(--surface-canvas-light);
+}
+
+@media (min-width: 600px) {
+  .tarjeta {
+    padding: var(--spacing-xxl);
+  }
+}
+
+.resumen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding-left: var(--espacio-6);
+}
+
+.pregunta {
+  font-size: var(--heading-sm-size);
+  font-weight: var(--heading-sm-weight);
+}
