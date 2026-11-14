@@ -6,7 +6,7 @@
 import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 
-const URL_PUBLICA = process.env.VITE_URL_PUBLICA ?? 'https://fiji-pa-los-reales.netlify.app/';
+const URL_PUBLICA = process.env.VITE_URL_PUBLICA ?? 'https://fiji-pa-los-reales.vercel.app/';
 const compilar = !process.argv.includes('--sin-compilar');
 const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
 

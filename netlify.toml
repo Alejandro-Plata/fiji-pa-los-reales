@@ -1,45 +1,12 @@
-# Publicación de la PWA y del APK en Netlify: SOLO con `npm run publicar` (scripts/publicar.mjs).
-# No hay comando de compilación a propósito: el APK y version.json se añaden a dist después de
-# compilar, y una compilación en Netlify (o un despliegue automático desde GitHub) los borraría.
+# Dirección anterior (fiji-pa-los-reales.netlify.app). La web oficial está en Vercel.
+# Netlify solo sirve descargas/version.json para que las apps instaladas con versiones ≤ 1.1.2
+# (que consultan aquí) encuentren la actualización; todo lo demás redirige a Vercel (_redirects).
+# Lo despliega scripts/publicar.mjs; no conectar despliegues automáticos desde GitHub.
 [build]
-  publish = "dist"
+  publish = "."
 
-# El service worker y el manifiesto se revalidan siempre: las actualizaciones llegan al instante
-[[headers]]
-  for = "/sw.js"
-  [headers.values]
-    Cache-Control = "no-cache"
-
-[[headers]]
-  for = "/manifest.webmanifest"
-  [headers.values]
-    Cache-Control = "no-cache"
-
-# Actualizaciones de la app Android: la app (origen https://localhost dentro del WebView) consulta
-# version.json, así que necesita CORS. version.json nunca se cachea.
 [[headers]]
   for = "/descargas/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
-
-[[headers]]
-  for = "/descargas/version.json"
-  [headers.values]
     Cache-Control = "no-cache"
-
-[[headers]]
-  for = "/descargas/*.exe"
-  [headers.values]
-    Content-Type = "application/vnd.microsoft.portable-executable"
-    Content-Disposition = "attachment"
-
-[[headers]]
-  for = "/descargas/*.apk"
-  [headers.values]
-    Content-Type = "application/vnd.android.package-archive"
-
-# Los recursos con hash en el nombre no cambian nunca
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"

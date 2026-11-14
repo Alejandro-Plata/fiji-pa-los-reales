@@ -24,6 +24,30 @@ test('web: Ajustes ofrece descargar el APK publicado', async ({ page }) => {
   expect(await windows.getAttribute('href')).toMatch(/\/descargas\/fiji-pa-los-reales-1\.1\.0-instalador\.exe$/);
 });
 
+test('web: version.json con direcciones absolutas (GitHub Releases)', async ({ page }) => {
+  const base = 'https://github.com/Alejandro-Plata/fiji-pa-los-reales/releases/download/v9.9.9/';
+  await page.route('**/descargas/version.json', (r) =>
+    r.fulfill({
+      json: {
+        version: '9.9.9',
+        apk: `${base}fiji-pa-los-reales-9.9.9.apk`,
+        publicada: '2026-11-14',
+        windows: { instalador: `${base}fiji-pa-los-reales-9.9.9-instalador.exe` },
+      },
+    }),
+  );
+  await page.goto('/#/ajustes');
+  const seccion = page.getByRole('region', { name: 'Actualizaciones' });
+  await expect(seccion.getByRole('link', { name: /Descargar APK 9\.9\.9/ })).toHaveAttribute(
+    'href',
+    `${base}fiji-pa-los-reales-9.9.9.apk`,
+  );
+  await expect(seccion.getByRole('link', { name: /Descargar instalador 9\.9\.9/ })).toHaveAttribute(
+    'href',
+    `${base}fiji-pa-los-reales-9.9.9-instalador.exe`,
+  );
+});
+
 test('web: sin publicación no se muestra la descarga', async ({ page }) => {
   await page.route('**/descargas/version.json', (r) => r.fulfill({ status: 404, body: '' }));
   await page.goto('/#/ajustes');

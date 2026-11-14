@@ -36,14 +36,17 @@ La especificación completa está en `spec.md`. El diseño visual manda según `
 ## Enlaces de receteta desde la app Android
 La app nativa necesita la dirección pública de la PWA: `VITE_URL_PUBLICA=https://…` al compilar.
 Sin ella, «Compartir» ofrece el archivo .json.
-Repositorio: github.com/Alejandro-Plata/fiji-pa-los-reales. Web: https://fiji-pa-los-reales.netlify.app
+Repositorio: github.com/Alejandro-Plata/fiji-pa-los-reales. Web oficial: https://fiji-pa-los-reales.vercel.app
+(Vercel recompila con cada push a main; `vercel.json`). APK e instalador: GitHub Releases.
+Netlify (dirección anterior) solo hace de puente: version.json para apps ≤ 1.1.2 y redirección a Vercel.
 
 ## Publicar una versión (web + APK + actualizaciones en la app)
 1. Subir `version` en package.json (el versionCode de Android se deriva de ella).
 2. Añadir sus novedades en `scripts/novedades.json`.
-3. `npm run publicar`: pruebas, compilación con `VITE_URL_PUBLICA`, APK, `dist/descargas/version.json`
-   y despliegue en Netlify con `--no-build`. No conectar despliegues automáticos desde GitHub:
-   recompilarían y borrarían `descargas/`.
+3. `npm run publicar` (requiere `gh auth login`): pruebas, compilación con `VITE_URL_PUBLICA`
+   (Vercel), APK firmado e instalador → release `vX.Y.Z` en GitHub → `public/descargas/version.json`
+   con esas direcciones, commit y push (Vercel la sirve) → puente en Netlify para apps ≤ 1.1.2.
+
 ## App de Windows (Electron)
 `escritorio/main.cjs` sirve `dist/` por el protocolo seguro `app://fplr/` (con file:// no funcionan
 los workers). `escritorio/preload.cjs` expone solo `window.fplrEscritorio` (abrir https en el

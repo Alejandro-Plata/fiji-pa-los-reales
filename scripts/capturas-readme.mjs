@@ -69,7 +69,7 @@ const nuevaPagina = async (ancho, alto, escala = 1) => {
   // Ajustes › Actualizaciones: la publicación real
   await ctx.route('**/descargas/version.json', async (ruta) => {
     try {
-      const r = await fetch('https://fiji-pa-los-reales.netlify.app/descargas/version.json');
+      const r = await fetch('https://fiji-pa-los-reales.vercel.app/descargas/version.json');
       await ruta.fulfill({ json: await r.json() });
     } catch {
       await ruta.fulfill({ status: 404, body: '' });

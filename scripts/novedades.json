@@ -1,4 +1,8 @@
 {
+  "1.1.3": [
+    "Nueva dirección oficial de la web: fiji-pa-los-reales.vercel.app.",
+    "Descargas de Android y Windows en GitHub Releases."
+  ],
   "1.1.2": [
     "Las imágenes OME-TIFF se abren sin el diálogo de Bio-Formats.",
     "Las escalas guardadas en mm, cm o nm se convierten a micras."

@@ -10,9 +10,8 @@
 </p>
 
 <p align="center">
-  <a href="https://fiji-pa-los-reales.netlify.app"><strong>Abrir la aplicación web</strong></a> ·
-  <a href="https://fiji-pa-los-reales.netlify.app/descargas/fiji-pa-los-reales-1.1.0.apk">Descargar para Android</a> ·
-  <a href="https://fiji-pa-los-reales.netlify.app/descargas/fiji-pa-los-reales-1.1.0-instalador.exe">Descargar para Windows</a>
+  <a href="https://fiji-pa-los-reales.vercel.app"><strong>Abrir la aplicación web</strong></a> ·
+  <a href="https://github.com/Alejandro-Plata/fiji-pa-los-reales/releases/latest">Descargar para Android y Windows</a>
 </p>
 
 <p align="center">
@@ -267,9 +266,9 @@ acciones del asistente fija en la parte inferior.
 
 | Plataforma | Instalación | Actualizaciones |
 | --- | --- | --- |
-| **Web** | [fiji-pa-los-reales.netlify.app](https://fiji-pa-los-reales.netlify.app). Puede instalarse como aplicación desde el navegador (Chrome: menú › *Instalar aplicación*; Safari en iPhone: *Compartir* › *Añadir a pantalla de inicio*). | Automáticas. |
-| **Android** | [APK](https://fiji-pa-los-reales.netlify.app/descargas/fiji-pa-los-reales-1.1.0.apk). Android solicita autorización para instalar aplicaciones de esa fuente. | Desde *Ajustes › Actualizaciones*. |
-| **Windows 10/11** | [Instalador](https://fiji-pa-los-reales.netlify.app/descargas/fiji-pa-los-reales-1.1.0-instalador.exe) o versión portátil. Al no estar firmado por una entidad certificadora, SmartScreen muestra un aviso la primera vez: *Más información › Ejecutar de todas formas*. | Aviso en la aplicación y descarga del nuevo instalador. |
+| **Web** | [fiji-pa-los-reales.vercel.app](https://fiji-pa-los-reales.vercel.app). Puede instalarse como aplicación desde el navegador (Chrome: menú › *Instalar aplicación*; Safari en iPhone: *Compartir* › *Añadir a pantalla de inicio*). | Automáticas. |
+| **Android** | Archivo `.apk` de la [última versión](https://github.com/Alejandro-Plata/fiji-pa-los-reales/releases/latest). Android solicita autorización para instalar aplicaciones de esa fuente. | Desde *Ajustes › Actualizaciones*. |
+| **Windows 10/11** | Instalador `.exe` de la [última versión](https://github.com/Alejandro-Plata/fiji-pa-los-reales/releases/latest). Al no estar firmado por una entidad certificadora, SmartScreen muestra un aviso la primera vez: *Más información › Ejecutar de todas formas*. | Aviso en la aplicación y descarga del nuevo instalador. |
 
 Para ejecutar los macros se necesita **Fiji** ([descarga gratuita](https://imagej.net/software/fiji/downloads))
 en Windows, macOS o Linux. StarDist es opcional y se instala desde el propio Fiji

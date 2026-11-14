@@ -9,7 +9,7 @@ const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 
 };
 
 export default defineConfig({
-  // Rutas relativas: funciona en GitHub Pages, Netlify y dentro de la app Android (Capacitor).
+  // Rutas relativas: funciona en Vercel, en cualquier subcarpeta y dentro de la app Android (Capacitor).
   base: './',
   define: {
     __VERSION_APP__: JSON.stringify(pkg.version),
