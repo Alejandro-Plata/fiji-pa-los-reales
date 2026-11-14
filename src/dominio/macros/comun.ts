@@ -74,6 +74,7 @@ export function macroLote(r: Receteta, ctx: Contexto, p: PiezasLote): string {
     'var dirSalida = "";',
     'var fila = 0;',
     'var extensiones;',
+    'var hayBioformats = false;',
     ...(p.globales ?? []),
     '',
     '// --- 1. Carpetas: de dónde se leen las imágenes y dónde se guardan los resultados',
@@ -94,12 +95,16 @@ export function macroLote(r: Receteta, ctx: Contexto, p: PiezasLote): string {
     '',
   ];
 
-  const comprobaciones = [...(p.comprobaciones ?? [])];
+  const comprobaciones = [
+    ...(p.comprobaciones ?? []),
+    '// ¿Está Bio-Formats? (abre los OME-TIFF sin diálogos y los formatos de microscopio)',
+    'List.setCommands;',
+    'if (List.get("Bio-Formats Importer") != "") hayBioformats = true;',
+  ];
   if (usaBioformats) {
     comprobaciones.push(
-      '// Los formatos de microscopio (.czi, .lif, .nd2…) se abren con Bio-Formats',
-      'List.setCommands;',
-      `if (List.get("Bio-Formats Importer") == "") exit(${texto(
+      '// Los formatos de microscopio (.czi, .lif, .nd2…) solo se abren con Bio-Formats',
+      `if (!hayBioformats) exit(${texto(
         'Esta receteta necesita Bio-Formats para abrir estos archivos y no está instalado.\nInstalación en Fiji: Help > Update... y aceptar las actualizaciones.',
       )});`,
     );
@@ -184,10 +189,17 @@ export function macroLote(r: Receteta, ctx: Contexto, p: PiezasLote): string {
     '    return false;',
     '}',
     '',
-    '// Abre la imagen; los formatos de microscopio se abren con Bio-Formats (solo la primera serie)',
+    '// Abre la imagen; los formatos de microscopio y los OME-TIFF se abren con Bio-Formats (solo la',
+    '// primera serie) y con las opciones escritas aquí: así Bio-Formats no muestra su diálogo',
     'function abrirImagen(ruta) {',
     '    r = toLowerCase(ruta);',
-    `    if (${BIOFORMATS.map((e) => `endsWith(r, "${e}")`).join(' || ')}) {`,
+    '    conBioformats = false;',
+    `    if (${BIOFORMATS.map((e) => `endsWith(r, "${e}")`).join(' || ')}) conBioformats = true;`,
+    '    if (hayBioformats) {',
+    '        if (endsWith(r, ".ome.tif")) conBioformats = true;',
+    '        if (endsWith(r, ".ome.tiff")) conBioformats = true;',
+    '    }',
+    '    if (conBioformats) {',
     '        run("Bio-Formats Importer", "open=[" + ruta + "] autoscale color_mode=Default view=Hyperstack stack_order=XYCZT series_1");',
     '    } else {',
     '        open(ruta);',
@@ -220,6 +232,15 @@ function funcionEscala(r: Receteta): string[] {
     '    u = toLowerCase(unidad);',
     '    if (u == "micron" || u == "microns" || u == "um") return true;',
     '    if (u == fromCharCode(181) + "m" || u == fromCharCode(956) + "m") return true;',
+    '    // Otras unidades de longitud: se convierten a micras (las pulgadas no: suelen ser 72 ppp)',
+    '    f = 0;',
+    '    if (u == "mm" || u == "millimeter" || u == "millimeters") f = 1000;',
+    '    if (u == "cm" || u == "centimeter" || u == "centimeters") f = 10000;',
+    '    if (u == "nm" || u == "nanometer" || u == "nanometers") f = 0.001;',
+    '    if (f > 0) {',
+    '        run("Properties...", "unit=micron pixel_width=" + (pw * f) + " pixel_height=" + (ph * f));',
+    '        return true;',
+    '    }',
     `    print(${texto('  AVISO: ')} + nombre + ${texto(' no tiene escala en micras (')} + unidad + ${texto('). Se omite.')});`,
     `    print(${texto("  Solución: seleccionar 'Escala manual' en la receteta e introducir las micras por píxel.")});`,
     '    return false;',

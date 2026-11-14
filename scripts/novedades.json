@@ -1,4 +1,8 @@
 {
+  "1.1.2": [
+    "Las imágenes OME-TIFF se abren sin el diálogo de Bio-Formats.",
+    "Las escalas guardadas en mm, cm o nm se convierten a micras."
+  ],
   "1.1.1": [
     "Capturas reales de Fiji en la guía «Uso en Fiji».",
     "Nombre actual del lenguaje en Fiji: «ImageJ Macro».",

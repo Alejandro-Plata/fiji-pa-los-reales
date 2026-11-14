@@ -11,6 +11,7 @@ requires("1.54f");
 var dirSalida = "";
 var fila = 0;
 var extensiones;
+var hayBioformats = false;
 
 // --- 1. Carpetas: de dónde se leen las imágenes y dónde se guardan los resultados
 args = getArgument();
@@ -28,6 +29,10 @@ if (dirEntrada == dirSalida) exit("La carpeta de resultados debe ser distinta de
 File.makeDirectory(dirSalida);
 File.makeDirectory(dirSalida + "control");
 File.makeDirectory(dirSalida + "rois");
+
+// ¿Está Bio-Formats? (abre los OME-TIFF sin diálogos y los formatos de microscopio)
+List.setCommands;
+if (List.get("Bio-Formats Importer") != "") hayBioformats = true;
 
 // --- 2. Preparación: cerramos todo y elegimos las medidas
 run("Close All");
@@ -94,10 +99,17 @@ function extensionValida(n) {
     return false;
 }
 
-// Abre la imagen; los formatos de microscopio se abren con Bio-Formats (solo la primera serie)
+// Abre la imagen; los formatos de microscopio y los OME-TIFF se abren con Bio-Formats (solo la
+// primera serie) y con las opciones escritas aquí: así Bio-Formats no muestra su diálogo
 function abrirImagen(ruta) {
     r = toLowerCase(ruta);
-    if (endsWith(r, ".czi") || endsWith(r, ".lif") || endsWith(r, ".nd2") || endsWith(r, ".lsm") || endsWith(r, ".oib")) {
+    conBioformats = false;
+    if (endsWith(r, ".czi") || endsWith(r, ".lif") || endsWith(r, ".nd2") || endsWith(r, ".lsm") || endsWith(r, ".oib")) conBioformats = true;
+    if (hayBioformats) {
+        if (endsWith(r, ".ome.tif")) conBioformats = true;
+        if (endsWith(r, ".ome.tiff")) conBioformats = true;
+    }
+    if (conBioformats) {
         run("Bio-Formats Importer", "open=[" + ruta + "] autoscale color_mode=Default view=Hyperstack stack_order=XYCZT series_1");
     } else {
         open(ruta);
